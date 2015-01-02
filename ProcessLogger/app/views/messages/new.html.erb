@@ -1,0 +1,24 @@
+<h1>New Log Message</h1>
+
+<%= form_for :message, url: messages_path do |f| %>
+    <p>
+      <%= f.label :process %><br>
+      <%= f.text_field :process %>
+    </p>
+
+    <p>
+      <%= f.label :sender %><br>
+      <%= f.text_field :sender %>
+    </p>
+
+    <p>
+      <%= f.label :text %><br>
+      <%= f.text_area :text %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>
+
+<%= link_to 'Back', messages_path %>
