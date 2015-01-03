@@ -1,0 +1,33 @@
+<% content_for :title do %>Tension dashboard<% end %>
+<div class="gridster">
+  <ul>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="tension" data-view="Graph" data-title="Tension:" style="background-color:#ff9618" data-min="0" data-max="250"></div>
+    </li>
+
+    <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="tension" data-view="GoogleGauge"  data-title="Tension" data-min="0.0" data-max="300"  data-red_from="250" data-red_to="300"></div>
+    </li>
+
+    <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="event" data-view="Text" data-title="Events:" data-text="Important Events Will Be Displayed Here." data-moreinfo="Protip: You can drag the widgets around!"></div>
+    </li>
+
+
+  </ul>
+  <center><div style="font-size: 12px">Try this: curl -d '{ "auth_token": "YOUR_AUTH_TOKEN", "text": "Hey, Look what I can do!" }' \http://<%=request.host%>:<%=request.port%>/widgets/welcome</div></center>
+</div>
+
+
+
+<!--    Other Widgets
+
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+  <div data-id="tension" data-view="Meter" data-title="Tension" data-min="0.375" data-max="0.625"></div>
+</li>
+
+<li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+  <div data-id="tension" data-view="Number" data-title="Current Valuation" data-moreinfo="lbs" data-prefix=""></div>
+</li>
+-->
