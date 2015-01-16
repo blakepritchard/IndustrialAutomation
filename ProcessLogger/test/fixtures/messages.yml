@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  process: MyString
-  sender: MyString
-  text: MyText
+  process: TestProcess1
+  sender: TestSender1
+  text: "{\"ADC1\":0.5061111111111111}"
 
 two:
-  process: MyString
-  sender: MyString
-  text: MyText
+  process: TestProcess1
+  sender: TestSender2
+  text: "{\"ADC1\":0.6}"
