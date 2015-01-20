@@ -5,26 +5,19 @@
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:ProcessLogger_development</jdbc-url>
-      <user-name>blake</user-name>
-      <user-password>dfdadf9adfd9dfdedfcddfd8df99dfd9dfdbdfc6</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails ProcessLogger: test" uuid="adc23158-b829-4cb8-8383-b15766fbb7db">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:ProcessLogger_test</jdbc-url>
-      <user-name>blake</user-name>
-      <user-password>dfdadf9adfd9dfdedfcddfd8df99dfd9dfdbdfc6</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails ProcessLogger: production" uuid="72c766be-fd5f-4238-945d-eb2b7e1913b2">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:ProcessLogger_production</jdbc-url>
-      <user-name>blake</user-name>
-      <user-password>dfdadf9adfd9dfdedfcddfd8df99dfd9dfdbdfc6</user-password>
       <libraries />
     </data-source>
   </component>
 </project>
-

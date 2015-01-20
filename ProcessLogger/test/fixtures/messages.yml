@@ -3,7 +3,7 @@
 one:
   process: TestProcess1
   sender: TestSender1
-  text: "{\"ADC1\":0.5061111111111111}"
+  text: "{\"ADC1\":0.123456789}"
 
 two:
   process: TestProcess1

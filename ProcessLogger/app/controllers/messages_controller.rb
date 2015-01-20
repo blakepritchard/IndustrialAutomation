@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
   private
     def message_params
       #params.require(:message).permit(:process, :sender, :text)
-      params.permit(:process, :sender, :text)
+      params.permit(:process, :sender, :text, :adc1, :adc2, :adc3, :adc4, :adc5, :adc6, :adc7, :adc8)
     end
 
 end
