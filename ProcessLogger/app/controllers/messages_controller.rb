@@ -1,6 +1,10 @@
 class MessagesController < ApplicationController
   skip_before_filter  :verify_authenticity_token
 
+  def chart
+
+  end
+
   def show
     @message = Message.find(params[:id])
   end
@@ -19,12 +23,18 @@ class MessagesController < ApplicationController
 
   end
 
+
+
+
   protected
+
+
     def send_alarms(message)
+      require 'twilio-ruby'
+
+
 
       if @message.adc1 > 100
-        require 'twilio-ruby'
-
         # put your own credentials here
         account_sid = 'ACcf3d9b19452bf652b424aec7f1e4c0d5'
         auth_token = 'a44f7f75644477c22b4d7be9169bf88d'
@@ -35,12 +45,19 @@ class MessagesController < ApplicationController
         @client.account.messages.create({
                                             :from => '+14697895468',
                                             :to => '2145174227',
-                                            :body => 'the value of ADC1 is now:'+@message.adc1.to_s,
+                                            :body => 'the value of Tension is now:'+@message.adc1.to_s,
                                         })
 
       end
     end
 
+    def send_sms(account_sid, auth_token, from, to, body)
+
+    end
+
+    def send_voice_message
+
+    end
 
   private
     def message_params

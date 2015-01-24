@@ -1,6 +1,11 @@
 ProcessLogger::Application.routes.draw do
 
-  resources :messages
+  resources :messages do
+    collection do
+      get 'chart'
+    end
+  end
+
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
