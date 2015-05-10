@@ -1,8 +1,19 @@
 class MessagesController < ApplicationController
   skip_before_filter  :verify_authenticity_token
 
-  def chart
+  def index
+    @message = Message.all
+  end
 
+  def chart
+  end
+
+  def tension_graph
+  end
+
+  def chart_data
+    @message = Message.last
+    render json: [@message.id, @message.adc1]
   end
 
   def show
@@ -10,7 +21,6 @@ class MessagesController < ApplicationController
   end
 
   def new
-
   end
 
   def create
@@ -20,7 +30,6 @@ class MessagesController < ApplicationController
     @message.save
     redirect_to(@message)
     send_alarms(@message)
-
   end
 
 
@@ -34,7 +43,7 @@ class MessagesController < ApplicationController
 
 
 
-      if @message.adc1 > 100
+      if @message.adc1 > 0.5
         # put your own credentials here
         account_sid = 'ACcf3d9b19452bf652b424aec7f1e4c0d5'
         auth_token = 'a44f7f75644477c22b4d7be9169bf88d'
@@ -45,7 +54,7 @@ class MessagesController < ApplicationController
         @client.account.messages.create({
                                             :from => '+14697895468',
                                             :to => '2145174227',
-                                            :body => 'the value of Tension is now:'+@message.adc1.to_s,
+                                            :body => 'the value of Tension is now:'<<@message.adc1.to_s,
                                         })
 
       end

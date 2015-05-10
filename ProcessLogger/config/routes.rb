@@ -3,6 +3,8 @@ ProcessLogger::Application.routes.draw do
   resources :messages do
     collection do
       get 'chart'
+      get 'chart_data'
+      get 'tension_graph'
     end
   end
 
