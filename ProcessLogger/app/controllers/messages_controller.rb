@@ -43,7 +43,7 @@ class MessagesController < ApplicationController
 
 
 
-      if @message.adc1 > 0.5
+      if @message.adc1 > 0.8
         # put your own credentials here
         account_sid = 'ACcf3d9b19452bf652b424aec7f1e4c0d5'
         auth_token = 'a44f7f75644477c22b4d7be9169bf88d'
@@ -56,6 +56,8 @@ class MessagesController < ApplicationController
                                             :to => '2145174227',
                                             :body => 'the value of Tension is now:'<<@message.adc1.to_s,
                                         })
+      elsif @message.adc1 > 0.65
+        TensionMailer.sample_email(@message).deliver
 
       end
     end

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ProcessLogger.iml" filepath="$PROJECT_DIR$/.idea/ProcessLogger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Dashboard/process_dashboard/.idea/process_dashboard.iml" filepath="$PROJECT_DIR$/../Dashboard/process_dashboard/.idea/process_dashboard.iml" />
     </modules>
   </component>
 </project>
-
