@@ -124,7 +124,9 @@ USAGE
                 if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
                     print(command)
                     device_rotator.execute_easycomm2_command(command)
-                    command = ""               
+                    command = ""  
+                elif '!'==char_next:
+                    print('.')             
                 else:
                     command += char_next
                     
