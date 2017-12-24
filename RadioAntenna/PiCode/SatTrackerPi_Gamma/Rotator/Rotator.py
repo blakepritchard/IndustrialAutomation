@@ -3,11 +3,12 @@ Created on Dec 18, 2017
 
 @author: blake
 '''
+from __future__ import division
 import sys
 import os
 import time
 from builtins import len
-from __future__ import division
+
 
 
 # Import Local Libraries
