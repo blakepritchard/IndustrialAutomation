@@ -95,8 +95,8 @@ USAGE
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-p", "--port", dest="serial port device", action="port", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-s", "--speed", dest="serial port speed", action="speeed", help="set verbosity level [default: %(default)s]")
+        parser.add_argument("-p", "--port", dest="serial port device", type=string, help="set serial port [default: %(default)s]")
+        parser.add_argument("-s", "--speed", dest="serial port speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
          
 
