@@ -3,7 +3,23 @@ Created on Dec 18, 2017
 
 @author: blake
 '''
+import sys
+import os
+import time
 from builtins import len
+from __future__ import division
+
+
+# Import Local Libraries
+path_runtime = os.path.dirname(__file__)
+path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
+path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
+path_lib_servo = os.path.join(path_parent_platform, "Adafruit_Python_PCA9685/Adafruit_PCA9685/PCA9685.py")
+sys.path.insert(0, os.path.abspath(path_lib_servo))
+# Import the PCA9685 module.
+import Adafruit_PCA9685
+
+
 
 class Rotator(object):
 
@@ -22,17 +38,34 @@ class Rotator(object):
     _azimuth_stepper_calibration_offset = 0
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
-    
+
+
+    # Configure min and max servo pulse lengths
+    _servo_min = 150  # Min pulse length out of 4096
+    _servo_max = 600  # Max pulse length out of 4096
+    _servo_center = 325
+            
     
     '''
     classdocs
     '''
 
-
+    '''
+    Constructor
+    '''
     def __init__(self):
-        '''
-        Constructor
-        '''
+
+        # Initialise the PCA9685 using the default address (0x40).
+        _pwm = Adafruit_PCA9685.PCA9685()
+        # Set frequency to 50hz, good for servos.
+        _pwm.set_pwm_freq(50)
+        
+        #Reset Servos to Center with a 1500us pulse
+        _pwm.set_pwm(0, 0, self._servo_center)
+        time.sleep(1)
+        _pwm.set_pwm(1, 0, self._servo_center)
+        time.sleep(1)
+
        
     def get_elevation(self):
         print("returning elevation of: "+ str(self._elevation_current))
@@ -50,14 +83,20 @@ class Rotator(object):
     def set_elevation(self, elevation):
         self._elevation_target = elevation
         '''ToDo: Remove this Hack'''
-        print("setting elevation to: "+ str(elevation))
+        
+        pulse_width = int(self._servo_center + ((self._servo_max - self._servo_center) * (float(elevation)/90.0)))
+        print("setting elevation to: "+ str(elevation)+" with a pulse width of: "+ pulse_width)
+        self._pwm.set_pwm(1, 0, pulse_width)
         self._elevation_current = elevation
 
     
     def set_azimuth(self, azimuth):
         self._azimuth_target = azimuth
         '''ToDo: Remove this Hack'''
-        print("setting azimuth to: "+ str(azimuth))
+        
+        pulse_width = int(self._servo_center + ((self._servo_max - self._servo_center) * (float(azimuth)/180.0)))
+        print("setting elevation to: "+ str(azimuth)+" with a pulse width of: "+ pulse_width)
+        self._pwm.set_pwm(0, 0, pulse_width)
         self._azimuth_current = azimuth
 
     
@@ -84,6 +123,19 @@ class Rotator(object):
         msg_text = "Unsupported Command..."
         print(msg_text)
         return msg_text
+    
+    
+    # Helper function to make setting a servo pulse width simpler.
+    def set_servo_pulse(self, channel, pulse):
+        pulse_length = 1000000    # 1,000,000 us per second
+        pulse_length //= 60       # 60 Hz
+        print('{0}us per period'.format(pulse_length))
+        pulse_length //= 4096     # 12 bits of resolution
+        print('{0}us per bit'.format(pulse_length))
+        pulse *= 1000
+        pulse //= pulse_length
+        self.pwm.set_pwm(channel, 0, pulse)
+        
           
     def execute_easycomm2_command(self, rotator_commands):  
         
