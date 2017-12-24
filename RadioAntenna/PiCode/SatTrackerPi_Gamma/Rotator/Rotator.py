@@ -98,13 +98,7 @@ class Rotator(object):
             self._elevation_current = enumerate
             
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
-            print(e)
-            
-            sys.stderr.write(program_name + ": " + repr(e) + "\n")
-            return 2
+            self.handle_exception(e)
     
     def set_azimuth(self, azimuth):
         try:
@@ -117,13 +111,7 @@ class Rotator(object):
             self._azimuth_current = azimuth
 
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
-            print(e)
-            
-            sys.stderr.write(program_name + ": " + repr(e) + "\n")
-            return 2
+            self.handle_exception(e)
     
     def set_polarity(self, polarity):
         self._polarity_target = polarity
@@ -133,13 +121,19 @@ class Rotator(object):
         
     
     def stop_azimuth(self):
-        self._pwm.set_pwm(0, 0, self._servo_center)        
-        print("AZ Stop")
+        try:
+            self._pwm.set_pwm(0, 0, self._servo_center)        
+            print("AZ Stop")
+        except Exception as e:
+            self.handle_exception(e)        
         
     def stop_elevation(self):
-        self._pwm.set_pwm(0, 0, self._servo_center)        
-        print("EL Stop")
-        
+        try:
+            self._pwm.set_pwm(1, 0, self._servo_center)        
+            print("EL Stop")
+        except Exception as e:
+            self.handle_exception(e)
+            
     def get_version_text(self):
         return "SatTrackerPi - Version 1.0"
     
@@ -198,6 +192,10 @@ class Rotator(object):
             return 0       
         
         except Exception as e:
+            self.handle_exception(e)
+
+
+    def handle_exception(self, e):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
