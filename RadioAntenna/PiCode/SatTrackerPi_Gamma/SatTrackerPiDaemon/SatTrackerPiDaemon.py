@@ -106,9 +106,14 @@ USAGE
         serial_port_dev = args.port
         serial_port_speed = int(args.speed)
         
-        if verbose > 0: print("Verbose mode on")       
-        if(''==serial_port_dev): serial_port_dev = '/dev/pts/4'
-        if(''==serial_port_speed): serial_port_speed = 9600
+        if verbose > 0: 
+                print("Verbose mode on")       
+        if(''==serial_port_dev): 
+            serial_port_dev = '/dev/pts/4'
+        print("Using Port: " + serial_port_dev)
+        if(''==serial_port_speed): 
+                serial_port_speed = 9600
+        print("Using Speed: " + serial_port_speed)
         
         ser = serial.Serial(serial_port_dev, 9600, rtscts=True,dsrdtr=True)
         bytes_carraigereturn = bytes("\r", "UTF8")
@@ -119,6 +124,7 @@ USAGE
         while True:
             byte_next = ser.read()
             char_next = byte_next.decode("utf-8")
+            if verbose: print('-')
             if byte_next:
                 
                 if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
