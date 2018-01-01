@@ -45,7 +45,7 @@ __version__ = 0.1
 __date__ = '2017-12-18'
 __updated__ = '2017-12-18'
 
-DEBUG = 1
+DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
 
@@ -95,32 +95,37 @@ USAGE
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-p", "--port", dest="serial port device", help="set serial port [default: %(default)s]")
-        parser.add_argument("-s", "--speed", dest="serial port speed", type=int, help="set serial port speed [default: %(default)s]")
+        parser.add_argument("-p", "--port", dest="port", help="set serial port [default: %(default)s]")
+        parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
-         
+
+        print("Processing Arguments")
 
         # Process arguments
         args = parser.parse_args()
         verbose = args.verbose
         serial_port_dev = args.port
-        serial_port_speed = int(args.speed)
+        serial_port_speed = args.speed
         
         if verbose > 0: 
                 print("Verbose mode on")       
         if(''==serial_port_dev): 
-            serial_port_dev = '/dev/pts/4'
+            serial_port_dev = '/dev/ttyUSB1'
         print("Using Port: " + serial_port_dev)
-        if(''==serial_port_speed): 
+
+        """if(''==serial_port_speed): 
                 serial_port_speed = 9600
         print("Using Speed: " + serial_port_speed)
-        
+        """
+        print("Opening serial port.")
         ser = serial.Serial(serial_port_dev, 9600, rtscts=True,dsrdtr=True)
-        bytes_carraigereturn = bytes("\r", "UTF8")
-        bytes_linefeed = bytes("\n", "UTF8")    
 
+        print("Port Open. Setting Constants.")
+        bytes_carraigereturn = bytes("\r")
+        bytes_linefeed = bytes("\n")    
+
+        print("Reading Serial Port Loop")
         command = ""
-        
         while True:
             byte_next = ser.read()
             char_next = byte_next.decode("utf-8")
@@ -149,11 +154,15 @@ USAGE
         raise       # XXX handle instead of re-raise?
 
     except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(e)
+        
         if DEBUG or TESTRUN:
             raise(e)
-        indent = len(program_name) * " "
+        
         sys.stderr.write(program_name + ": " + repr(e) + "\n")
-        sys.stderr.write(indent + "  for help use --help")
         return 2
 
 if __name__ == "__main__":

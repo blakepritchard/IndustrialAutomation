@@ -42,6 +42,8 @@ mh = Adafruit_MotorHAT()
 
 class Rotator(object):
 
+    _pwm = Adafruit_PCA9685.PCA9685()
+
     _azimuth_current = 0
     _elevation_current = 0
     _polarity_current = 0
@@ -76,14 +78,14 @@ class Rotator(object):
 
         """
         # Initialise the PCA9685 using the default address (0x40).
-        _pwm = Adafruit_PCA9685.PCA9685()
+
         # Set frequency to 50hz, good for servos.
-        _pwm.set_pwm_freq(50)
+        self._pwm.set_pwm_freq(50)
         
         #Reset Servos to Center with a 1500us pulse
-        _pwm.set_pwm(0, 0, self._servo_center)
+        self._pwm.set_pwm(0, 0, self._servo_center)
         time.sleep(1)
-        _pwm.set_pwm(1, 0, self._servo_center)
+        self._pwm.set_pwm(1, 0, self._servo_center)
         time.sleep(1)
         """
         
@@ -108,24 +110,30 @@ class Rotator(object):
     
     
     def set_elevation(self, elevation):
-        self._elevation_target = elevation
-        '''ToDo: Remove this Hack'''
-        
-        pulse_width = int(self._servo_center + ((self._servo_max - self._servo_center) * (float(elevation)/90.0)))
-        print("setting elevation to: "+ str(elevation)+" with a pulse width of: "+ pulse_width)
-        self._pwm.set_pwm(1, 0, pulse_width)
-        self._elevation_current = elevation
-
+        try:       
+            self._elevation_target = elevation
+            '''ToDo: Remove this Hack'''
+            
+            pulse_width = int((self._servo_center + ((self._servo_max - self._servo_center) * (float(elevation)/90.0))) /2 )
+            print("setting elevation to: "+ str(elevation)+" with a pulse width of: "+ str(pulse_width))
+            self._pwm.set_pwm(1, 0, pulse_width)
+            self._elevation_current = enumerate
+            
+        except Exception as e:
+            self.handle_exception(e)
     
     def set_azimuth(self, azimuth):
-        self._azimuth_target = azimuth
-        '''ToDo: Remove this Hack'''
-        
-        pulse_width = int(self._servo_center + ((self._servo_max - self._servo_center) * (float(azimuth)/180.0)))
-        print("setting elevation to: "+ str(azimuth)+" with a pulse width of: "+ pulse_width)
-        self._pwm.set_pwm(0, 0, pulse_width)
-        self._azimuth_current = azimuth
+        try:
+            self._azimuth_target = azimuth
+            '''ToDo: Remove this Hack'''
+            
+            pulse_width = int((self._servo_center + ((self._servo_max - self._servo_center) * (float(azimuth)/180.0))) /2 )
+            print("setting elevation to: "+ str(azimuth)+" with a pulse width of: "+ str(pulse_width))
+            self._pwm.set_pwm(0, 0, pulse_width)
+            self._azimuth_current = azimuth
 
+        except Exception as e:
+            self.handle_exception(e)
     
     def set_polarity(self, polarity):
         self._polarity_target = polarity
@@ -135,11 +143,19 @@ class Rotator(object):
         
     
     def stop_azimuth(self):
-        print("AZ Stop")
+        try:
+            self._pwm.set_pwm(0, 0, self._servo_center)        
+            print("AZ Stop")
+        except Exception as e:
+            self.handle_exception(e)        
         
     def stop_elevation(self):
-        print("EL Stop")
-        
+        try:
+            self._pwm.set_pwm(1, 0, self._servo_center)        
+            print("EL Stop")
+        except Exception as e:
+            self.handle_exception(e)
+            
     def get_version_text(self):
         return "SatTrackerPi - Version 1.0"
     
@@ -174,33 +190,47 @@ class Rotator(object):
         
           
     def execute_easycomm2_command(self, rotator_commands):  
-        
-        array_commands = rotator_commands.split(" ")
-        hash_results = {}
-        
-        for rotator_command in array_commands: 
-            print("Command: " + rotator_command)
-            result = ""
-            
-            # EasyCommII uses short commands to Get values from the Rotator
-            if len(rotator_command) == 2:
-                if      "AZ" == rotator_command: result = self.get_azimuth()
-                elif    "EL" == rotator_command: result = self.get_elevation()
-                elif    "SA" == rotator_command: result = self.stop_azimuth()
-                elif    "SE" == rotator_command: result = self.stop_elevation()
-                elif    "VE" == rotator_command: result = self.get_version_text()
-                elif    "HE" == rotator_command: result = self.get_help_text()
-            
-            # EasyCommII uses longer commands to Set values on the Rotator        
-            elif len(rotator_command) > 2:
-                command_operation = rotator_command[:2]
-                command_parameters = rotator_command[2:]
-                
-                if      "AZ" == command_operation: self.set_azimuth(command_parameters)
-                elif    "EL" == command_operation: self.set_elevation(command_parameters)       
-    
-            hash_results[rotator_command] = result;
 
-        return hash_results       
+        try:
+            array_commands = rotator_commands.split(" ")
+            hash_results = {}
+                
+            for rotator_command in array_commands: 
+                print("Command: " + rotator_command)
+                result = ""
+                    
+                # EasyCommII uses short commands to Get values from the Rotator
+                if len(rotator_command) == 2:
+                    if      "AZ" == rotator_command: result = self.get_azimuth()
+                    elif    "EL" == rotator_command: result = self.get_elevation()
+                    elif    "SA" == rotator_command: result = self.stop_azimuth()
+                    elif    "SE" == rotator_command: result = self.stop_elevation()
+                    elif    "VE" == rotator_command: result = self.get_version_text()
+                    elif    "HE" == rotator_command: result = self.get_help_text()
+                    
+                    # EasyCommII uses longer commands to Set values on the Rotator        
+                elif len(rotator_command) > 2:
+                    command_operation = rotator_command[:2]
+                    command_parameters = rotator_command[2:]
+                        
+                    if      "AZ" == command_operation:
+                                print("Recieved Azimuth Command: " + str(command_parameters))
+                                self.set_azimuth(command_parameters)
+                    elif    "EL" == command_operation:
+                                print("Recieved Elevation Command: " + str(command_parameters))      
+                                self.set_elevation(command_parameters)       
+
+            return 0       
         
-    
+        except Exception as e:
+            self.handle_exception(e)
+
+
+    def handle_exception(self, e):
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
+            print(e)
+            
+            sys.stderr.write(program_name + ": " + repr(e) + "\n")
+            return 2
