@@ -137,7 +137,7 @@ USAGE
                     device_rotator.execute_easycomm2_command(command)
                     command = ""  
                 elif '!'==char_next:
-                    print('.')             
+                    print('.'),             
                 else:
                     command += char_next
                     
