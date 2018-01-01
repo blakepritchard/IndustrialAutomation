@@ -20,10 +20,24 @@ path_runtime = os.path.dirname(__file__)
 path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
 path_lib_servo = os.path.join(path_parent_platform, "Adafruit_Python_PCA9685/Adafruit_PCA9685/PCA9685.py")
+path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
+
 sys.path.insert(0, os.path.abspath(path_lib_servo))
+sys.path.insert(0, os.path.abspath(path_lib_stepper))
+
 # Import the PCA9685 module.
 import Adafruit_PCA9685
 
+
+#!/usr/bin/python
+#import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Stepper
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+
+import time
+import atexit
+
+# create a default object, no changes to I2C address or frequency
+mh = Adafruit_MotorHAT()
 
 
 class Rotator(object):
@@ -60,6 +74,7 @@ class Rotator(object):
     '''
     def __init__(self):
 
+        """
         # Initialise the PCA9685 using the default address (0x40).
         _pwm = Adafruit_PCA9685.PCA9685()
         # Set frequency to 50hz, good for servos.
@@ -70,6 +85,13 @@ class Rotator(object):
         time.sleep(1)
         _pwm.set_pwm(1, 0, self._servo_center)
         time.sleep(1)
+        """
+        
+        atexit.register(turnOffMotors)
+
+        myStepper = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1
+        myStepper.setSpeed(30)             # 30 RPM
+                
 
        
     def get_elevation(self):
@@ -140,6 +162,15 @@ class Rotator(object):
         pulse *= 1000
         pulse //= pulse_length
         self.pwm.set_pwm(channel, 0, pulse)
+        
+        
+    def turnOffMotors():
+        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+    
+
         
           
     def execute_easycomm2_command(self, rotator_commands):  
