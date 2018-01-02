@@ -109,7 +109,7 @@ class Rotator(object):
                 
             elif self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
-                print("Moving Azimuth Downward by: " + str(nSteps) + "steps.")
+                print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
                 
             else:
