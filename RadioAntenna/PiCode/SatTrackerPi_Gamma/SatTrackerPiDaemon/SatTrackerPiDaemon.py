@@ -125,10 +125,13 @@ USAGE
         bytes_linefeed = bytes("\n")    
 
         print("Reading Serial Port Loop")
+        
         command = ""
+        print_newline = False
         while True:
             byte_next = ser.read()
             char_next = byte_next.decode("utf-8")
+
             if verbose: print('-')
             if byte_next:
                 
@@ -137,9 +140,13 @@ USAGE
                     device_rotator.execute_easycomm2_command(command)
                     command = ""  
                 elif '!'==char_next:
-                    print('.'),             
+                    print('.'),
+                    print_newline = True 
                 else:
                     command += char_next
+                    if print_newline:
+                        print','
+                        print_newline = False
                     
                 char_next = ''
                 byte_next = 0
