@@ -203,12 +203,15 @@ class Rotator(object):
     def stop_azimuth(self):
         try: 
             print("AZ Stop")
+            self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
             self.handle_exception(e)        
         
     def stop_elevation(self):
         try:        
             print("EL Stop")
+            self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+            self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
             self.handle_exception(e)
             
