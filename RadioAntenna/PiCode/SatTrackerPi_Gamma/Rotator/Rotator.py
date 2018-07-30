@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 Created on Dec 18, 2017
 
@@ -5,37 +6,33 @@ Created on Dec 18, 2017
 '''
 from __future__ import division
 #from __future__ import builtins
-
+#from builtins import len
 
 import sys
 import os
 import time
-
-#from builtins import len
-
-
+import atexit
 
 # Import Local Libraries
 path_runtime = os.path.dirname(__file__)
 path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
-path_lib_servo = os.path.join(path_parent_platform, "Adafruit_Python_PCA9685/Adafruit_PCA9685/PCA9685.py")
+
+path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
 path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
+path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
 
-sys.path.insert(0, os.path.abspath(path_lib_servo))
+
 sys.path.insert(0, os.path.abspath(path_lib_stepper))
+sys.path.insert(0, os.path.abspath(path_lib_gpio))
+sys.path.insert(0, os.path.abspath(path_lib_adc))
 
-# Import the PCA9685 module.
-import Adafruit_PCA9685
-
-
-#!/usr/bin/python
-#import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Stepper
+# Import Stepper
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 
-import time
-import atexit
-
+# Import SPI library (for hardware SPI) and MCP3008 library.
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_MCP3008
 
 
 class Rotator(object):
@@ -44,6 +41,15 @@ class Rotator(object):
     _encoder_A = 0
     _stepperAzimuth = 0
     _stepperElevation = 0
+
+    _cabletension_azimuth_center = 701
+    _cabletension_azimuth_min = 552
+    _cabletension_azimuth_max = 778
+
+    # Hardware SPI configuration:
+    SPI_PORT   = 0
+    SPI_DEVICE = 0
+    _adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
     # this line was for the hobby servo motors
     # _pwm = Adafruit_PCA9685.PCA9685()
@@ -87,6 +93,8 @@ class Rotator(object):
         print str(self._encoder_A)
         print str(self._encoder_B)
 
+        self.recenter_azimuth();
+
         atexit.register(self.turnOffMotors)               
 
 
@@ -108,8 +116,20 @@ class Rotator(object):
         print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
 
-
+    def recenter_azimuth
+        try:
+            cabletension_current = mcp.read_adc(1)
  
+            while cabletension_current > _cabletension_azimuth_center:
+                self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)
+                
+            while cabletension_current < _cabletension_azimuth_center:
+                self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)
+                
+        except Exception as e:
+            self.handle_exception(e)
     
     def set_elevation(self, elevation):
         try:       
@@ -127,12 +147,12 @@ class Rotator(object):
             if self._elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving Elevation Upward by: " + str(nSteps) + "steps.")
-                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                 
             elif self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
-                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
@@ -166,14 +186,17 @@ class Rotator(object):
              
  
             if self.azimuth_increment > self._azimuth_current:
-                nSteps = self.calculate_azimuth_steps()
-                print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
-                self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)
+                if cabletension < _cabletension_azimuth_max:
+                    nSteps = self.calculate_azimuth_steps()
+                    print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                       
             elif self.azimuth_increment < self._azimuth_current:
-                nSteps = self.calculate_azimuth_steps()
-                print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
-                self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+                if cabletension > _cabletension_azimuth_min:
+                    nSteps = self.calculate_azimuth_steps()
+                    print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
                       
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
