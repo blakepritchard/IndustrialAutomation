@@ -68,13 +68,24 @@ class Rotator(object):
     Constructor
     '''
     def __init__(self):
-        self._encoder_A = Adafruit_MotorHAT()
+
+        # bottom hat is default address 0x60
+        self._encoder_A = Adafruit_MotorHAT(addr=0x60)
+        
+        # top hat has A0 jumper closed, so its address 0x61
+        self._encoder_B = Adafruit_MotorHAT(addr=0x61)
+
         self._stepperAzimuth = self._encoder_A.getStepper(200, 1)     # 200 steps/rev, motor port #1
-        self._stepperAzimuth.setSpeed(30)                             # 30 RPM
+        self._stepperAzimuth.setSpeed(10)                             # 10 RPM
 
         self._stepperElevation = self._encoder_A.getStepper(200, 2)   # 200 steps/rev, motor port #2
-        self._stepperElevation.setSpeed(30)                           # 30 RPM
+        self._stepperElevation.setSpeed(10)                           # 10 RPM
+
+        self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
+        self._stepperElevation.setSpeed(10)                           # 10 RPM
+
         print str(self._encoder_A)
+        print str(self._encoder_B)
 
         atexit.register(self.turnOffMotors)               
 
@@ -96,11 +107,22 @@ class Rotator(object):
     def get_polarity(self):
         print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
-    
+
+
+ 
     
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
+            
+            elevation_remainder = divmod(self._elevation_target, .25)
+            
+            #round down to nearest half degree
+            elevation_increment = self._elevation_target - elevation_remainder
+            
+            #round back up if remainder was closer to upper bound
+            if elevation_remainder > .125:
+                elevation_increment += .25
 
             if self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
@@ -115,7 +137,7 @@ class Rotator(object):
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
                       
-            self._elevation_current = float(elevation)
+            self._elevation_current = float(elevation_increment)
             
         except Exception as e:
             self.handle_exception(e)
@@ -132,14 +154,24 @@ class Rotator(object):
     
     def set_azimuth(self, azimuth):
         try:
+            #Find Nearest Half Degree Increment
             self._azimuth_target = float(azimuth)
+            azimuth_remainder = divmod(self._azimuth_target, .5)
+            
+            #round down to nearest half degree
+            azimuth_increment = self._azimuth_target - azimuth_remainder
+            
+            #round back up if remainder was closer to upper bound
+            if azimuth_remainder > .25:
+                azimuth_increment += .5
+             
  
-            if self._azimuth_target > self._azimuth_current:
+            if self.azimuth_increment > self._azimuth_current:
                 nSteps = self.calculate_azimuth_steps()
                 print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
                 self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                       
-            elif self._azimuth_target < self._azimuth_current:
+            elif self.azimuth_increment < self._azimuth_current:
                 nSteps = self.calculate_azimuth_steps()
                 print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
                 self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
@@ -147,7 +179,7 @@ class Rotator(object):
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
 
-            self._azimuth_current = float(azimuth)
+            self._azimuth_current = float(azimuth_increment)
 
         except Exception as e:
             self.handle_exception(e)
