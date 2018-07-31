@@ -144,12 +144,13 @@ class Rotator(object):
             if elevation_remainder > .125:
                 elevation_increment += .25
 
-            if self._elevation_target > self._elevation_current:
+            if self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving Elevation Upward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+
                 
-            elif self._elevation_target < self._elevation_current:
+            elif self._elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
@@ -165,6 +166,7 @@ class Rotator(object):
     def calculate_elevation_steps(self):
         try:
             degrees = float(self._elevation_target) - float(self._elevation_current)
+            print("Elevation Degrees:" + str(degrees))
             steps = abs(4 * int(degrees))
             return steps
         except Exception as e:
