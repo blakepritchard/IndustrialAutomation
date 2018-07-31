@@ -43,8 +43,8 @@ class Rotator(object):
     _stepperElevation = 0
 
     _cabletension_azimuth_center = 701
-    _cabletension_azimuth_min = 552
-    _cabletension_azimuth_max = 778
+    _cabletension_azimuth_min = 640
+    _cabletension_azimuth_max = 745
 
     # Hardware SPI configuration:
     SPI_PORT   = 0
@@ -119,14 +119,16 @@ class Rotator(object):
     def recenter_azimuth
         try:
             cabletension_current = mcp.read_adc(1)
+
+             while cabletension_current < _cabletension_azimuth_center && cabletension_current < cabletension_azimuth_max && cabletension_current > cabletension_azimuth_min:
+                self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)           
  
-            while cabletension_current > _cabletension_azimuth_center:
+            while cabletension_current > _cabletension_azimuth_center && cabletension_current < cabletension_azimuth_max && cabletension_current > cabletension_azimuth_min:
                 self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                 cabletension_current = mcp.read_adc(1)
                 
-            while cabletension_current < _cabletension_azimuth_center:
-                self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                cabletension_current = mcp.read_adc(1)
+
                 
         except Exception as e:
             self.handle_exception(e)
