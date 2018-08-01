@@ -119,7 +119,7 @@ class Rotator(object):
     def recenter_azimuth(self):
         try:
             print("Recentering Azimuth")
-            cabletension_current = self._adc.read_adc(1)
+            cabletension_current = self._adc.read_adc(0)
 
             print("Cable Tension = " + str(cabletension_current))
 
@@ -127,7 +127,7 @@ class Rotator(object):
             while ((cabletension_current < self._cabletension_azimuth_center)
                 and (cabletension_current < self._cabletension_azimuth_max)
                 and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps++
+                    nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)           
 
@@ -135,7 +135,7 @@ class Rotator(object):
             while ((cabletension_current > self._cabletension_azimuth_center)
                 and (cabletension_current < self._cabletension_azimuth_max)
                 and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps++
+                    nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)
 
@@ -204,7 +204,7 @@ class Rotator(object):
              
  
             if self.azimuth_increment > self._azimuth_current:
-                cabletension_current = self._adc.read_adc(1)
+                cabletension_current = self._adc.read_adc(0)
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
@@ -213,7 +213,7 @@ class Rotator(object):
                     recenter_azimuth()
                 
             elif self.azimuth_increment < self._azimuth_current:
-                cabletension_current = self._adc.read_adc(1)
+                cabletension_current = self._adc.read_adc(0)
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
