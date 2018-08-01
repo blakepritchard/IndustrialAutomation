@@ -131,11 +131,11 @@ class Rotator(object):
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(0)           
 
-            nSteps = 0;
+            
             while ((cabletension_current > self._cabletension_azimuth_center)
                 and (cabletension_current < self._cabletension_azimuth_max)
                 and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps+=1
+                    nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(0)
 
@@ -150,23 +150,23 @@ class Rotator(object):
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
-            
-            elevation_remainder = divmod(self._elevation_target, .25)
+            elevation_tuple = divmod(self._elevation_target, .25)
+            elevation_remainder = float(elevation_tuple[1])
             
             #round down to nearest half degree
-            elevation_increment = self._elevation_target - elevation_remainder
+            elevation_increment = float(self._elevation_target - elevation_remainder)
             
             #round back up if remainder was closer to upper bound
             if elevation_remainder > .125:
                 elevation_increment += .25
 
-            if self._elevation_target < self._elevation_current:
+            if elevation_increment > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving Elevation Upward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
 
                 
-            elif self._elevation_target > self._elevation_current:
+            elif elevation_increment < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.MICROSTEP)
@@ -193,17 +193,18 @@ class Rotator(object):
         try:
             #Find Nearest Half Degree Increment
             self._azimuth_target = float(azimuth)
-            azimuth_remainder = divmod(self._azimuth_target, .5)
+            azimuth_tuple = divmod(self._azimuth_target, .5)
+            azimuth_remainder = float(azimuth_tuple[1])
             
             #round down to nearest half degree
-            azimuth_increment = self._azimuth_target - azimuth_remainder
+            azimuth_increment = float(self._azimuth_target - azimuth_remainder)
             
             #round back up if remainder was closer to upper bound
             if azimuth_remainder > .25:
                 azimuth_increment += .5
              
  
-            if self.azimuth_increment > self._azimuth_current:
+            if azimuth_increment > self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
@@ -212,7 +213,7 @@ class Rotator(object):
                 else:
                     recenter_azimuth()
                 
-            elif self.azimuth_increment < self._azimuth_current:
+            elif azimuth_increment < self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
