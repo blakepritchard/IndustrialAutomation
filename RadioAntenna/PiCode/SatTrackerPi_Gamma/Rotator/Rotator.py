@@ -118,19 +118,19 @@ class Rotator(object):
 
     def recenter_azimuth(self):
         try:
-            cabletension_current = _adc.read_adc(1)
+            cabletension_current = self._adc.read_adc(1)
 
             while ((cabletension_current < _cabletension_azimuth_center)
                 and (cabletension_current < _cabletension_azimuth_max)
                 and (cabletension_current > _cabletension_azimuth_min)):
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
-                    cabletension_current = _adc.read_adc(1)           
+                    cabletension_current = self._adc.read_adc(1)           
  
             while ((cabletension_current > _cabletension_azimuth_center)
                 and (cabletension_current < _cabletension_azimuth_max)
                 and (cabletension_current > _cabletension_azimuth_min)):
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
-                    cabletension_current = mcp.read_adc(1)
+                    cabletension_current = self._adc.read_adc(1)
 
             self._azimuth_current = 0    
 
@@ -195,7 +195,7 @@ class Rotator(object):
              
  
             if self.azimuth_increment > self._azimuth_current:
-                cabletension_current = mcp.read_adc(1)
+                cabletension_current = self._adc.read_adc(1)
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
@@ -204,6 +204,7 @@ class Rotator(object):
                     recenter_azimuth()
                 
             elif self.azimuth_increment < self._azimuth_current:
+                cabletension_current = self._adc.read_adc(1)
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
