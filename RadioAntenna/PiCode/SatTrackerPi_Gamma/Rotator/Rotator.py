@@ -93,7 +93,7 @@ class Rotator(object):
         print str(self._encoder_A)
         print str(self._encoder_B)
 
-        self.recenter_azimuth();
+        self.recenter_azimuth()
 
         atexit.register(self.turnOffMotors)               
 
@@ -118,20 +118,29 @@ class Rotator(object):
 
     def recenter_azimuth(self):
         try:
+            print("Recentering Azimuth")
             cabletension_current = self._adc.read_adc(1)
 
+            print("Cable Tension = " + str(cabletension_current))
+
+            nSteps = 0;
             while ((cabletension_current < self._cabletension_azimuth_center)
                 and (cabletension_current < self._cabletension_azimuth_max)
                 and (cabletension_current > self._cabletension_azimuth_min)):
+                    nSteps++
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)           
- 
+
+            nSteps = 0;
             while ((cabletension_current > self._cabletension_azimuth_center)
                 and (cabletension_current < self._cabletension_azimuth_max)
                 and (cabletension_current > self._cabletension_azimuth_min)):
+                    nSteps++
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)
 
+            print("Steps: " + str(nSteps))
+                  
             self._azimuth_current = 0    
 
         except Exception as e:
