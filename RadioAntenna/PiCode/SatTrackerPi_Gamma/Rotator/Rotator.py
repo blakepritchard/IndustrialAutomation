@@ -118,18 +118,18 @@ class Rotator(object):
 
     def recenter_azimuth(self):
         try:
-            cabletension_current = mcp.read_adc(1)
+            cabletension_current = _adc.read_adc(1)
 
             while ((cabletension_current < _cabletension_azimuth_center)
                 and (cabletension_current < _cabletension_azimuth_max)
                 and (cabletension_current > _cabletension_azimuth_min)):
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    cabletension_current = mcp.read_adc(1)           
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
+                    cabletension_current = _adc.read_adc(1)           
  
             while ((cabletension_current > _cabletension_azimuth_center)
                 and (cabletension_current < _cabletension_azimuth_max)
                 and (cabletension_current > _cabletension_azimuth_min)):
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = mcp.read_adc(1)
 
             self._azimuth_current = 0    
@@ -154,13 +154,13 @@ class Rotator(object):
             if self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving Elevation Upward by: " + str(nSteps) + "steps.")
-                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
 
                 
             elif self._elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
-                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.MICROSTEP)
                 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
@@ -199,7 +199,7 @@ class Rotator(object):
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
-                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
                 else:
                     recenter_azimuth()
                 
@@ -207,7 +207,7 @@ class Rotator(object):
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
-                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
                 else:
                     recenter_azimuth()
             else:
