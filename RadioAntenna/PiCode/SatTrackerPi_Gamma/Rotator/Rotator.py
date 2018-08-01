@@ -120,15 +120,15 @@ class Rotator(object):
         try:
             cabletension_current = self._adc.read_adc(1)
 
-            while ((cabletension_current < _cabletension_azimuth_center)
-                and (cabletension_current < _cabletension_azimuth_max)
-                and (cabletension_current > _cabletension_azimuth_min)):
+            while ((cabletension_current < self._cabletension_azimuth_center)
+                and (cabletension_current < self._cabletension_azimuth_max)
+                and (cabletension_current > self._cabletension_azimuth_min)):
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)           
  
-            while ((cabletension_current > _cabletension_azimuth_center)
-                and (cabletension_current < _cabletension_azimuth_max)
-                and (cabletension_current > _cabletension_azimuth_min)):
+            while ((cabletension_current > self._cabletension_azimuth_center)
+                and (cabletension_current < self._cabletension_azimuth_max)
+                and (cabletension_current > self._cabletension_azimuth_min)):
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
                     cabletension_current = self._adc.read_adc(1)
 
