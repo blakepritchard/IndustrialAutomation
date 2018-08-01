@@ -129,7 +129,7 @@ class Rotator(object):
                 and (cabletension_current > self._cabletension_azimuth_min)):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
-                    cabletension_current = self._adc.read_adc(1)           
+                    cabletension_current = self._adc.read_adc(0)           
 
             nSteps = 0;
             while ((cabletension_current > self._cabletension_azimuth_center)
@@ -137,7 +137,7 @@ class Rotator(object):
                 and (cabletension_current > self._cabletension_azimuth_min)):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.MICROSTEP)
-                    cabletension_current = self._adc.read_adc(1)
+                    cabletension_current = self._adc.read_adc(0)
 
             print("Steps: " + str(nSteps))
                   
