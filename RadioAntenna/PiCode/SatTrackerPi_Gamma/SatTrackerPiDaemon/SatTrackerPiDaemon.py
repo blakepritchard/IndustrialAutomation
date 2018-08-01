@@ -33,7 +33,7 @@ path_lib_rotor = os.path.join(path_parent, "Rotator")
 
 sys.path.insert(0, os.path.abspath(path_parent))
 sys.path.insert(0, os.path.abspath(path_lib_rotor))
-print(sys.path)
+# print(sys.path)
 
 import Rotator
 device_rotator = Rotator.Rotator()
