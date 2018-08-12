@@ -105,8 +105,6 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperElevation.setSpeed(10)                           # 10 RPM
 
-        if not self._orientation.begin():
-            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
         self.test_orientation_sensor()
 
         print str(self._encoder_A)
@@ -137,8 +135,33 @@ class Rotator(object):
         return self._polarity_current
 
     def test_orientation_sensor(self):
+        
+        bIsRunning = false
+
+        if not bIsRunning:
+            nRetry = 6
+            nSleepTime = 2
+            while ((not bIsRunning) and (nRetry>0)):
+                try:
+                    bIsRunning = self._orientation.begin()
+                except RunTimeError as error:
+                    print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry)
+                    print(type(error))    # the exception instance
+                    print(error.args)     # arguments stored in .args
+                    sleep(nSleepTime)
+                          
+                    nRetry = nRetry - 1
+                    nSleepTime = nSleepTime*2
+                except:
+                    print("Unexpected error:", sys.exc_info()[0])
+                    raise
+                          
+         if not bIsRunning:
+            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
+        
+        
         # Print system status and self test result.
-        status, self_test, error = bno.get_system_status()
+        status, self_test, error = self._orientation.get_system_status()
         print('System status: {0}'.format(status))
         print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
         # Print out an error if system status is in error mode.
