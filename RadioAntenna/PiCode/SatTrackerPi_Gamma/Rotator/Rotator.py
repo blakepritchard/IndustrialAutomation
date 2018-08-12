@@ -57,6 +57,8 @@ class Rotator(object):
     # Hardware SPI configuration:
     SPI_PORT   = 0
     SPI_DEVICE = 0
+
+    _bOrientationRunning = false
     
 
     _azimuth_current = 0
@@ -136,14 +138,14 @@ class Rotator(object):
 
     def test_orientation_sensor(self):
         
-        bIsRunning = false
+        self._isOrientationRunning = false
 
-        if not bIsRunning:
+        if not self._isOrientationRunning:
             nRetry = 6
             nSleepTime = 2
             while ((not bIsRunning) and (nRetry>0)):
                 try:
-                    bIsRunning = self._orientation.begin()
+                    self._isOrientationRunning = self._orientation.begin()
                 except RunTimeError as error:
                     print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
                     print(type(error))    # the exception instance
@@ -156,7 +158,7 @@ class Rotator(object):
                     print("Unexpected error:", sys.exc_info()[0])
                     raise
                           
-         if not bIsRunning:
+        if (not self._isOrientationRunning):
             raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
         
         
