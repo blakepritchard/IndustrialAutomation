@@ -148,7 +148,7 @@ class Rotator(object):
                     self._isOrientationRunning = self._orientation.begin()  #Start BNO055 Orientation Sensor
                     
                 except RuntimeError as error:
-                    print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
+                    print("BNO055 Chip Not Initialized. Will Attempt in: " + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
                     print(type(error))    # the exception instance
                     print(error.args)     # arguments stored in .args
                     time.sleep(nSleepTime)
