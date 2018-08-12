@@ -88,7 +88,7 @@ class Rotator(object):
         self._encoder_B = Adafruit_MotorHAT(addr=0x61)
 
         # Analog Digital Converter
-        self._adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+        self._adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(self.SPI_PORT, self.SPI_DEVICE))
 
         #Ultimate Orientation Sensor
         self._orientation = BNO055.BNO055(serial_port='/dev/serial0', rst=24)
@@ -143,8 +143,8 @@ class Rotator(object):
         print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
         # Print out an error if system status is in error mode.
         if status == 0x01:
-            print('System error: {0}'.format(error))
-            print('See datasheet section 4.3.59 for the meaning.')
+            print('Orientatin System error: {0}'.format(error))
+            print('See BNO055 datasheet section 4.3.59 for the meaning.')
 
         # Print BNO055 software revision and other diagnostic data.
         sw, bl, accel, mag, gyro = bno.get_revision()
