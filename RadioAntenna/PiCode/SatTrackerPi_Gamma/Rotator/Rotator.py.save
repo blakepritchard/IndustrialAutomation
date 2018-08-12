@@ -21,13 +21,11 @@ path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pard
 path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
 path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
 path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
-path_lib_orientation = os.path.join(path_parent_platform, "Adafruit_Python_BNO055/dafruit_BNO055/BNO055.py")
 
 
 sys.path.insert(0, os.path.abspath(path_lib_stepper))
 sys.path.insert(0, os.path.abspath(path_lib_gpio))
 sys.path.insert(0, os.path.abspath(path_lib_adc))
-sys.path.insert(0, os.path.abspath(path_lib_orientation))
 
 # Import Stepper
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
@@ -36,27 +34,25 @@ from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Step
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 
-from Adafruit_BNO055 import BNO055
-
 
 class Rotator(object):
 
-    
+    # create a default object, no changes to I2C address or frequency
     _encoder_A = 0
-    _encoder_B = 0
-    _adc = 0;
-    _orientation = 0
     _stepperAzimuth = 0
     _stepperElevation = 0
 
     _cabletension_azimuth_center = 701
-    _cabletension_azimuth_min = 640
-    _cabletension_azimuth_max = 745
+    _cabletension_azimuth_min = 552
+    _cabletension_azimuth_max = 778
 
     # Hardware SPI configuration:
     SPI_PORT   = 0
     SPI_DEVICE = 0
-    
+    _adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+
+    # this line was for the hobby servo motors
+    # _pwm = Adafruit_PCA9685.PCA9685()
 
     _azimuth_current = 0
     _elevation_current = 0
@@ -80,20 +76,10 @@ class Rotator(object):
     def __init__(self):
 
         # bottom hat is default address 0x60
-        # create a default object, no changes to I2C address or frequency
         self._encoder_A = Adafruit_MotorHAT(addr=0x60)
         
         # top hat has A0 jumper closed, so its address 0x61
         self._encoder_B = Adafruit_MotorHAT(addr=0x61)
-
-        # Analog Digital Converter
-        self._adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
-
-        #Ultimate Orientation Sensor
-        self._orientation = BNO055.BNO055(serial_port='/dev/serial0', rst=24)
-
-        if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
-        logging.basicConfig(level=logging.DEBUG)
 
         self._stepperAzimuth = self._encoder_A.getStepper(200, 1)     # 200 steps/rev, motor port #1
         self._stepperAzimuth.setSpeed(10)                             # 10 RPM
@@ -104,15 +90,10 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperElevation.setSpeed(10)                           # 10 RPM
 
-        if not self._orientation.begin():
-            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
-        self.test_orientation_sensor()
-
         print str(self._encoder_A)
         print str(self._encoder_B)
 
-        self.recenter_azimuth()
-        self.recenter_elevation()
+        self.recenter_azimuth();
 
         atexit.register(self.turnOffMotors)               
 
@@ -135,88 +116,52 @@ class Rotator(object):
         print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
 
-    def test_orientation_sensor(self):
-        # Print system status and self test result.
-        status, self_test, error = bno.get_system_status()
-        print('System status: {0}'.format(status))
-        print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
-        # Print out an error if system status is in error mode.
-        if status == 0x01:
-            print('System error: {0}'.format(error))
-            print('See datasheet section 4.3.59 for the meaning.')
-
-        # Print BNO055 software revision and other diagnostic data.
-        sw, bl, accel, mag, gyro = bno.get_revision()
-        print('Software version:   {0}'.format(sw))
-        print('Bootloader version: {0}'.format(bl))
-        print('Accelerometer ID:   0x{0:02X}'.format(accel))
-        print('Magnetometer ID:    0x{0:02X}'.format(mag))
-        print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))   
-
-    def recenter_elevation(self):
-        heading, roll, pitch = self._orientation.read_euler()
-        while(pitch > 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-            heading, roll, pitch = self._orientation.read_euler()
-        while(pitch < 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-            heading, roll, pitch = self._orientation.read_euler()
-
-
-    def recenter_azimuth(self):
+    def recenter_azimuth
         try:
-            print("Recentering Azimuth")
-            cabletension_current = self._adc.read_adc(0)
-
-            print("Cable Tension = " + str(cabletension_current))
-
-            nSteps = 0;
-            while ((cabletension_current < self._cabletension_azimuth_center)
-                and (cabletension_current < self._cabletension_azimuth_max)
-                and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps+=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    cabletension_current = self._adc.read_adc(0)           
-
-            
-            while ((cabletension_current > self._cabletension_azimuth_center)
-                and (cabletension_current < self._cabletension_azimuth_max)
-                and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps-=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                    cabletension_current = self._adc.read_adc(0)
-
-            print("Steps: " + str(nSteps))
-                  
-            self._azimuth_current = 0    
-
+            cabletension_current = mcp.read_adc(1)
+ 
+            while cabletension_current > _cabletension_azimuth_center:
+                self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)
+                
+            while cabletension_current < _cabletension_azimuth_center:
+                self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                cabletension_current = mcp.read_adc(1)
+                
         except Exception as e:
             self.handle_exception(e)
-
     
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
-            elevation_tuple = divmod(self._elevation_target, .25)
-            elevation_remainder = float(elevation_tuple[1])
+            
+            elevation_remainder = divmod(self._elevation_target, .25)
             
             #round down to nearest half degree
-            elevation_increment = float(self._elevation_target - elevation_remainder)
+            elevation_increment = self._elevation_target - elevation_remainder
             
             #round back up if remainder was closer to upper bound
             if elevation_remainder > .125:
                 elevation_increment += .25
 
-            if elevation_increment > self._elevation_current:
+            if self._elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
+<<<<<<< HEAD
                 print("Moving Elevation Upward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-
+=======
+                print("Moving Elevation Downwar by: " + str(nSteps) + "steps.")
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+>>>>>>> c9319d978552c891cbd0f4544b3f19ddacd73383
                 
-            elif elevation_increment < self._elevation_current:
+            elif self._elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Moving ElevationAzimuth Downward by: " + str(nSteps) + "steps.")
                 self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+=======
+                print("Moving ElevationAzimuth Upward by: " + str(nSteps) + "steps.")
+                self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+>>>>>>> c9319d978552c891cbd0f4544b3f19ddacd73383
                 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
@@ -240,34 +185,29 @@ class Rotator(object):
         try:
             #Find Nearest Half Degree Increment
             self._azimuth_target = float(azimuth)
-            azimuth_tuple = divmod(self._azimuth_target, .5)
-            azimuth_remainder = float(azimuth_tuple[1])
+            azimuth_remainder = divmod(self._azimuth_target, .5)
             
             #round down to nearest half degree
-            azimuth_increment = float(self._azimuth_target - azimuth_remainder)
+            azimuth_increment = self._azimuth_target - azimuth_remainder
             
             #round back up if remainder was closer to upper bound
             if azimuth_remainder > .25:
                 azimuth_increment += .5
              
  
-            if azimuth_increment > self._azimuth_current:
-                cabletension_current = self._adc.read_adc(0)
+            if self.azimuth_increment > self._azimuth_current:
+                cabletension_current = mcp.read_adc(1)
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
                     self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                else:
-                    recenter_azimuth()
-                
-            elif azimuth_increment < self._azimuth_current:
-                cabletension_current = self._adc.read_adc(0)
+                      
+            elif self.azimuth_increment < self._azimuth_current:
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
                     print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
                     self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
-                else:
-                    recenter_azimuth()
+                      
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
 
