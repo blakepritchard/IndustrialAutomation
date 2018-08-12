@@ -143,9 +143,10 @@ class Rotator(object):
         if not self._isOrientationRunning:
             nRetry = 6
             nSleepTime = 2
-            while ((not bIsRunning) and (nRetry>0)):
+            while ((not self._isOrientationRunning) and (nRetry>0)):
                 try:
-                    self._isOrientationRunning = self._orientation.begin()
+                    self._isOrientationRunning = self._orientation.begin()  #Start BNO055 Orientation Sensor
+                    
                 except RunTimeError as error:
                     print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
                     print(type(error))    # the exception instance
