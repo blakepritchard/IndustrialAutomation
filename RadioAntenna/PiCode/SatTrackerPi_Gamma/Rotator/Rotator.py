@@ -107,7 +107,7 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperElevation.setSpeed(10)                           # 10 RPM
 
-        self.test_orientation_sensor()
+        self.start_orientation_sensor()
 
         print str(self._encoder_A)
         print str(self._encoder_B)
@@ -136,9 +136,9 @@ class Rotator(object):
         print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
 
-    def test_orientation_sensor(self):
+    def start_orientation_sensor(self):
         
-        self._isOrientationRunning = false
+        self._isOrientationRunning = False
 
         if not self._isOrientationRunning:
             nRetry = 6
