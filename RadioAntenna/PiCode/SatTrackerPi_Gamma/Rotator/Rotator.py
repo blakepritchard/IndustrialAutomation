@@ -58,7 +58,7 @@ class Rotator(object):
     SPI_PORT   = 0
     SPI_DEVICE = 0
 
-    _bOrientationRunning = false
+    _bOrientationRunning = False
     
 
     _azimuth_current = 0
