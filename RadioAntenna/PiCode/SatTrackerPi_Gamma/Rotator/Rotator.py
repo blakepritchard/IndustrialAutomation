@@ -173,7 +173,7 @@ class Rotator(object):
             print('See BNO055 datasheet section 4.3.59 for the meaning.')
 
         # Print BNO055 software revision and other diagnostic data.
-        sw, bl, accel, mag, gyro = bno.get_revision()
+        sw, bl, accel, mag, gyro = self._orientation.get_revision()
         print('Software version:   {0}'.format(sw))
         print('Bootloader version: {0}'.format(bl))
         print('Accelerometer ID:   0x{0:02X}'.format(accel))
