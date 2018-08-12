@@ -145,7 +145,7 @@ class Rotator(object):
                 try:
                     bIsRunning = self._orientation.begin()
                 except RunTimeError as error:
-                    print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry)
+                    print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
                     print(type(error))    # the exception instance
                     print(error.args)     # arguments stored in .args
                     sleep(nSleepTime)
