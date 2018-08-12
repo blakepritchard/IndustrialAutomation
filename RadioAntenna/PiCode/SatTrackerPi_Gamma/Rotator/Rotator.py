@@ -12,6 +12,7 @@ import sys
 import os
 import time
 import atexit
+import logging
 
 # Import Local Libraries
 path_runtime = os.path.dirname(__file__)
@@ -93,7 +94,7 @@ class Rotator(object):
         self._orientation = BNO055.BNO055(serial_port='/dev/serial0', rst=24)
 
         if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
-        logging.basicConfig(level=logging.DEBUG)
+            logging.basicConfig(level=logging.DEBUG)
 
         self._stepperAzimuth = self._encoder_A.getStepper(200, 1)     # 200 steps/rev, motor port #1
         self._stepperAzimuth.setSpeed(10)                             # 10 RPM
