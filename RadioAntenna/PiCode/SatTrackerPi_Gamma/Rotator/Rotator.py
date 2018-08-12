@@ -182,12 +182,14 @@ class Rotator(object):
 
     def recenter_elevation(self):
         heading, roll, pitch = self._orientation.read_euler()
-        while(pitch < 0):
+        while(roll > 0):
             self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
             heading, roll, pitch = self._orientation.read_euler()
-        while(pitch > 0):
+            print("Elevation: " + str(roll))
+        while(roll < 0):
             self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
             heading, roll, pitch = self._orientation.read_euler()
+            print("Elevation: " + str(roll))
 
 
     def recenter_azimuth(self):
