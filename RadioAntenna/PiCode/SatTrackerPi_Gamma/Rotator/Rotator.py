@@ -151,7 +151,7 @@ class Rotator(object):
                     print("BNO055 Chip Not Initialized. Will Attempt in" + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
                     print(type(error))    # the exception instance
                     print(error.args)     # arguments stored in .args
-                    sleep(nSleepTime)
+                    time.sleep(nSleepTime)
                           
                     nRetry = nRetry - 1
                     nSleepTime = nSleepTime*2
