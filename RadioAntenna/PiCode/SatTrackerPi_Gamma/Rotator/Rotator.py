@@ -245,7 +245,7 @@ class Rotator(object):
                     steps_actual = 0
                     azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                     while(elevation_target > elevation_actual):
-                        self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                        self._stepperElevation.0step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                         print("Elevation Actual: " + str(elevation_actual))
                         steps_actual = steps_actual +1
@@ -307,7 +307,7 @@ class Rotator(object):
             #Move Clockwise
             if azimuth_target > self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
-                if cabletension < _cabletension_azimuth_max:
+                if cabletension_current < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
 
