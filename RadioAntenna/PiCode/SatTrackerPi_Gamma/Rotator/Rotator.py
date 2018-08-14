@@ -315,12 +315,20 @@ class Rotator(object):
                     if(self._isOrientationRunning):
                         steps_actual = 0
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+
+                        #this is a hack because I mounted the chip sideways
+                        azimuth_actual = azimuth_actual-90
+
                         while(azimuth_target > azimuth_actual):
                             self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+
+                            #this is a hack because I mounted the chip sideways
+                            azimuth_actual = azimuth_actual-90
+
                             print("Azimuth Actual: " + str(elevation_actual))
                             steps_actual = steps_actual +1
-                        print(Actual Azimuth Steps Forward: "+ str(steps_actual))
+                        print("Actual Azimuth Steps Forward: "+ str(steps_actual))
 
                     #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
                     else:
@@ -341,9 +349,17 @@ class Rotator(object):
                     if(self._isOrientationRunning):
                         steps_actual = 0
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+
+                        #this is a hack because I mounted the chip sideways
+                        azimuth_actual = azimuth_actual-90
+                              
                         while(azimuth_target < azimuth_actual):
                             self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+
+                            #this is a hack because I mounted the chip sideways
+                            azimuth_actual = azimuth_actual-90
+                              
                             print("Azimuth Actual: " + str(elevation_actual))
                             steps_actual = steps_actual +1
                         print("Actual Azimuth Steps Backward: "+ str(steps_actual))
