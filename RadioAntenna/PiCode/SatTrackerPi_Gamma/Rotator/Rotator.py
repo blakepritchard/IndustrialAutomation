@@ -245,7 +245,7 @@ class Rotator(object):
                     steps_actual = 0
                     azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                     while(elevation_target > elevation_actual):
-                        self._stepperElevation.0step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                        self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                         print("Elevation Actual: " + str(elevation_actual))
                         steps_actual = steps_actual +1
