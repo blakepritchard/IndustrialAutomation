@@ -289,6 +289,14 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
+    def get_orientation_azimuth(self):
+        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+
+        #this is a hack because I mounted the chip sideways
+        azimuth_actual = azimuth_actual-90
+
+        return azimuth_actual
+    
     
     def set_azimuth(self, azimuth):
         try:
@@ -314,17 +322,11 @@ class Rotator(object):
                     #Use Magnetic Compass on BNO055
                     if(self._isOrientationRunning):
                         steps_actual = 0
-                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-
-                        #this is a hack because I mounted the chip sideways
-                        azimuth_actual = azimuth_actual-90
+                        azimuth_actual = self.get_orientation_azimuth()
 
                         while(azimuth_target > azimuth_actual):
-                            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                            azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-
-                            #this is a hack because I mounted the chip sideways
-                            azimuth_actual = azimuth_actual-90
+                            self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                            azimuth_actual = self.get_orientation_azimuth()
 
                             print("Azimuth Actual: " + str(elevation_actual))
                             steps_actual = steps_actual +1
@@ -348,17 +350,11 @@ class Rotator(object):
                     #Use Magnetic Compass on BNO055
                     if(self._isOrientationRunning):
                         steps_actual = 0
-                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-
-                        #this is a hack because I mounted the chip sideways
-                        azimuth_actual = azimuth_actual-90
+                        azimuth_actual = self.get_orientation_azimuth()
                               
                         while(azimuth_target < azimuth_actual):
-                            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                            azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-
-                            #this is a hack because I mounted the chip sideways
-                            azimuth_actual = azimuth_actual-90
+                            self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                            azimuth_actual = self.get_orientation_azimuth()
                               
                             print("Azimuth Actual: " + str(elevation_actual))
                             steps_actual = steps_actual +1
