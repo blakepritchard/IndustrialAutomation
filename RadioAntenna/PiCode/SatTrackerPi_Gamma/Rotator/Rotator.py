@@ -307,7 +307,7 @@ class Rotator(object):
             #Move Clockwise
             if azimuth_target > self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
-                if cabletension_current < _cabletension_azimuth_max:
+                if cabletension_current < self._cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
                     print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
 
@@ -340,7 +340,7 @@ class Rotator(object):
             #Move Counter-Clockwise    
             elif azimuth_target < self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
-                if cabletension > _cabletension_azimuth_min:
+                if cabletension_current > self._cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
                     print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Backward by Estimated: " + str(nSteps) + "steps.")
 
