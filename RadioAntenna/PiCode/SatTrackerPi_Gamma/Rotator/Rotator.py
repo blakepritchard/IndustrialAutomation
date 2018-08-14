@@ -230,44 +230,44 @@ class Rotator(object):
             elevation_remainder = float(elevation_tuple[1])
             
             #round down to nearest half degree
-            elevation_increment = float(self._elevation_target - elevation_remainder)
+            elevation_target = float(self._elevation_target - elevation_remainder)
             
             #round back up if remainder was closer to upper bound
             if elevation_remainder > .125:
-                elevation_increment += .25
+                elevation_target += .25
 
             #Move Up
-            if elevation_increment > self._elevation_current:
+            if elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
-                print("Moving Elevation Upward by Estimated: " + str(nSteps) + " steps.")
+                print("Elevation Target: "+str(elevation_target)+"; Moving Elevation Upward by Estimated: " + str(nSteps) + " steps.")
                 
                 if(self._isOrientationRunning):
                     steps_actual = 0
                     azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                    while(elevation_increment > elevation_actual):
+                    while(elevation_target > elevation_actual):
                         self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                         print("Elevation Actual: " + str(elevation_actual))
                         steps_actual = steps_actual +1
-                    print("Actual Steps: "+ str(steps_actual))
+                    print("Actual Elevation Steps: "+ str(steps_actual))
                 else:
                     self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
 
 
             #Move Down    
-            elif elevation_increment < self._elevation_current:
+            elif elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
-                print("Moving Elevation Downward by Estimated: " + str(nSteps) + "steps.")
+                print("Elevation Target: "+str(elevation_target)+"; Moving Elevation Downward by Estimated: " + str(nSteps) + "steps.")
 
                 if(self._isOrientationRunning):
                     steps_actual = 0
                     azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                    while(elevation_increment < elevation_actual):
+                    while(elevation_target < elevation_actual):
                         self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
                         print("Elevation Actual: " + str(elevation_actual))
                         steps_actual = steps_actual +1
-                    print("Actual Steps: "+ str(steps_actual))
+                    print("Actual Elevation Steps: "+ str(steps_actual))
 
                 else:
                     self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
@@ -275,7 +275,7 @@ class Rotator(object):
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
                       
-            self._elevation_current = float(elevation_increment)
+            self._elevation_current = float(elevation_target)
             
         except Exception as e:
             self.handle_exception(e)
@@ -298,34 +298,65 @@ class Rotator(object):
             azimuth_remainder = float(azimuth_tuple[1])
             
             #round down to nearest half degree
-            azimuth_increment = float(self._azimuth_target - azimuth_remainder)
+            azimuth_target = float(self._azimuth_target - azimuth_remainder)
             
             #round back up if remainder was closer to upper bound
             if azimuth_remainder > .25:
-                azimuth_increment += .5
+                azimuth_target += .5
              
- 
-            if azimuth_increment > self._azimuth_current:
+            #Move Clockwise
+            if azimuth_target > self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
                 if cabletension < _cabletension_azimuth_max:
                     nSteps = self.calculate_azimuth_steps()
-                    print("Moving Azimuth Forward by: " + str(nSteps) + "steps.")
-                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
+
+                    #Use Magnetic Compass on BNO055
+                    if(self._isOrientationRunning):
+                        steps_actual = 0
+                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+                        while(azimuth_target > azimuth_actual):
+                            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                            azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+                            print("Azimuth Actual: " + str(elevation_actual))
+                            steps_actual = steps_actual +1
+                        print(Actual Azimuth Steps Forward: "+ str(steps_actual))
+
+                    #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
+                    else:
+                        self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    
                 else:
                     recenter_azimuth()
-                
-            elif azimuth_increment < self._azimuth_current:
+
+            #Move Counter-Clockwise    
+            elif azimuth_target < self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
                 if cabletension > _cabletension_azimuth_min:
                     nSteps = self.calculate_azimuth_steps()
-                    print("Moving Azimuth Backward by: " + str(nSteps) + "steps.")
-                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+                    print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Backward by Estimated: " + str(nSteps) + "steps.")
+
+
+                    #Use Magnetic Compass on BNO055
+                    if(self._isOrientationRunning):
+                        steps_actual = 0
+                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+                        while(azimuth_target < azimuth_actual):
+                            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                            azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+                            print("Azimuth Actual: " + str(elevation_actual))
+                            steps_actual = steps_actual +1
+                        print("Actual Azimuth Steps Backward: "+ str(steps_actual))
+
+                    #BNO055 Orientation Sensor Not Running, so Step Backward By the Calculated Number of Steps
+                    else:
+                        self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
                 else:
                     recenter_azimuth()
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
 
-            self._azimuth_current = float(azimuth_increment)
+            self._azimuth_current = float(azimuth_target)
 
         except Exception as e:
             self.handle_exception(e)
