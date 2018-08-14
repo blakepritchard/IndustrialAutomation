@@ -274,8 +274,12 @@ class Rotator(object):
                 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
-                      
-            self._elevation_current = float(elevation_target)
+
+            # Set Elevation Value to Be Returned to GPredict
+            if(self._isOrientationRunning):
+                self._elevation_current = float(elevation_actual)
+            else:
+                self._elevation_current = float(elevation_target)
             
         except Exception as e:
             self.handle_exception(e)
@@ -328,7 +332,7 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
 
-                            print("Azimuth Actual: " + str(elevation_actual))
+                            print("Azimuth Actual: " + str(azimuth_actual))
                             steps_actual = steps_actual +1
                         print("Actual Azimuth Steps Forward: "+ str(steps_actual))
 
@@ -356,7 +360,7 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
                               
-                            print("Azimuth Actual: " + str(elevation_actual))
+                            print("Azimuth Actual: " + str(azimuth_actual))
                             steps_actual = steps_actual +1
                         print("Actual Azimuth Steps Backward: "+ str(steps_actual))
 
@@ -368,7 +372,12 @@ class Rotator(object):
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
 
-            self._azimuth_current = float(azimuth_target)
+            # Set Azimuth Value to Be Returned to GPredict
+            if(self._isOrientationRunning):
+                self._azimuth_current = float(azimuth_actual)
+            else:
+                self._azimuth_current = float(azimuth_target)
+            
 
         except Exception as e:
             self.handle_exception(e)
