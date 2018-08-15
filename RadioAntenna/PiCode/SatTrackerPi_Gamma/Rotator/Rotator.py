@@ -298,6 +298,8 @@ class Rotator(object):
 
         #this is a hack because I mounted the chip sideways
         azimuth_actual = azimuth_actual-90
+        if azimuth_actual <0:
+            azimuth_actual = 360-azimuth_actual
 
         return azimuth_actual
     
