@@ -118,6 +118,8 @@ class Rotator(object):
         atexit.register(self.turnOffMotors)               
 
 
+            
+
     def turnOffMotors(self):
         self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
@@ -180,6 +182,12 @@ class Rotator(object):
         print('Magnetometer ID:    0x{0:02X}'.format(mag))
         print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))   
 
+
+
+
+##########################################################################################
+# Elevation
+##########################################################################################    
     def recenter_elevation(self):
         heading, roll, pitch = self._orientation.read_euler()
         while(roll < 0):
@@ -192,37 +200,8 @@ class Rotator(object):
             print("Elevation: " + str(roll))
 
 
-    def recenter_azimuth(self):
-        try:
-            print("Recentering Azimuth")
-            cabletension_current = self._adc.read_adc(0)
 
-            print("Cable Tension = " + str(cabletension_current))
 
-            nSteps = 0;
-            while ((cabletension_current < self._cabletension_azimuth_center)
-                and (cabletension_current < self._cabletension_azimuth_max)
-                and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps+=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    cabletension_current = self._adc.read_adc(0)           
-
-            
-            while ((cabletension_current > self._cabletension_azimuth_center)
-                and (cabletension_current < self._cabletension_azimuth_max)
-                and (cabletension_current > self._cabletension_azimuth_min)):
-                    nSteps-=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                    cabletension_current = self._adc.read_adc(0)
-
-            print("Steps: " + str(nSteps))
-                  
-            self._azimuth_current = 0    
-
-        except Exception as e:
-            self.handle_exception(e)
-
-    
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
@@ -293,6 +272,9 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
+##########################################################################################
+#    Azimuth
+##########################################################################################
     def get_orientation_azimuth(self):
         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
 
@@ -302,8 +284,68 @@ class Rotator(object):
             azimuth_actual = 360-azimuth_actual
 
         return azimuth_actual
+
     
-    
+    def recenter_azimuth(self):
+        try:
+            print("Recentering Azimuth")
+            cabletension_current = self._adc.read_adc(0)
+
+            print("Cable Tension = " + str(cabletension_current))
+
+            nSteps = 0;
+            while ((cabletension_current < self._cabletension_azimuth_center)
+                and (cabletension_current < self._cabletension_azimuth_max)
+                and (cabletension_current > self._cabletension_azimuth_min)):
+                    nSteps+=1
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    cabletension_current = self._adc.read_adc(0)           
+
+            
+            while ((cabletension_current > self._cabletension_azimuth_center)
+                and (cabletension_current < self._cabletension_azimuth_max)
+                and (cabletension_current > self._cabletension_azimuth_min)):
+                    nSteps-=1
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    cabletension_current = self._adc.read_adc(0)
+
+            print("Steps: " + str(nSteps))
+                  
+            self._azimuth_current = 0    
+
+        except Exception as e:
+            self.handle_exception(e)
+
+            
+    def estimate_cable_tension_azimuth(self, target_azimuth):
+        cabletension_current = self._adc.read_adc(0)
+        azimuth_actual = self.get_orientation_azimuth()
+
+        target_is_safe = True
+        degrees_travel = 0
+        estimated_tension = 0
+        tension_ratio = 180 / (self._cabletension_azimuth_max - self._cabletension_azimuth_min)
+
+        if (target_azimuth > azimuth_actual):
+            degrees_travel = target_azimuth - azimuth_actual
+            estimated_tension = degrees_travel * tension_ratio
+            print "Predicted CableTension Value: {estimated_tension}"
+            if estimated_tension > self._cabletension_azimuth_max:
+                target_is_safe = False
+                print "Exceeds Maximum Value of {self._cabletension_azimuth_max}"
+        else:
+            degrees_travel = azimuth_actual - target_azimuth
+            estimated_tension = degrees_travel * tension_ratio
+            print "Predicted CableTension Value: {estimated_tension}"
+            if estimated_tension < self._cabletension_azimuth_min:
+                target_is_safe = False
+                print "Exceeds Mainimum Value of {self._cabletension_azimuth_min}"
+                
+        if target_is_safe = False:
+            print "Resetting Azimuth Back to Center"
+            self.recenter_azimuth()
+
+                
     def set_azimuth(self, azimuth):
         try:
             #Find Nearest Half Degree Increment
@@ -317,6 +359,9 @@ class Rotator(object):
             #round back up if remainder was closer to upper bound
             if azimuth_remainder > .25:
                 azimuth_target += .5
+
+            # check cable tension
+            self.estimate_cable_tension_azimuth(azimuth_target)
              
             #Move Clockwise
             if azimuth_target > self._azimuth_current:
@@ -334,7 +379,7 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
 
-                            print("Azimuth Actual: " + str(azimuth_actual))
+                            print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current))
                             steps_actual = steps_actual +1
                         print("Actual Azimuth Steps Forward: "+ str(steps_actual))
 
@@ -362,7 +407,7 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
                               
-                            print("Azimuth Actual: " + str(azimuth_actual))
+                            print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current))
                             steps_actual = steps_actual +1
                         print("Actual Azimuth Steps Backward: "+ str(steps_actual))
 
