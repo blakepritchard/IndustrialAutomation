@@ -420,11 +420,11 @@ class Rotator(object):
             else:
                 print("Holding Azimuth Steady at: "+ str(azimuth))
 
-        # Set Azimuth Value to Be Returned to GPredict
-        if(self._isOrientationRunning):
-            self._azimuth_current = float(azimuth_actual)
-        else:
-            self._azimuth_current = float(azimuth_target)
+            # Set Azimuth Value to Be Returned to GPredict
+            if(self._isOrientationRunning):
+                self._azimuth_current = float(azimuth_actual)
+            else:
+                self._azimuth_current = float(azimuth_target)
             
 
         except Exception as e:
