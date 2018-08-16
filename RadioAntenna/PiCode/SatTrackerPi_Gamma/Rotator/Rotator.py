@@ -340,10 +340,13 @@ class Rotator(object):
             if estimated_tension < self._cabletension_azimuth_min:
                 target_is_safe = False
                 print "Exceeds Mainimum Value of {self._cabletension_azimuth_min}"
-                
+        '''        
         if target_is_safe == False:
-            print "Resetting Azimuth Back to Center"
-            self.recenter_azimuth()
+           print "Resetting Azimuth Back to Center"
+           self.recenter_azimuth()
+        '''
+        return target_is_safe
+
 
                 
     def set_azimuth(self, azimuth):
@@ -361,7 +364,7 @@ class Rotator(object):
                 azimuth_target += .5
 
             # check cable tension
-            self.estimate_cable_tension_azimuth(azimuth_target)
+            target_azimuth_is_safe = self.estimate_cable_tension_azimuth(azimuth_target)
              
             #Move Clockwise
             if azimuth_target > self._azimuth_current:
@@ -369,6 +372,11 @@ class Rotator(object):
                 nSteps = self.calculate_azimuth_steps()
                 print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
 
+                motor_direction = Adafruit_MotorHAT.FORWARD
+                if not target_azimuth_is_safe:
+                    motor_direction = Adafruit_MotorHAT.BACKWARD
+                    print "Target Cable Tension Maxed Out, Reversing Direction to unwind cable"
+                        
                 #Use Magnetic Compass on BNO055
                 if(self._isOrientationRunning):
                     steps_actual = 0
@@ -376,7 +384,7 @@ class Rotator(object):
 
                     while(azimuth_target > azimuth_actual):
                         if cabletension_current < self._cabletension_azimuth_max:
-                            self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                            self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
                             cabletension_current = self._adc.read_adc(0)
                             print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current))
@@ -387,7 +395,7 @@ class Rotator(object):
 
                 #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
                 else:
-                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(nSteps, motor_direction,  Adafruit_MotorHAT.DOUBLE)
                     
                 
 
@@ -396,6 +404,11 @@ class Rotator(object):
                 cabletension_current = self._adc.read_adc(0)
                 nSteps = self.calculate_azimuth_steps()
                 print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Backward by Estimated: " + str(nSteps) + "steps.")
+
+                motor_direction = Adafruit_MotorHAT.BACKWARD
+                if not target_azimuth_is_safe:
+                    motor_direction = Adafruit_MotorHAT.FORWARD
+                    print "Target Cable Tension Maxed Out, Reversing Direction to unwind cable"
 
                 #Use Magnetic Compass on BNO055
                 if(self._isOrientationRunning):
@@ -498,12 +511,12 @@ class Rotator(object):
                     command_operation = rotator_command[:2]
                     command_parameters = rotator_command[2:]
                         
-                    if      "AZ" == command_operation:
-                                print("Recieved Azimuth Command: " + str(command_parameters))
-                                self.set_azimuth(command_parameters)
-                    elif    "EL" == command_operation:
-                                print("Recieved Elevation Command: " + str(command_parameters))      
-                                self.set_elevation(command_parameters)       
+                    if "AZ" == command_operation:
+                        print("Recieved Azimuth Command: " + str(command_parameters))
+                        self.set_azimuth(command_parameters)
+                    elif "EL" == command_operation:
+                        print("Recieved Elevation Command: " + str(command_parameters))      
+                        self.set_elevation(command_parameters)       
 
             return 0       
         
