@@ -385,9 +385,9 @@ class Rotator(object):
                             recenter_azimuth()
                     print("Actual Azimuth Steps Forward: "+ str(steps_actual))
 
-                    #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
-                    else:
-                        self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
+                else:
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                     
                 
 
