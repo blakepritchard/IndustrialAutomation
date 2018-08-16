@@ -156,7 +156,7 @@ class Rotator(object):
                     time.sleep(nSleepTime)
                           
                     nRetry = nRetry - 1
-                    nSleepTime = nSleepTime*2
+                    nSleepTime = nSleepTime*1.5
                 except:
                     print("Unexpected error:", sys.exc_info()[0])
                     raise
@@ -366,64 +366,65 @@ class Rotator(object):
             #Move Clockwise
             if azimuth_target > self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
-                if cabletension_current < self._cabletension_azimuth_max:
-                    nSteps = self.calculate_azimuth_steps()
-                    print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
+                nSteps = self.calculate_azimuth_steps()
+                print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Forward by Estimated: " + str(nSteps) + "steps.")
 
-                    #Use Magnetic Compass on BNO055
-                    if(self._isOrientationRunning):
-                        steps_actual = 0
-                        azimuth_actual = self.get_orientation_azimuth()
+                #Use Magnetic Compass on BNO055
+                if(self._isOrientationRunning):
+                    steps_actual = 0
+                    azimuth_actual = self.get_orientation_azimuth()
 
-                        while(azimuth_target > azimuth_actual):
+                    while(azimuth_target > azimuth_actual):
+                        if cabletension_current < self._cabletension_azimuth_max:
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
-
+                            cabletension_current = self._adc.read_adc(0)
                             print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current))
                             steps_actual = steps_actual +1
-                        print("Actual Azimuth Steps Forward: "+ str(steps_actual))
+                        else:
+                            recenter_azimuth()
+                    print("Actual Azimuth Steps Forward: "+ str(steps_actual))
 
                     #BNO055 Orientation Sensor Not Running, so Step Forward By the Calculated Number of Steps
                     else:
                         self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
                     
-                else:
-                    recenter_azimuth()
+                
 
             #Move Counter-Clockwise    
             elif azimuth_target < self._azimuth_current:
                 cabletension_current = self._adc.read_adc(0)
-                if cabletension_current > self._cabletension_azimuth_min:
-                    nSteps = self.calculate_azimuth_steps()
-                    print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Backward by Estimated: " + str(nSteps) + "steps.")
+                nSteps = self.calculate_azimuth_steps()
+                print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth Backward by Estimated: " + str(nSteps) + "steps.")
 
-
-                    #Use Magnetic Compass on BNO055
-                    if(self._isOrientationRunning):
-                        steps_actual = 0
-                        azimuth_actual = self.get_orientation_azimuth()
+                #Use Magnetic Compass on BNO055
+                if(self._isOrientationRunning):
+                    steps_actual = 0
+                    azimuth_actual = self.get_orientation_azimuth()
                               
-                        while(azimuth_target < azimuth_actual):
+                    while(azimuth_target < azimuth_actual):
+                        if cabletension_current > self._cabletension_azimuth_min:
                             self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
-                              
+                            cabletension_current = self._adc.read_adc(0)  
                             print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current))
                             steps_actual = steps_actual +1
-                        print("Actual Azimuth Steps Backward: "+ str(steps_actual))
+                        else:
+                            recenter_azimuth()                            
+                    print("Actual Azimuth Steps Backward: "+ str(steps_actual))
 
-                    #BNO055 Orientation Sensor Not Running, so Step Backward By the Calculated Number of Steps
-                    else:
-                        self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+                #BNO055 Orientation Sensor Not Running, so Step Backward By the Calculated Number of Steps
                 else:
-                    recenter_azimuth()
-            else:
-                print("Holding Azimuth Steady at: "+ str(azimuth))
+                    self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-            # Set Azimuth Value to Be Returned to GPredict
-            if(self._isOrientationRunning):
-                self._azimuth_current = float(azimuth_actual)
-            else:
-                self._azimuth_current = float(azimuth_target)
+        else:
+            print("Holding Azimuth Steady at: "+ str(azimuth))
+
+        # Set Azimuth Value to Be Returned to GPredict
+        if(self._isOrientationRunning):
+            self._azimuth_current = float(azimuth_actual)
+        else:
+            self._azimuth_current = float(azimuth_target)
             
 
         except Exception as e:
