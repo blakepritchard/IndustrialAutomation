@@ -311,7 +311,7 @@ class Rotator(object):
 
             print("Steps: " + str(nSteps))
                   
-            self._azimuth_current = 0    
+            self._azimuth_current = self.get_orientation_azimuth()   
 
         except Exception as e:
             self.handle_exception(e)
