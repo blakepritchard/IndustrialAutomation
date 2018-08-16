@@ -417,8 +417,8 @@ class Rotator(object):
                 else:
                     self._stepperAzimuth.step(nSteps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-        else:
-            print("Holding Azimuth Steady at: "+ str(azimuth))
+            else:
+                print("Holding Azimuth Steady at: "+ str(azimuth))
 
         # Set Azimuth Value to Be Returned to GPredict
         if(self._isOrientationRunning):
