@@ -341,7 +341,7 @@ class Rotator(object):
                 target_is_safe = False
                 print "Exceeds Mainimum Value of {self._cabletension_azimuth_min}"
                 
-        if target_is_safe = False:
+        if target_is_safe == False:
             print "Resetting Azimuth Back to Center"
             self.recenter_azimuth()
 
