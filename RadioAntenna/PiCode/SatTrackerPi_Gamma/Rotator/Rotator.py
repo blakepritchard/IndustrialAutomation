@@ -394,7 +394,7 @@ class Rotator(object):
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
                     nSteps = self.calculate_azimuth_steps(degrees_travel)
-                    print("Azimuth Target: "+str(azimuth_target)+"; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
+                    print("Azimuth Target: " + str(azimuth_target) + "; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
 
 
                     #Use Magnetic Compass on BNO055
@@ -406,15 +406,15 @@ class Rotator(object):
 
                         if ((cabletension_current > _cabletension_azimuth_min) and (cabletension_current < self._cabletension_azimuth_max)):
                             motor_direction = self.motor_direction_driver_const(is_clockwise)
-                                self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
-                                azimuth_actual = self.get_orientation_azimuth()
-                                cabletension_current = self._adc.read_adc(0)
-                                print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
-                                steps_actual = steps_actual +1
+                            self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
+                            azimuth_actual = self.get_orientation_azimuth()
+                            cabletension_current = self._adc.read_adc(0)
+                            print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
+                            steps_actual = steps_actual +1
                         else:
-                                print "Target Cable Tension Maxed Out In Current Direction, Re-centering and Reversing Direction to unwind cable"
-                                recenter_azimuth()
-                                is_clockwise = not is_clockwise
+                            print "Target Cable Tension Maxed Out In Current Direction, Re-centering and Reversing Direction to unwind cable"
+                            recenter_azimuth()
+                            is_clockwise = not is_clockwise
 
                         # Update Object
                         self._azimuth_current = azimuth_actual
