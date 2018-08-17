@@ -356,7 +356,7 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
-    def motor_direction_driver_const(is_clockwise)
+    def motor_direction_driver_const(self, is_clockwise):
         if True == is_clockwise:
             return Adafruit_MotorHAT.FORWARD
         else:
