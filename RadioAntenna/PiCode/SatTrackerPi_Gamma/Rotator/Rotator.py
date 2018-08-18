@@ -290,12 +290,12 @@ class Rotator(object):
         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
 
         #this is a hack because I mounted the chip sideways
-        print "Azimuth Raw: " + str(azimuth_actual) + "Azimuth Offset: " + str(self._azimuth_stepper_calibration_offset)
+        #print "Azimuth Raw: " + str(azimuth_actual) + "Azimuth Offset: " + str(self._azimuth_stepper_calibration_offset)
         azimuth_actual = azimuth_actual + self._azimuth_stepper_calibration_offset
         
         if azimuth_actual <0:
             azimuth_actual = 360 + azimuth_actual
-        print "Azimuth Adusted: " + str(azimuth_actual)
+        #print "Azimuth Adusted: " + str(azimuth_actual)
         return azimuth_actual
 
     
@@ -303,7 +303,6 @@ class Rotator(object):
         try:
             print("Recentering Azimuth")
             cabletension_current = self._adc.read_adc(0)
-
             print("Cable Tension = " + str(cabletension_current))
 
             nSteps = 0;
@@ -325,7 +324,9 @@ class Rotator(object):
             print("Steps: " + str(nSteps))
                   
             self._azimuth_current = self.get_orientation_azimuth()   
-
+            cabletension_current = self._adc.read_adc(0)
+            print("Current Azimuth Reading:"+self._azimuth_current+", Now Centered on Tripod with Cable Tension = " + str(cabletension_current))
+            
         except Exception as e:
             self.handle_exception(e)
 
@@ -474,10 +475,7 @@ class Rotator(object):
                     print("Holding Azimuth Steady at: "+ str(azimuth))
 
                 # Set Azimuth Value to Be Returned to GPredict
-                if(self._isOrientationRunning):
-                    self._azimuth_current = float(azimuth_actual)
-                else:
-                    self._azimuth_current = float(azimuth_target)
+                self.get_orientation_azimuth()
 
             else:
                 print "Orientation Sensor Not Running"
