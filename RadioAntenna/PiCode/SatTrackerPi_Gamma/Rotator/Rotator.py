@@ -273,6 +273,16 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
+    def stop_elevation(self):
+        try:        
+            print("EL Stop")
+            self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+            self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+        except Exception as e:
+            self.handle_exception(e)
+            
+
+
 ##########################################################################################
 #    Azimuth
 ##########################################################################################
@@ -319,39 +329,6 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
-            
-    def estimate_cable_tension_azimuth(self, target_azimuth, is_clockwise):
-        cabletension_current = self._adc.read_adc(0)
-        azimuth_actual = self.get_orientation_azimuth()
-
-        target_is_safe = True
-        degrees_travel = 0
-        estimated_tension = 0
-        tension_ratio = 180 / (self._cabletension_azimuth_max - self._cabletension_azimuth_min)
-
-        if (is_clockwise):
-            degrees_travel = target_azimuth - azimuth_actual
-            if degrees_travel < 0:
-                degrees_travel = 360 + degrees_travel
-            estimated_tension_change = degrees_travel * tension_ratio
-            estimated_tension_total = cabletension_current + estimated_tension_change
-            print "Predicted CableTension Value: " + str(estimated_tension_total)
-            if estimated_tension > self._cabletension_azimuth_max:
-                target_is_safe = False
-                print "Exceeds Maximum Value of " + str(self._cabletension_azimuth_max)
-        else:
-            degrees_travel = azimuth_actual - target_azimuth
-            if degrees_travel < 0:
-                degrees_travel = 360 + degrees_travel
-            estimated_tension_change = degrees_travel * tension_ratio
-            estimated_tension_total = cabletension_current - estimated_tension_change
-            print "Predicted CableTension Value: " + str(estimated_tension_total)
-            if estimated_tension < self._cabletension_azimuth_min:
-                target_is_safe = False
-                print "Exceeds Mainimum Value of " + str(self._cabletension_azimuth_min)
-
-        return (target_is_safe, degrees_travel, estimated_tension)
-
 
     def plan_azimuth_movement(self, target_azimuth):
         
@@ -365,7 +342,6 @@ class Rotator(object):
         degrees_travel_alternate = 0
         degrees_travel_shortest = 0
         
-
         #Use Magnetic Compass on BNO055 and Encoder on MCP3008
         cabletension_current = self._adc.read_adc(0)
         azimuth_actual = self.get_orientation_azimuth()
@@ -374,7 +350,6 @@ class Rotator(object):
         is_clockwise = True;
         if target_azimuth < self._azimuth_current:
             move_clockwise = False;
-
 
         # Check for shortest Circular Route
         # Is it shorter to go the other way around ?
@@ -390,10 +365,8 @@ class Rotator(object):
         else:
             degrees_travel_shortest = degrees_travel_simple
 
-
         # Check Cable Tension
-        # Is it physically safe to spin any farther in that direction?
-                
+        # Is it physically safe to spin any farther in that direction?                
         estimated_tension_change = degrees_travel_shortest * tension_ratio
 
         if (move_clockwise):
@@ -455,7 +428,7 @@ class Rotator(object):
                 azimuth_target_rounded = self.round_azimuth_value(self._azimuth_target)
                 
                 # Plan Movement
-                is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded, is_clockwise)
+                is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded)
               
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
@@ -524,26 +497,19 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)  
 
-
-            
-    
+##########################################################################################
+#    Polarity
+##########################################################################################
     def set_polarity(self, polarity):
         self._polarity_target = polarity
         '''ToDo: Remove this Hack'''
         print("setting polarity to: "+ str(polarity))
         self._polarity_current = polarity
         
-    
-      
-        
-    def stop_elevation(self):
-        try:        
-            print("EL Stop")
-            self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-            self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        except Exception as e:
-            self.handle_exception(e)
-            
+
+##########################################################################################
+#    Protocol
+##########################################################################################    
     def get_version_text(self):
         return "SatTrackerPi - Version 1.0"
     
@@ -553,9 +519,8 @@ class Rotator(object):
     def get_unsupported_command_text(self):
         msg_text = "Unsupported Command..."
         print(msg_text)
-        return msg_text
-        
-          
+        return msg_text    
+                  
     def execute_easycomm2_command(self, rotator_commands):  
 
         try:
