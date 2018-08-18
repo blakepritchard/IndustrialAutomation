@@ -325,7 +325,7 @@ class Rotator(object):
                   
             self._azimuth_current = self.get_orientation_azimuth()   
             cabletension_current = self._adc.read_adc(0)
-            print("Current Azimuth Reading:"+self._azimuth_current+", Now Centered on Tripod with Cable Tension = " + str(cabletension_current))
+            print("Current Azimuth Reading:"+str(self._azimuth_current)+", Now Centered on Tripod with Cable Tension = " + str(cabletension_current))
             
         except Exception as e:
             self.handle_exception(e)
