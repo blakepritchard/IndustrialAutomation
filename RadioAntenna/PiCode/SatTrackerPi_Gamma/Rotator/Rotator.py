@@ -127,15 +127,15 @@ class Rotator(object):
         self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
       
     def get_elevation(self):
-        print("returning elevation of: "+ str(self._elevation_current))
+        #print("returning elevation of: "+ str(self._elevation_current))
         return self._elevation_current
     
     def get_azimuth(self):
-        print("returning azimuth of: "+ str(self._azimuth_current))
+        #print("returning azimuth of: "+ str(self._azimuth_current))
         return self._azimuth_current
     
     def get_polarity(self):
-        print("returning polarity of: "+ str(self._polarity_current))
+        #print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
 
     def start_orientation_sensor(self):
