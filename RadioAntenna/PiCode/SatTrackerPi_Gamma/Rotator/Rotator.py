@@ -423,7 +423,7 @@ class Rotator(object):
                             azimuth_current_rounded += .5
 
                         # Keep Moving ?
-                        if azimuth_current_rounded  =  azimuth_target_rounded:
+                        if azimuth_current_rounded  ==  azimuth_target_rounded:
                             keep_moving = False
 
                     print("Actual Azimuth Steps Forward: "+ str(steps_actual))
