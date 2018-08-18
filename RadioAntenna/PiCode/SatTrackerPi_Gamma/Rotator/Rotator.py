@@ -337,7 +337,7 @@ class Rotator(object):
         target_is_safe = True
         degrees_travel = 0
         estimated_tension = 0
-        tension_ratio = 180 / (self._cabletension_azimuth_max - self._cabletension_azimuth_min)
+        tension_ratio = (self._cabletension_azimuth_max - self._cabletension_azimuth_min) / 360
 
         degrees_travel_simple = 0
         degrees_travel_alternate = 0
@@ -369,6 +369,10 @@ class Rotator(object):
         # Check Cable Tension
         # Is it physically safe to spin any farther in that direction?                
         estimated_tension_change = degrees_travel_shortest * tension_ratio
+        if (move_clockwise):
+            print "Shortest Path: "+str(degrees_travel_shortest)+" Degrees Clockwise, Tension Ratio:" + str(tension_ratio) + " Per Degree"
+        else:
+            print "Shortest Path: "+str(degrees_travel_shortest)+" Degrees Counter-Clockwise, Tension Ratio:" + str(tension_ratio)+ " Per Degree"
 
         if (move_clockwise):
             estimated_tension_total = cabletension_current + estimated_tension_change
