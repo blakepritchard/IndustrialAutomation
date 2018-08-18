@@ -475,12 +475,12 @@ class Rotator(object):
                             motor_direction = self.motor_direction_driver_const(is_clockwise)
                             self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
 
-
-
+                            # Echo Log 
+                            steps_actual = steps_actual +1
                             azimuth_current_rounded = self.get_rounded_azimuth()
                             cabletension_current = self._adc.read_adc(0)
                             print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Raw: " +str(azimuth_actual) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
-                            steps_actual = steps_actual +1
+                            
                         else:
                             print "Target Cable Tension Maxed Out In Current Direction at: "+str(cabletension_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
                             self.recenter_azimuth()
@@ -488,7 +488,7 @@ class Rotator(object):
                             is_clockwise = not is_clockwise
 
                         # Update Object
-                        self._azimuth_current = azimuth_actual
+                        self._azimuth_current = self.get_orientation_azimuth()
                         
 
                         # Keep Moving ?
