@@ -334,20 +334,20 @@ class Rotator(object):
                 degrees_travel = 360 + degrees_travel
             estimated_tension_change = degrees_travel * tension_ratio
             estimated_tension_total = cabletension_current + estimated_tension_change
-            print "Predicted CableTension Value: {estimated_tension}"
+            print "Predicted CableTension Value: " + str(estimated_tension_total)
             if estimated_tension > self._cabletension_azimuth_max:
                 target_is_safe = False
-                print "Exceeds Maximum Value of {self._cabletension_azimuth_max}"
+                print "Exceeds Maximum Value of " + str(self._cabletension_azimuth_max)
         else:
             degrees_travel = azimuth_actual - target_azimuth
             if degrees_travel < 0:
                 degrees_travel = 360 + degrees_travel
             estimated_tension_change = degrees_travel * tension_ratio
             estimated_tension_total = cabletension_current - estimated_tension_change
-            print "Predicted CableTension Value: {estimated_tension}"
+            print "Predicted CableTension Value: " + str(estimated_tension_total)
             if estimated_tension < self._cabletension_azimuth_min:
                 target_is_safe = False
-                print "Exceeds Mainimum Value of {self._cabletension_azimuth_min}"
+                print "Exceeds Mainimum Value of " + str(self._cabletension_azimuth_min)
 
         return (target_is_safe, degrees_travel, estimated_tension)
 
@@ -406,7 +406,7 @@ class Rotator(object):
                     keep_moving = True
                     while(keep_moving):
 
-                        if ((cabletension_current > _cabletension_azimuth_min) and (cabletension_current < self._cabletension_azimuth_max)):
+                        if ((cabletension_current > self._cabletension_azimuth_min) and (cabletension_current < self._cabletension_azimuth_max)):
                             motor_direction = self.motor_direction_driver_const(is_clockwise)
                             self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
@@ -414,7 +414,7 @@ class Rotator(object):
                             print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             steps_actual = steps_actual +1
                         else:
-                            print "Target Cable Tension Maxed Out In Current Direction, Re-centering and Reversing Direction to unwind cable"
+                            print "Target Cable Tension Maxed Out In Current Direction Despite Predictions, Re-centering and Reversing Direction to unwind cable"
                             recenter_azimuth()
                             is_clockwise = not is_clockwise
 
