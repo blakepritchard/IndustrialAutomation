@@ -347,7 +347,7 @@ class Rotator(object):
         azimuth_actual = self.get_orientation_azimuth()
 
         #Start by setting motor direction to shortest linear route
-        is_clockwise = True;
+        move_clockwise = True;
         if target_azimuth < self._azimuth_current:
             move_clockwise = False;
 
@@ -376,7 +376,6 @@ class Rotator(object):
                 target_is_safe = False
                 print "Exceeds Maximum Value of " + str(self._cabletension_azimuth_max) + ", Azimuth will track the long way around."
         else:
-
             estimated_tension_total = cabletension_current - estimated_tension_change
             print "Predicted CableTension Value: " + str(estimated_tension_total)
             if estimated_tension < self._cabletension_azimuth_min:
