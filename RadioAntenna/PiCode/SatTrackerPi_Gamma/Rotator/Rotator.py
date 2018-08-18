@@ -73,7 +73,7 @@ class Rotator(object):
     _elevation_stepper_count = 0
     _polarity_stepper_count = 0
     
-    _azimuth_stepper_calibration_offset = -90
+    _azimuth_stepper_calibration_offset = 90
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
 
