@@ -451,7 +451,7 @@ class Rotator(object):
                             steps_actual = steps_actual +1
                             azimuth_current_rounded = self.get_rounded_azimuth()
                             cabletension_current = self._adc.read_adc(0)
-                            print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Raw: " +str(azimuth_actual) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
+                            print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             
                         else:
                             print "Target Cable Tension Maxed Out In Current Direction at: "+str(cabletension_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
