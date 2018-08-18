@@ -373,13 +373,13 @@ class Rotator(object):
                 #Find Nearest Half Degree Increment
                 self._azimuth_target = float(azimuth)
                 azimuth_tuple = divmod(self._azimuth_target, .5)
-                azimuth_remainder = float(azimuth_tuple[1])
+                azimuth_target_remainder = float(azimuth_tuple[1])
                 
                 #round down to nearest half degree
-                azimuth_target_rounded = float(self._azimuth_target - azimuth_remainder)
+                azimuth_target_rounded = float(self._azimuth_target - azimuth_target_remainder)
                 
                 #round back up if remainder was closer to upper bound
-                if azimuth_remainder > .25:
+                if azimuth_target_remainder > .25:
                     azimuth_target_rounded += .5
 
                 #determine Motor Direction
@@ -411,7 +411,10 @@ class Rotator(object):
                             motor_direction = self.motor_direction_driver_const(is_clockwise)
                             self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
-                            azimuth_current_rounded, azimuth_current_remainder = divmod(azimuth_actual, .5)
+                            azimuth_div, azimuth_current_remainder = divmod(azimuth_actual, .5)
+                            azimuth_current_rounded = float(azimuth_actual - azimuth_current_remainder)
+                            if azimuth_current_remainder > .25:
+                                azimuth_current_rounded += .5
                             cabletension_current = self._adc.read_adc(0)
                             print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Raw: " +str(azimuth_actual) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             steps_actual = steps_actual +1
