@@ -452,7 +452,7 @@ class Rotator(object):
             if(self._isOrientationRunning):
                 #Find Nearest Half Degree Increment
                 self._azimuth_target = float(azimuth)
-                azimuth_target_rounded = round_azimuth_value(self._azimuth_target)
+                azimuth_target_rounded = self.round_azimuth_value(self._azimuth_target)
                 
                 # Plan Movement
                 is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded, is_clockwise)
