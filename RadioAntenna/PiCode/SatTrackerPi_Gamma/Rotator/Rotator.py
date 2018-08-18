@@ -279,7 +279,9 @@ class Rotator(object):
         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
 
         #this is a hack because I mounted the chip sideways
+        print "Azimuth Raw: " + str(azimuth_actual) + "Azimuth Offset: " + str(self._azimuth_stepper_calibration_offset)
         azimuth_actual = azimuth_actual + self._azimuth_stepper_calibration_offset
+        print "Azimuth Adusted: " + str(azimuth_actual)
         if azimuth_actual <0:
             azimuth_actual = 360 + azimuth_actual
 
