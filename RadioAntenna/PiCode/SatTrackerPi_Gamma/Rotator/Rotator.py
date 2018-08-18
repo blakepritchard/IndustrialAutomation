@@ -73,7 +73,7 @@ class Rotator(object):
     _elevation_stepper_count = 0
     _polarity_stepper_count = 0
     
-    _azimuth_stepper_calibration_offset = 90
+    _azimuth_stepper_calibration_offset = -90
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
 
@@ -416,7 +416,7 @@ class Rotator(object):
                             steps_actual = steps_actual +1
                         else:
                             print "Target Cable Tension Maxed Out In Current Direction Despite Predictions, Re-centering and Reversing Direction to unwind cable"
-                            recenter_azimuth()
+                            self.recenter_azimuth()
                             is_clockwise = not is_clockwise
 
                         # Update Object
