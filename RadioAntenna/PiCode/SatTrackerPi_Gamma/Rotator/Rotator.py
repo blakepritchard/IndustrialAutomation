@@ -412,10 +412,8 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
                             azimuth_actual = self.get_orientation_azimuth()
                             azimuth_current_rounded, azimuth_current_remainder = divmod(azimuth_actual, .5)
-                            if azimuth_current_remainder > .25:
-                                azimuth_current_rounded += .5   
                             cabletension_current = self._adc.read_adc(0)
-                            print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + "Azimuth Actual Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
+                            print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             steps_actual = steps_actual +1
                         else:
                             print "Target Cable Tension Maxed Out In Current Direction at: "+str(cabletension_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
