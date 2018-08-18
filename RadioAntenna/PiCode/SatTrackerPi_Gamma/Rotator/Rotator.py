@@ -404,11 +404,6 @@ class Rotator(object):
         else:
             return Adafruit_MotorHAT.BACKWARD
 
-    def get_rounded_azimuth(self):
-        azimuth_actual = self.get_orientation_azimuth()
-        azimuth_current_rounded = round_azimuth_value(azimuth_actual)
-        return azimuth_current_rounded 
-
     def round_azimuth_value(self, azimuth):
         #round down to nearest half degree
         azimuth_div, azimuth_remainder = divmod(azimuth, .5)
@@ -416,8 +411,12 @@ class Rotator(object):
         #round back up if remainder was closer to upper bound
         if azimuth_remainder > .25:
             azimuth_rounded += .5
-        return azimuth_rounded        
-        
+        return azimuth_rounded   
+
+    def get_rounded_azimuth(self):
+        azimuth_actual = self.get_orientation_azimuth()
+        azimuth_current_rounded = self.round_azimuth_value(azimuth_actual)
+        return azimuth_current_rounded 
 
     def set_azimuth(self, azimuth):
         try:
