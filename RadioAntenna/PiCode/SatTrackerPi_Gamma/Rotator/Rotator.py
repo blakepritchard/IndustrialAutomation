@@ -415,8 +415,9 @@ class Rotator(object):
                             print("Azimuth Actual: " + str(azimuth_actual) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             steps_actual = steps_actual +1
                         else:
-                            print "Target Cable Tension Maxed Out In Current Direction Despite Predictions, Re-centering and Reversing Direction to unwind cable"
+                            print "Target Cable Tension Maxed Out In Current Direction at: "+str(cabletension_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
                             self.recenter_azimuth()
+                            cabletension_current = self._adc.read_adc(0)
                             is_clockwise = not is_clockwise
 
                         # Update Object
