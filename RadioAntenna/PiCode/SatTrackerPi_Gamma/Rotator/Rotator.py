@@ -352,6 +352,72 @@ class Rotator(object):
 
         return (target_is_safe, degrees_travel, estimated_tension)
 
+
+    def plan_azimuth_movement(self, target_azimuth):
+        
+        # Init
+        target_is_safe = True
+        degrees_travel = 0
+        estimated_tension = 0
+        tension_ratio = 180 / (self._cabletension_azimuth_max - self._cabletension_azimuth_min)
+
+        degrees_travel_simple = 0
+        degrees_travel_alternate = 0
+        degrees_travel_shortest = 0
+        
+
+        #Use Magnetic Compass on BNO055 and Encoder on MCP3008
+        cabletension_current = self._adc.read_adc(0)
+        azimuth_actual = self.get_orientation_azimuth()
+
+        #Start by setting motor direction to shortest linear route
+        is_clockwise = True;
+        if target_azimuth < self._azimuth_current:
+            move_clockwise = False;
+
+
+        # Check for shortest Circular Route
+        # Is it shorter to go the other way around ?
+        if (move_clockwise):
+            degrees_travel_simple = target_azimuth - azimuth_actual
+        else:
+            degrees_travel_simple = azimuth_actual - target_azimuth
+
+        degrees_travel_alternate = 360 - degrees_travel_simple               
+        if degrees_travel_alternate < degrees_travel_simple:
+            move_clockwise = not move_clockwise
+            degrees_travel_shortest = degrees_travel_alternate
+        else:
+            degrees_travel_shortest = degrees_travel_simple
+
+
+        # Check Cable Tension
+        # Is it physically safe to spin any farther in that direction?
+                
+        estimated_tension_change = degrees_travel_shortest * tension_ratio
+
+        if (move_clockwise):
+            estimated_tension_total = cabletension_current + estimated_tension_change
+            print "Predicted CableTension Value: " + str(estimated_tension_total)
+            if estimated_tension > self._cabletension_azimuth_max:
+                target_is_safe = False
+                print "Exceeds Maximum Value of " + str(self._cabletension_azimuth_max) + ", Azimuth will track the long way around."
+        else:
+
+            estimated_tension_total = cabletension_current - estimated_tension_change
+            print "Predicted CableTension Value: " + str(estimated_tension_total)
+            if estimated_tension < self._cabletension_azimuth_min:
+                target_is_safe = False
+                print "Exceeds Mainimum Value of " + str(self._cabletension_azimuth_min) + ", Azimuth will track the long way around."
+
+        if not target_is_safe:
+            move_clockwise = not move_clockwise
+
+        return (move_clockwise, degrees_travel, estimated_tension)
+
+
+
+
     def calculate_azimuth_steps(self, degrees_travel):
         try:
             steps = abs(2 * int(degrees_travel))
@@ -364,6 +430,20 @@ class Rotator(object):
             return Adafruit_MotorHAT.FORWARD
         else:
             return Adafruit_MotorHAT.BACKWARD
+
+    def get_rounded_azimuth(self):
+        azimuth_actual = self.get_orientation_azimuth()
+        azimuth_current_rounded = round_azimuth_value(azimuth_actual)
+        return azimuth_current_rounded 
+
+    def round_azimuth_value(self, azimuth):
+        #round down to nearest half degree
+        azimuth_div, azimuth_remainder = divmod(azimuth, .5)
+        azimuth_rounded = float(azimuth - azimuth_remainder)
+        #round back up if remainder was closer to upper bound
+        if azimuth_remainder > .25:
+            azimuth_rounded += .5
+        return azimuth_rounded        
         
 
     def set_azimuth(self, azimuth):
@@ -372,49 +452,32 @@ class Rotator(object):
             if(self._isOrientationRunning):
                 #Find Nearest Half Degree Increment
                 self._azimuth_target = float(azimuth)
-                azimuth_tuple = divmod(self._azimuth_target, .5)
-                azimuth_target_remainder = float(azimuth_tuple[1])
+                azimuth_target_rounded = round_azimuth_value(self._azimuth_target)
                 
-                #round down to nearest half degree
-                azimuth_target_rounded = float(self._azimuth_target - azimuth_target_remainder)
-                
-                #round back up if remainder was closer to upper bound
-                if azimuth_target_remainder > .25:
-                    azimuth_target_rounded += .5
-
-                #determine Motor Direction
-                is_clockwise = True;
-                if azimuth_target_rounded < self._azimuth_current:
-                    is_clockwise = False;
-
-                # check cable tension
-                target_azimuth_is_safe, degrees_travel, estimated_tension = self.estimate_cable_tension_azimuth(azimuth_target_rounded, is_clockwise)
-                if False == target_azimuth_is_safe:
-                    print "Default Direction is Estimated to Exceed Cable Tension. Reversing Direction"
-                    is_clockwise = not is_clockwise
-                 
-                #Move Stepper
+                # Plan Movement
+                is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded, is_clockwise)
+              
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
                     nSteps = self.calculate_azimuth_steps(degrees_travel)
                     print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
 
-
-                    #Use Magnetic Compass on BNO055
+                    # Scope Variables
                     steps_actual = 0
-                    azimuth_actual = self.get_orientation_azimuth()
+                    azimuth_current_rounded = self.get_rounded_azimuth()
 
                     keep_moving = True
                     while(keep_moving):
 
                         if ((cabletension_current > self._cabletension_azimuth_min) and (cabletension_current < self._cabletension_azimuth_max)):
+
+                            #Move Stepper
                             motor_direction = self.motor_direction_driver_const(is_clockwise)
                             self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
-                            azimuth_actual = self.get_orientation_azimuth()
-                            azimuth_div, azimuth_current_remainder = divmod(azimuth_actual, .5)
-                            azimuth_current_rounded = float(azimuth_actual - azimuth_current_remainder)
-                            if azimuth_current_remainder > .25:
-                                azimuth_current_rounded += .5
+
+
+
+                            azimuth_current_rounded = self.get_rounded_azimuth()
                             cabletension_current = self._adc.read_adc(0)
                             print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Raw: " +str(azimuth_actual) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", CableTension: " + str(cabletension_current) + ", Direction: " + str(motor_direction))
                             steps_actual = steps_actual +1
