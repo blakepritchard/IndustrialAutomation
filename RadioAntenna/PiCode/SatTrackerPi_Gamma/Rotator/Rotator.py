@@ -396,7 +396,7 @@ class Rotator(object):
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
                     nSteps = self.calculate_azimuth_steps(degrees_travel)
-                    print("Azimuth Target: " + str(azimuth_target) + "; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
+                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
 
 
                     #Use Magnetic Compass on BNO055
@@ -426,6 +426,7 @@ class Rotator(object):
 
                         # Keep Moving ?
                         if azimuth_current_rounded  ==  azimuth_target_rounded:
+                            print "Stopping Rotation at : " + str(azimuth_current_rounded)
                             keep_moving = False
 
                     print("Actual Azimuth Steps Forward: "+ str(steps_actual))
