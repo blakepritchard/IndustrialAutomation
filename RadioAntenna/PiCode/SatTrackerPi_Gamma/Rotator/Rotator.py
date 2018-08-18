@@ -73,7 +73,7 @@ class Rotator(object):
     _elevation_stepper_count = 0
     _polarity_stepper_count = 0
     
-    _azimuth_stepper_calibration_offset = -90
+    _azimuth_stepper_calibration_offset = 90
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
 
@@ -189,6 +189,7 @@ class Rotator(object):
 # Elevation
 ##########################################################################################    
     def recenter_elevation(self):
+        print "Recentering - Leveling Elevation"
         heading, roll, pitch = self._orientation.read_euler()
         while(roll < 0):
             self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
