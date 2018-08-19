@@ -397,7 +397,7 @@ class Rotator(object):
 
     def calculate_azimuth_steps(self, degrees_travel):
         try:
-            steps = abs(2 * int(degrees_travel))
+            steps, remainder = divmod(degrees_travel, .5)
             return steps            
         except Exception as e:
             self.handle_exception(e)
@@ -438,7 +438,7 @@ class Rotator(object):
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
                     nSteps = self.calculate_azimuth_steps(degrees_travel)
-                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(nSteps) + "steps.")
+                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(nSteps) + " steps.")
 
                     # Scope Variables
                     steps_actual = 0
@@ -470,11 +470,14 @@ class Rotator(object):
                         
 
                         # Keep Moving ?
-                        if azimuth_current_rounded  ==  azimuth_target_rounded:
-                            print "Stopping Rotation at : " + str(azimuth_current_rounded)
+                        if ((is_clockwise) and (azimuth_current_rounded >= azimuth_target_rounded)):
+                            print "Stopping Clockwise Rotation at : " + str(azimuth_current_rounded)
+                            keep_moving = False
+                        elif ((not is_clockwise) and (azimuth_current_rounded  <=  azimuth_target_rounded)):
+                            print "Stopping Counter-Clockwise Rotation at : " + str(azimuth_current_rounded)
                             keep_moving = False
 
-                    print("Actual Azimuth Steps Forward: "+ str(steps_actual))
+                    print("Actual Azimuth Steps: "+ str(steps_actual))
 
 
                 else:
