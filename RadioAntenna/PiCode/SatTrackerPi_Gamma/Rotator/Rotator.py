@@ -200,7 +200,12 @@ class Rotator(object):
             heading, roll, pitch = self._orientation.read_euler()
             print("Elevation: " + str(roll))
 
-
+    def get_orientation_elevation(self):
+        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
+        elevation_actual = elevation_actual + self._elevation_stepper_calibration_offset
+        if elevation_actual < 0
+            elevation_actual = 360 + elevation_actual
+        return float(elevation_actual)
 
 
     def set_elevation(self, elevation):
@@ -216,50 +221,42 @@ class Rotator(object):
             if elevation_remainder > .125:
                 elevation_target += .25
 
+            elevation_actual = self.get_orientation_elevation()
+
             #Move Up
             if elevation_target > self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Elevation Target: "+str(elevation_target)+"; Moving Elevation Upward by Estimated: " + str(nSteps) + " steps.")
                 
-                if(self._isOrientationRunning):
-                    steps_actual = 0
-                    azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                    while(elevation_target > elevation_actual):
-                        self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                        print("Elevation Actual: " + str(elevation_actual))
-                        steps_actual = steps_actual +1
-                    print("Actual Elevation Steps: "+ str(steps_actual))
-                else:
-                    self._stepperElevation.step(nSteps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-
+                steps_actual = 0
+                elevation_actual = self.get_orientation_elevation()
+                while(elevation_target > elevation_actual):
+                    self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    elevation_actual = self.get_orientation_elevation()
+                    print("Elevation Actual: " + str(elevation_actual))
+                    steps_actual = steps_actual +1
+                print("Actual Elevation Steps: "+ str(steps_actual))
 
             #Move Down    
             elif elevation_target < self._elevation_current:
                 nSteps = self.calculate_elevation_steps()
                 print("Elevation Target: "+str(elevation_target)+"; Moving Elevation Downward by Estimated: " + str(nSteps) + "steps.")
 
-                if(self._isOrientationRunning):
-                    steps_actual = 0
-                    azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                    while(elevation_target < elevation_actual):
-                        self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-                        print("Elevation Actual: " + str(elevation_actual))
-                        steps_actual = steps_actual +1
-                    print("Actual Elevation Steps: "+ str(steps_actual))
+                steps_actual = 0
+                elevation_actual = self.get_orientation_elevation()
+                while(elevation_target < elevation_actual):
+                    self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    elevation_actual = self.get_orientation_elevation()
+                    print("Elevation Actual: " + str(elevation_actual))
+                    steps_actual = steps_actual +1
+                print("Actual Elevation Steps: "+ str(steps_actual))
 
-                else:
-                    self._stepperElevation.step(nSteps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
-                
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
 
             # Set Elevation Value to Be Returned to GPredict
-            if(self._isOrientationRunning):
-                self._elevation_current = float(elevation_actual)
-            else:
-                self._elevation_current = float(elevation_target)
+            self._elevation_current = self.get_orientation_elevation()
+
             
         except Exception as e:
             self.handle_exception(e)
@@ -296,7 +293,7 @@ class Rotator(object):
         if azimuth_actual <0:
             azimuth_actual = 360 + azimuth_actual
         #print "Azimuth Adusted: " + str(azimuth_actual)
-        return azimuth_actual
+        return float(azimuth_actual)
 
     
     def recenter_azimuth(self):
@@ -484,7 +481,7 @@ class Rotator(object):
                     print("Holding Azimuth Steady at: "+ str(azimuth))
 
                 # Set Azimuth Value to Be Returned to GPredict
-                self.get_orientation_azimuth()
+                self._azimuth_current = self.get_orientation_azimuth()
 
             else:
                 print "Orientation Sensor Not Running"
@@ -535,8 +532,8 @@ class Rotator(object):
                     
                 # EasyCommII uses short commands to Get values from the Rotator
                 if len(rotator_command) == 2:
-                    if      "AZ" == rotator_command: result = self.get_azimuth()
-                    elif    "EL" == rotator_command: result = self.get_elevation()
+                    if      "AZ" == rotator_command: result = str(self.get_orientation_azimuth())
+                    elif    "EL" == rotator_command: result = str(self.get_orientation_elevation())
                     elif    "SA" == rotator_command: result = self.stop_azimuth()
                     elif    "SE" == rotator_command: result = self.stop_elevation()
                     elif    "VE" == rotator_command: result = self.get_version_text()
