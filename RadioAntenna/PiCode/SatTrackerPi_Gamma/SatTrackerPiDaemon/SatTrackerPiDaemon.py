@@ -106,6 +106,9 @@ USAGE
         verbose = args.verbose
         serial_port_dev = args.port
         serial_port_speed = args.speed
+
+        #set rotator verbosity
+        device_rotator.set_verbosity(verbose)
         
         if verbose > 0: 
                 print("Verbose mode on")       
@@ -132,11 +135,11 @@ USAGE
             byte_next = ser.read()
             char_next = byte_next.decode("utf-8")
 
-            if verbose: print('-')
+            if verbose > 0: print('-')
             if byte_next:
                 
                 if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
-                    print(command)
+                    if verbose > 0: print(command)
                     device_rotator.execute_easycomm2_command(command)
                     command = ""  
                 elif '!'==char_next:

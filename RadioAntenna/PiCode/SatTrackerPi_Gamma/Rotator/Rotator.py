@@ -42,6 +42,7 @@ from Adafruit_BNO055 import BNO055
 
 class Rotator(object):
 
+    _verbose = False
     
     _encoder_A = 0
     _encoder_B = 0
@@ -137,6 +138,12 @@ class Rotator(object):
     def get_polarity(self):
         #print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
+
+    def set_verbosity(self, verbose)
+        self._verbose = verbose
+
+    def get_verbosity(self)
+        return self._verbose
 
     def start_orientation_sensor(self):
         
