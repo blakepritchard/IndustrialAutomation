@@ -370,9 +370,9 @@ class Rotator(object):
         # Is it physically safe to spin any farther in that direction?                
         estimated_tension_change = degrees_travel_shortest * tension_ratio
         if (move_clockwise):
-            print "Shortest Path: "+str(degrees_travel_shortest)+" Degrees Clockwise, Tension Ratio:" + str(tension_ratio) + " Per Degree"
+            print "Shortest Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel_shortest)+" Degrees Clockwise, Tension Ratio:" + str(tension_ratio) + " Per Degree"
         else:
-            print "Shortest Path: "+str(degrees_travel_shortest)+" Degrees Counter-Clockwise, Tension Ratio:" + str(tension_ratio)+ " Per Degree"
+            print "Shortest Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel_shortest)+" Degrees Counter-Clockwise, Tension Ratio:" + str(tension_ratio)+ " Per Degree"
 
         if (move_clockwise):
             estimated_tension_total = cabletension_current + estimated_tension_change
@@ -422,6 +422,8 @@ class Rotator(object):
         azimuth_current_rounded = self.round_azimuth_value(azimuth_actual)
         return azimuth_current_rounded 
 
+    ##########################################
+    # Execute Azimuth 
     def set_azimuth(self, azimuth):
         try:
 
@@ -486,9 +488,6 @@ class Rotator(object):
 
         except Exception as e:
             self.handle_exception(e)
-
-
-                
 
     def stop_azimuth(self):
         try: 
