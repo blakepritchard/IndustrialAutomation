@@ -139,10 +139,10 @@ class Rotator(object):
         #print("returning polarity of: "+ str(self._polarity_current))
         return self._polarity_current
 
-    def set_verbosity(self, verbose)
+    def set_verbosity(self, verbose):
         self._verbose = verbose
 
-    def get_verbosity(self)
+    def get_verbosity(self):
         return self._verbose
 
     def start_orientation_sensor(self):
