@@ -195,17 +195,7 @@ class Rotator(object):
 ##########################################################################################
 # Elevation
 ##########################################################################################    
-    def recenter_elevation(self):
-        print "Recentering - Leveling Elevation"
-        heading, roll, pitch = self._orientation.read_euler()
-        while(roll < 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-            heading, roll, pitch = self._orientation.read_euler()
-            if self._verbose > 0: print("Elevation: " + str(roll))
-        while(roll > 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-            heading, roll, pitch = self._orientation.read_euler()
-            if self._verbose > 0: print("Elevation: " + str(roll))
+
 
     def get_orientation_elevation(self):
         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
@@ -213,6 +203,17 @@ class Rotator(object):
         if elevation_actual < 0:
             elevation_actual = 360 + elevation_actual
         return float(elevation_actual)
+
+
+    def recenter_elevation(self):
+        print "Recentering - Leveling Elevation"
+        self._elevation_current = self.get_orientation_elevation()
+        while(roll < 0):
+            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+            print("Elevation: " + str(self._elevation_current))
+        while(roll > 0):
+            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+            print("Elevation: " + str(self._elevation_current))
 
 
     def set_elevation(self, elevation):
@@ -245,7 +246,7 @@ class Rotator(object):
 
             #Move Down    
             elif elevation_target < self._elevation_current:
-                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Downward by Estimated: " + str(steps_estimated) + "steps.")
+                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Downward by Estimated: " + str(steps_estimated) + " steps.")
 
                 while(elevation_target < elevation_actual):
                     self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
