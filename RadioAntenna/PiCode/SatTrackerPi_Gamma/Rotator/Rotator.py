@@ -377,15 +377,15 @@ class Rotator(object):
         if (move_clockwise):
             estimated_tension_total = cabletension_current + estimated_tension_change
             print "Predicted CableTension Value: " + str(estimated_tension_total)
-            if estimated_tension > self._cabletension_azimuth_max:
+            if estimated_tension_total > self._cabletension_azimuth_max:
                 target_is_safe = False
-                print "Exceeds Maximum Value of " + str(self._cabletension_azimuth_max) + ", Azimuth will track the long way around."
+                print "Estiamte: "+str(estimated_tension_total)+ " Exceeds Maximum Value of " + str(self._cabletension_azimuth_max) + ", Azimuth will track the long way around."
         else:
             estimated_tension_total = cabletension_current - estimated_tension_change
             print "Predicted CableTension Value: " + str(estimated_tension_total)
-            if estimated_tension < self._cabletension_azimuth_min:
+            if estimated_tension_total < self._cabletension_azimuth_min:
                 target_is_safe = False
-                print "Exceeds Mainimum Value of " + str(self._cabletension_azimuth_min) + ", Azimuth will track the long way around."
+                print "Estimate: "+str(estimated_tension_total)+ " Is Below Minimum Value of " + str(self._cabletension_azimuth_min) + ", Azimuth will track the long way around."
 
         if not target_is_safe:
             move_clockwise = not move_clockwise
