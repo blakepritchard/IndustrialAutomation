@@ -528,7 +528,7 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                print("Command: " + rotator_command)
+                #print("Command: " + rotator_command)
                 result = ""
                     
                 # EasyCommII uses short commands to Get values from the Rotator
