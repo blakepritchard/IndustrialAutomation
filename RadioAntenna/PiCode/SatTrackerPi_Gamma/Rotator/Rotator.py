@@ -200,8 +200,6 @@ class Rotator(object):
     def get_orientation_elevation(self):
         azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
         elevation_actual = elevation_actual + self._elevation_stepper_calibration_offset
-        if elevation_actual < 0:
-            elevation_actual = 360 + elevation_actual
         return float(elevation_actual)
 
 
