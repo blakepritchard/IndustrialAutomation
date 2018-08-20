@@ -206,8 +206,8 @@ class Rotator(object):
 
 
     def recenter_elevation(self):
-        print "Recentering - Leveling Elevation"
         self._elevation_current = self.get_orientation_elevation()
+        print "Leveling Elevation. Starting Elevation:"+str(self._elevation_current)
         while(self._elevation_current < 0):
             self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
             self._elevation_current = self.get_orientation_elevation()
