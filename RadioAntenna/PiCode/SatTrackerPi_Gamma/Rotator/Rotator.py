@@ -242,7 +242,7 @@ class Rotator(object):
                     elevation_actual = self.get_orientation_elevation()
                     if self._verbose > 0: print("Elevation Actual: " + str(elevation_actual))
                     steps_actual = steps_actual +1
-                print("Actual Elevation Steps: "+ str(steps_actual))
+                print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
 
             #Move Down    
             elif elevation_target < self._elevation_current:
@@ -253,7 +253,7 @@ class Rotator(object):
                     elevation_actual = self.get_orientation_elevation()
                     if self._verbose > 0: print("Elevation Actual: " + str(elevation_actual))
                     steps_actual = steps_actual +1
-                print("Actual Elevation Steps: "+ str(steps_actual))
+                print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
