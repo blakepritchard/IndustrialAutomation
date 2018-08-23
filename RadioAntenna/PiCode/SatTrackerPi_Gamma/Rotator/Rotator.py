@@ -261,7 +261,7 @@ class Rotator(object):
                             self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
                             step_increment = 0
 
-                elif abs(move_steps_vertical) > abs(move_steps_horizontal):    
+                else:  
                     step_ratio =   abs(move_steps_horizontal) / abs(move_steps_vertical) 
                     step_increment = 0
 
@@ -272,7 +272,7 @@ class Rotator(object):
                             self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
                             step_increment = 0
 
-                else:
+
 
                 current_sine_steps = next_sine_steps
                 current_cosine_steps = next_cosine_steps
