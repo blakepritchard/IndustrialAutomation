@@ -226,7 +226,7 @@ class Rotator(object):
         calibration_clockwise = False
 
         while mag < 3:
-            print "Compass Not Calibrated, Calibrating...)
+            print "Compass Not Calibrated, Calibrating..."
             
             #clockwise
             for degree in range(0, 360):
