@@ -113,6 +113,7 @@ class Rotator(object):
         self._stepperElevation.setSpeed(10)                           # 10 RPM
 
         self.start_orientation_sensor()
+        self.calibrate_orientation_sensor()
 
         print str(self._encoder_A)
         print str(self._encoder_B)
