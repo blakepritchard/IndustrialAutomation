@@ -11,6 +11,7 @@ from __future__ import division
 import sys
 import os
 import time
+import math
 import atexit
 import logging
 
@@ -77,6 +78,9 @@ class Rotator(object):
     _azimuth_stepper_calibration_offset = -90
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
+
+    _calibration_routine_steps_vertical = 360
+    _calibration_routine_steps_horizontal = 180
 
     '''
     Constructor
@@ -145,6 +149,12 @@ class Rotator(object):
     def get_verbosity(self):
         return self._verbose
 
+
+
+
+##########################################################################################
+# BNO055 Orientation Sensor
+########################################################################################## 
     def start_orientation_sensor(self):
         
         self._isOrientationRunning = False
@@ -189,6 +199,89 @@ class Rotator(object):
         print('Magnetometer ID:    0x{0:02X}'.format(mag))
         print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))   
 
+
+
+
+
+
+    def calibrate_orientation_sensor(self):
+        
+        heading, roll, pitch = bno.read_euler()
+        sys, gyro, accel, mag = self._orientation.get_calibration_status()
+        print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
+        
+        current_sine = 0
+        current_cosine = 1
+
+        current_sine_steps = 0
+        current_cosine_steps = 0
+
+        next_sine = 0
+        next_cosine = 1
+
+        next_sine_steps = 0
+        next_cosine_steps = 1
+
+        calibration_clockwise = False
+
+        while mag < 3:
+            print "Compass Not Calibrated, Calibrating...)
+            
+            #clockwise
+            for degree in range(0, 360):
+                rad = radians(degree)
+                
+                next_sine = degrees(sin(rad))
+                next_cosine = degrees(cos(rad))
+
+                
+                next_sine_steps = next_sine * self._calibration_routine_steps_vertical
+                next_cosine_steps = next_cosine * self._calibration_routine_steps_horizontal 
+
+                move_steps_vertical = next_sine_steps - current_sine_steps
+                move_steps_horizontal = next_cosine_steps - current_cosine_steps
+
+                if calibration_clockwise:
+                    direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical >= 0 else Adafruit_MotorHAT.BACKWARD
+                    direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal >= 0 else Adafruit_MotorHAT.BACKWARD
+                else
+                    direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical <= 0 else Adafruit_MotorHAT.BACKWARD
+                    direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal <= 0 else Adafruit_MotorHAT.BACKWARD
+
+                # Interleave Stepper Motor Movement 
+                if abs(move_steps_vertical) <= abs(move_steps_horizontal):
+                    step_ratio =  abs(move_steps_vertical) \ abs(move_steps_horizontal)
+                    step_increment = 0
+
+                    for step_count in range(move_steps_horizontal):
+                        self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
+                        step_increment = step_increment + step_ratio
+                        if step_increment >= 1:
+                            self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
+                            step_increment = 0
+
+                elif abs(move_steps_vertical) > abs(move_steps_horizontal):    
+                    step_ratio =   abs(move_steps_horizontal) \ abs(move_steps_vertical) 
+                    step_increment = 0
+
+                    for step_count in range(move_steps_vertical):
+                        self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
+                        step_increment = step_increment + step_ratio
+                        if step_increment >= 1:
+                            self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
+                            step_increment = 0
+
+                else:
+
+                current_sine_steps = next_sine_steps
+                current_cosine_steps = next_cosine_steps
+
+            heading, roll, pitch = bno.read_euler()
+            sys, gyro, accel, mag = self._orientation.get_calibration_status()
+            print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
+
+            #reverse direction
+            calibration_clockwise = not calibration_clockwise
 
 
 
