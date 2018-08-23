@@ -251,7 +251,7 @@ class Rotator(object):
 
                 # Interleave Stepper Motor Movement 
                 if abs(move_steps_vertical) <= abs(move_steps_horizontal):
-                    step_ratio =  abs(move_steps_vertical) \ abs(move_steps_horizontal)
+                    step_ratio =  abs(move_steps_vertical) / abs(move_steps_horizontal)
                     step_increment = 0
 
                     for step_count in range(move_steps_horizontal):
@@ -262,7 +262,7 @@ class Rotator(object):
                             step_increment = 0
 
                 elif abs(move_steps_vertical) > abs(move_steps_horizontal):    
-                    step_ratio =   abs(move_steps_horizontal) \ abs(move_steps_vertical) 
+                    step_ratio =   abs(move_steps_horizontal) / abs(move_steps_vertical) 
                     step_increment = 0
 
                     for step_count in range(move_steps_vertical):
