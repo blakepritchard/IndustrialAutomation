@@ -245,7 +245,7 @@ class Rotator(object):
                 if calibration_clockwise:
                     direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical >= 0 else Adafruit_MotorHAT.BACKWARD
                     direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal >= 0 else Adafruit_MotorHAT.BACKWARD
-                else
+                else:
                     direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical <= 0 else Adafruit_MotorHAT.BACKWARD
                     direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal <= 0 else Adafruit_MotorHAT.BACKWARD
 
