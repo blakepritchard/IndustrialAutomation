@@ -207,7 +207,7 @@ class Rotator(object):
 
     def calibrate_orientation_sensor(self):
         
-        heading, roll, pitch = bno.read_euler()
+        heading, roll, pitch = self._orientation.read_euler()
         sys, gyro, accel, mag = self._orientation.get_calibration_status()
         print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
         
@@ -277,7 +277,7 @@ class Rotator(object):
                 current_sine_steps = next_sine_steps
                 current_cosine_steps = next_cosine_steps
 
-            heading, roll, pitch = bno.read_euler()
+            heading, roll, pitch = self._orientation.read_euler()
             sys, gyro, accel, mag = self._orientation.get_calibration_status()
             print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
 
