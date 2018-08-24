@@ -232,8 +232,8 @@ class Rotator(object):
             for degree in range(0, 360):
                 rad = math.radians(degree)
                 
-                next_sine = sin(rad)
-                next_cosine = cos(rad)
+                next_sine = math.sin(rad)
+                next_cosine = math.cos(rad)
 
                 next_sine_steps = next_sine * self._calibration_routine_steps_vertical
                 next_cosine_steps = next_cosine * self._calibration_routine_steps_horizontal 
