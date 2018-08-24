@@ -227,8 +227,10 @@ class Rotator(object):
 
         while mag < 3:
             print "Compass Not Calibrated, Calibrating..."
+            partial_steps_vertical = 0
+            partial_steps_horizontal = 0 
             
-            #clockwise
+            # Trace a Figure Eight
             for degree in range(0, 360):
                 rad = math.radians(degree)
                 
@@ -238,9 +240,22 @@ class Rotator(object):
                 next_sine_steps = next_sine * self._calibration_routine_steps_vertical
                 next_cosine_steps = next_cosine * self._calibration_routine_steps_horizontal 
 
-                move_steps_vertical = next_sine_steps - current_sine_steps
-                move_steps_horizontal = next_cosine_steps - current_cosine_steps
+                # 
+                move_steps_vertical, remainder_vertical = divmod(next_sine_steps - current_sine_steps, 1)
+                move_steps_horizontal, remainder_horizontal = divmod(next_cosine_steps - current_cosine_steps, 1)
 
+                partial_steps_vertical = partial_steps_vertical + remainder_vertical
+                partial_steps_horizontal = partial_steps_horizontal + remainder_horizontal
+
+                # pick up remainder from last degree sweep
+                if partial_steps_vertical >=1:
+                    move_steps_vertical = move_steps_vertical +1
+                    partial_steps_vertical = partial_steps_vertical -1
+                if partial_steps_horizontal >=1:
+                    move_steps_horizontal = partial_steps_horizontal +1
+                    partial_steps_horizontal = partial_steps_horizontal -1
+
+                # Set direction
                 if calibration_clockwise:
                     direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical >= 0 else Adafruit_MotorHAT.BACKWARD
                     direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal >= 0 else Adafruit_MotorHAT.BACKWARD
