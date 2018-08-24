@@ -264,6 +264,8 @@ class Rotator(object):
                     direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical <= 0 else Adafruit_MotorHAT.BACKWARD
                     direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal <= 0 else Adafruit_MotorHAT.BACKWARD
 
+                print "X Moving {0} Steps {1}, Y Moving {2} Steps {3}".format(move_steps_horizontal, direction_horizontal, move_steps_vertical, direction_vertical)
+
                 # Interleave Stepper Motor Movement 
                 if abs(move_steps_vertical) <= abs(move_steps_horizontal):
                     step_ratio =  abs(move_steps_vertical) / abs(move_steps_horizontal)
