@@ -233,6 +233,7 @@ class Rotator(object):
             # Trace a Figure Eight
             for degree in range(0, 360):
                 rad = math.radians(degree)
+                print "Degree: {0}, Radians: {1} ".format(degree, rad)
                 
                 next_sine = math.sin(rad)
                 next_cosine = math.cos(rad)
@@ -240,7 +241,7 @@ class Rotator(object):
                 next_sine_steps = next_sine * self._calibration_routine_steps_vertical
                 next_cosine_steps = next_cosine * self._calibration_routine_steps_horizontal 
 
-                # 
+                # calculate steps
                 move_steps_vertical, remainder_vertical = divmod(next_sine_steps - current_sine_steps, 1)
                 move_steps_horizontal, remainder_horizontal = divmod(next_cosine_steps - current_cosine_steps, 1)
 
@@ -268,7 +269,7 @@ class Rotator(object):
                     step_ratio =  abs(move_steps_vertical) / abs(move_steps_horizontal)
                     step_increment = 0
 
-                    for step_count in range(move_steps_horizontal):
+                    for step_count in range(int(move_steps_horizontal)):
                         self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
                         step_increment = step_increment + step_ratio
                         if step_increment >= 1:
@@ -279,7 +280,7 @@ class Rotator(object):
                     step_ratio =   abs(move_steps_horizontal) / abs(move_steps_vertical) 
                     step_increment = 0
 
-                    for step_count in range(move_steps_vertical):
+                    for step_count in range(int(move_steps_vertical)):
                         self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
                         step_increment = step_increment + step_ratio
                         if step_increment >= 1:
