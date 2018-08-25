@@ -79,8 +79,8 @@ class Rotator(object):
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
 
-    _calibration_routine_steps_vertical = 360
-    _calibration_routine_steps_horizontal = 180
+    _calibration_routine_steps_vertical = 90
+    _calibration_routine_steps_horizontal = 90
 
     '''
     Constructor
@@ -275,10 +275,10 @@ class Rotator(object):
                     step_increment = 0
 
                     for step_count in range(int(move_steps_horizontal)):
-                        self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
+                        self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.INTERLEAVE)
                         step_increment = step_increment + step_ratio
                         if step_increment >= 1:
-                            self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
+                            self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.INTERLEAVE)
                             step_increment = 0
 
                 else:  
@@ -286,14 +286,14 @@ class Rotator(object):
                     step_increment = 0
 
                     for step_count in range(int(move_steps_vertical)):
-                        self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.DOUBLE)
+                        self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.INTERLEAVE)
                         step_increment = step_increment + step_ratio
                         if step_increment >= 1:
-                            self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.DOUBLE)
+                            self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.INTERLEAVE)
                             step_increment = 0
 
-
-
+                #wait a split second to allow vibration to settle
+                time.sleep(30)
                 current_sine_steps = next_sine_steps
                 current_cosine_steps = next_cosine_steps
 
