@@ -237,26 +237,48 @@ class Rotator(object):
             
             # Trace a Square Figure Eight
 
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
             self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+
+
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+
+            #wait a second to allow vibration to settle
+            time.sleep(1)
+            heading, roll, pitch = self._orientation.read_euler()
+            sys, gyro, accel, mag = self._orientation.get_calibration_status()
+            print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
+
+            if mag < 3:
+                print "Not Calibrated Yet. Moving To Wider Routine"
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
 
 
-            #wait a split second to allow vibration to settle
-            time.sleep(.3)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+
 
 
             heading, roll, pitch = self._orientation.read_euler()
