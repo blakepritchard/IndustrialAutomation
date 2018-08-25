@@ -233,76 +233,33 @@ class Rotator(object):
             partial_steps_vertical = 0
             partial_steps_horizontal = 0 
             
-            # Trace a Figure Eight
-            for degree in range(0, 360):
-                rad = math.radians(degree)
-                print "Degree: {0}, Radians: {1} ".format(degree, rad)
-                
-                next_sine = math.sin(rad)
-                next_cosine = math.cos(rad)
+            # Trace a Square Figure Eight
 
-                next_sine_steps = next_sine * self._calibration_routine_steps_vertical
-                next_cosine_steps = next_cosine * self._calibration_routine_steps_horizontal 
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
 
-                # calculate steps
-                move_steps_vertical, remainder_vertical = divmod(next_sine_steps - current_sine_steps, 1)
-                move_steps_horizontal, remainder_horizontal = divmod(next_cosine_steps - current_cosine_steps, 1)
 
-                partial_steps_vertical = partial_steps_vertical + remainder_vertical
-                partial_steps_horizontal = partial_steps_horizontal + remainder_horizontal
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
+            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
+            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/6), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
 
-                # pick up remainder from last degree sweep
-                if partial_steps_vertical >=1:
-                    move_steps_vertical = move_steps_vertical +1
-                    partial_steps_vertical = partial_steps_vertical -1
-                if partial_steps_horizontal >=1:
-                    move_steps_horizontal = partial_steps_horizontal +1
-                    partial_steps_horizontal = partial_steps_horizontal -1
 
-                # Set direction
-                if calibration_clockwise:
-                    direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical >= 0 else Adafruit_MotorHAT.BACKWARD
-                    direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal >= 0 else Adafruit_MotorHAT.BACKWARD
-                else:
-                    direction_vertical = Adafruit_MotorHAT.FORWARD if move_steps_vertical <= 0 else Adafruit_MotorHAT.BACKWARD
-                    direction_horizontal = Adafruit_MotorHAT.FORWARD if move_steps_horizontal <= 0 else Adafruit_MotorHAT.BACKWARD
+            #wait a split second to allow vibration to settle
+            time.sleep(.3)
 
-                print "X Moving {0} Steps {1}, Y Moving {2} Steps {3}".format(move_steps_horizontal, direction_horizontal, move_steps_vertical, direction_vertical)
-
-                # Interleave Stepper Motor Movement 
-                if abs(move_steps_vertical) <= abs(move_steps_horizontal):
-                    step_ratio = abs(move_steps_vertical) / abs(move_steps_horizontal)
-                    step_increment = 0
-
-                    for step_count in range(int(move_steps_horizontal)):
-                        self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.INTERLEAVE)
-                        step_increment = step_increment + step_ratio
-                        if step_increment >= 1:
-                            self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.INTERLEAVE)
-                            step_increment = 0
-
-                else:  
-                    step_ratio = abs(move_steps_horizontal) / abs(move_steps_vertical) 
-                    step_increment = 0
-
-                    for step_count in range(int(move_steps_vertical)):
-                        self._stepperElevation.step(1, direction_vertical,  Adafruit_MotorHAT.INTERLEAVE)
-                        step_increment = step_increment + step_ratio
-                        if step_increment >= 1:
-                            self._stepperAzimuth.step(1, direction_horizontal,  Adafruit_MotorHAT.INTERLEAVE)
-                            step_increment = 0
-
-                #wait a split second to allow vibration to settle
-                time.sleep(.3)
-                current_sine_steps = next_sine_steps
-                current_cosine_steps = next_cosine_steps
 
             heading, roll, pitch = self._orientation.read_euler()
             sys, gyro, accel, mag = self._orientation.get_calibration_status()
             print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
-
-            #reverse direction
-            calibration_clockwise = not calibration_clockwise
 
 
 
