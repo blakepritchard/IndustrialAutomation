@@ -81,7 +81,7 @@ class Rotator(object):
     _polarity_stepper_calibration_offset = 0
 
     _calibration_routine_steps_vertical = 90
-    _calibration_routine_steps_horizontal = 90
+    _calibration_routine_steps_horizontal = 120
     _calibration_time = datetime.datetime.now()
 
     '''
@@ -236,7 +236,7 @@ class Rotator(object):
             partial_steps_horizontal = 0 
             
             # Trace a Square Figure Eight
-
+            self.recenter_elevation()
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
@@ -245,7 +245,7 @@ class Rotator(object):
             self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
 
-
+            self.recenter_elevation()
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
             self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
@@ -262,6 +262,7 @@ class Rotator(object):
 
             if mag < 3:
                 print "Not Calibrated Yet. Moving To Wider Routine"
+                self.recenter_elevation()
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
@@ -270,7 +271,7 @@ class Rotator(object):
                 self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
 
-
+                self.recenter_elevation()
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
@@ -278,8 +279,6 @@ class Rotator(object):
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
                 self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
                 self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-
 
             heading, roll, pitch = self._orientation.read_euler()
             sys, gyro, accel, mag = self._orientation.get_calibration_status()
