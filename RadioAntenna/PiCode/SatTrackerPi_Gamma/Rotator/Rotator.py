@@ -271,7 +271,7 @@ class Rotator(object):
 
                 # Interleave Stepper Motor Movement 
                 if abs(move_steps_vertical) <= abs(move_steps_horizontal):
-                    step_ratio =  abs(move_steps_vertical) / abs(move_steps_horizontal)
+                    step_ratio = abs(move_steps_vertical) / abs(move_steps_horizontal)
                     step_increment = 0
 
                     for step_count in range(int(move_steps_horizontal)):
@@ -282,7 +282,7 @@ class Rotator(object):
                             step_increment = 0
 
                 else:  
-                    step_ratio =   abs(move_steps_horizontal) / abs(move_steps_vertical) 
+                    step_ratio = abs(move_steps_horizontal) / abs(move_steps_vertical) 
                     step_increment = 0
 
                     for step_count in range(int(move_steps_vertical)):
@@ -293,7 +293,7 @@ class Rotator(object):
                             step_increment = 0
 
                 #wait a split second to allow vibration to settle
-                time.sleep(30)
+                time.sleep(.3)
                 current_sine_steps = next_sine_steps
                 current_cosine_steps = next_cosine_steps
 
