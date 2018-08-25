@@ -11,6 +11,7 @@ from __future__ import division
 import sys
 import os
 import time
+import datetime
 import math
 import atexit
 import logging
@@ -81,6 +82,7 @@ class Rotator(object):
 
     _calibration_routine_steps_vertical = 90
     _calibration_routine_steps_horizontal = 90
+    _calibration_time = datetime.datetime.now()
 
     '''
     Constructor
@@ -122,7 +124,7 @@ class Rotator(object):
         self.recenter_elevation()
 
 
-        # self.calibrate_orientation_sensor()
+        self.calibrate_orientation_sensor()
 
         atexit.register(self.turnOffMotors)               
 
@@ -261,7 +263,8 @@ class Rotator(object):
             sys, gyro, accel, mag = self._orientation.get_calibration_status()
             print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
 
-
+        print "Compass Is Now Calibrated..."
+        self._calibration_time = datetime.datetime.now()
 
 ##########################################################################################
 # Elevation
