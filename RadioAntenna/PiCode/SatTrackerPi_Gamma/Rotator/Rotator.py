@@ -124,7 +124,7 @@ class Rotator(object):
         self.recenter_elevation()
 
 
-        self.calibrate_orientation_sensor()
+        #self.calibrate_orientation_sensor()
 
         atexit.register(self.turnOffMotors)               
 
