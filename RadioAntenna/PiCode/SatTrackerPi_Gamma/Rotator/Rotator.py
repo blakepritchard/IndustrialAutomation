@@ -76,7 +76,7 @@ class Rotator(object):
     _elevation_stepper_count = 0
     _polarity_stepper_count = 0
     
-    _azimuth_stepper_calibration_offset = -90
+    _azimuth_stepper_calibration_offset = 0
     _elevation_stepper_calibration_offset = 0
     _polarity_stepper_calibration_offset = 0
 
@@ -106,10 +106,10 @@ class Rotator(object):
             logging.basicConfig(level=logging.DEBUG)
 
         self._stepperAzimuth = self._encoder_A.getStepper(200, 1)     # 200 steps/rev, motor port #1
-        self._stepperAzimuth.setSpeed(20)                             # 10 RPM
+        self._stepperAzimuth.setSpeed(15)                             # 10 RPM
 
         self._stepperElevation = self._encoder_A.getStepper(200, 2)   # 200 steps/rev, motor port #2
-        self._stepperElevation.setSpeed(20)                           # 10 RPM
+        self._stepperElevation.setSpeed(15)                           # 10 RPM
 
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperElevation.setSpeed(10)                           # 10 RPM
