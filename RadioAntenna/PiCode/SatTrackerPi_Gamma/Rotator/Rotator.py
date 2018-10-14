@@ -57,13 +57,22 @@ class Rotator(object):
     _cabletension_azimuth_min = 640
     _cabletension_azimuth_max = 745
 
+    _cabletension_elevation_center = 700
+    _cabletension_elevation_min = 650
+    _cabletension_elevation_max = 750
+
+    _cabletension_elevation_center = 700
+    _cabletension_elevation_min = 650
+    _cabletension_elevation_max = 750
+    
+
     # Hardware SPI configuration:
     SPI_PORT   = 0
     SPI_DEVICE = 0
 
     _bOrientationRunning = False
     
-
+    #Position in Degrees
     _azimuth_current = 0
     _elevation_current = 0
     _polarity_current = 0
@@ -71,18 +80,16 @@ class Rotator(object):
     _azimuth_target = 0
     _elevation_target = 0    
     _polarity_target = 0   
-    
+
+    #Position in Steps
     _azimuth_stepper_count = 0
     _elevation_stepper_count = 0
     _polarity_stepper_count = 0
-    
-    _azimuth_stepper_calibration_offset = 0
-    _elevation_stepper_calibration_offset = 0
-    _polarity_stepper_calibration_offset = 0
 
-    _calibration_routine_steps_vertical = 120
-    _calibration_routine_steps_horizontal = 360
-    _calibration_time = datetime.datetime.now()
+    _azimuth_steps_per_degree = 2
+    _elevation_steps_per_degree = 4
+    _polarity_steps_per_degree = 2
+
 
     '''
     Constructor
@@ -114,17 +121,12 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperElevation.setSpeed(10)                           # 10 RPM
 
-        self.start_orientation_sensor()
-
-
         print str(self._encoder_A)
         print str(self._encoder_B)
 
         self.recenter_azimuth()
         self.recenter_elevation()
 
-
-        #self.calibrate_orientation_sensor()
 
         atexit.register(self.turnOffMotors)               
 
@@ -159,162 +161,50 @@ class Rotator(object):
 
 
 ##########################################################################################
-# BNO055 Orientation Sensor
-########################################################################################## 
-    def start_orientation_sensor(self):
-        
-        self._isOrientationRunning = False
-
-        if not self._isOrientationRunning:
-            nRetry = 6
-            nSleepTime = 2
-            while ((not self._isOrientationRunning) and (nRetry>0)):
-                try:
-                    self._isOrientationRunning = self._orientation.begin()  #Start BNO055 Orientation Sensor
-                    
-                except RuntimeError as error:
-                    print("BNO055 Chip Not Initialized. Will Attempt in: " + str(nSleepTime) +" seconds. Attemps Left:" +str(nRetry))
-                    print(type(error))    # the exception instance
-                    print(error.args)     # arguments stored in .args
-                    time.sleep(nSleepTime)
-                          
-                    nRetry = nRetry - 1
-                    nSleepTime = nSleepTime*1.5
-                except:
-                    print("Unexpected error:", sys.exc_info()[0])
-                    raise
-                          
-        if (not self._isOrientationRunning):
-            raise RuntimeError('Failed to initialize BNO055! Is the sensor connected?')
-        
-        
-        # Print system status and self test result.
-        status, self_test, error = self._orientation.get_system_status()
-        print('System status: {0}'.format(status))
-        print('Self test result (0x0F is normal): 0x{0:02X}'.format(self_test))
-        # Print out an error if system status is in error mode.
-        if status == 0x01:
-            print('Orientatin System error: {0}'.format(error))
-            print('See BNO055 datasheet section 4.3.59 for the meaning.')
-
-        # Print BNO055 software revision and other diagnostic data.
-        sw, bl, accel, mag, gyro = self._orientation.get_revision()
-        print('Software version:   {0}'.format(sw))
-        print('Bootloader version: {0}'.format(bl))
-        print('Accelerometer ID:   0x{0:02X}'.format(accel))
-        print('Magnetometer ID:    0x{0:02X}'.format(mag))
-        print('Gyroscope ID:       0x{0:02X}\n'.format(gyro))   
-
-
-
-
-
-
-    def calibrate_orientation_sensor(self):
-        
-        heading, roll, pitch = self._orientation.read_euler()
-        sys, gyro, accel, mag = self._orientation.get_calibration_status()
-        print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
-        
-        current_sine = 0
-        current_cosine = 1
-
-        current_sine_steps = 0
-        current_cosine_steps = 0
-
-        next_sine = 0
-        next_cosine = 1
-
-        next_sine_steps = 0
-        next_cosine_steps = 1
-
-        calibration_clockwise = False
-
-        while mag < 3:
-            print "Compass Not Calibrated, Calibrating..."
-            partial_steps_vertical = 0
-            partial_steps_horizontal = 0 
-            
-            # Trace a Square Figure Eight
-            self.recenter_elevation()
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-            self.recenter_elevation()
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
-            self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-            self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal/3), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-            #wait a second to allow vibration to settle
-            time.sleep(1)
-            heading, roll, pitch = self._orientation.read_euler()
-            sys, gyro, accel, mag = self._orientation.get_calibration_status()
-            print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
-
-            if mag < 3:
-                print "Not Calibrated Yet. Moving To Wider Routine"
-                self.recenter_elevation()
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)    
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-                self.recenter_elevation()
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)    
-                self._stepperElevation.step(int(self._calibration_routine_steps_vertical/2), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.INTERLEAVE)
-                self._stepperAzimuth.step(int(self._calibration_routine_steps_horizontal), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-
-            heading, roll, pitch = self._orientation.read_euler()
-            sys, gyro, accel, mag = self._orientation.get_calibration_status()
-            print('Heading={0:0.2F} Roll={1:0.2F} Pitch={2:0.2F}\tSys_cal={3} Gyro_cal={4} Accel_cal={5} Mag_cal={6}'.format(heading, roll, pitch, sys, gyro, accel, mag))
-
-        print "Compass Is Now Calibrated..."
-        self._calibration_time = datetime.datetime.now()
-
-##########################################################################################
 # Elevation
 ##########################################################################################    
 
-
+    
     def get_orientation_elevation(self):
-        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-        elevation_actual = elevation_actual + self._elevation_stepper_calibration_offset
-        return float(elevation_actual)
-
+        self._elevation_actual = float((self._elevation_stepper_count / self._elevation_steps_per_degree) + self._elevation_stepper_calibration_offset)
+        return self._elevation_actual
 
     def recenter_elevation(self):
-        self._elevation_current = self.get_orientation_elevation()
-        print "Leveling Elevation. Starting Elevation:"+str(self._elevation_current)
-        while(self._elevation_current < 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-            self._elevation_current = self.get_orientation_elevation()
-            print("Elevation: " + str(self._elevation_current))
-        while(self._elevation_current > 0):
-            self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-            self._elevation_current = self.get_orientation_elevation()
-            print("Elevation: " + str(self._elevation_current))
+        try:
+            print("Recentering elevation")
+            cabletension_current = self._adc.read_adc(1)
+            print("Cable Tension = " + str(cabletension_current))
 
+            nSteps = 0;
+            while ((cabletension_current < self._cabletension_elevation_center)
+                and (cabletension_current < self._cabletension_elevation_max)
+                and (cabletension_current > self._cabletension_elevation_min)):
+                    nSteps+=1
+                    self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    cabletension_current = self._adc.read_adc(1)           
+
+            
+            while ((cabletension_current > self._cabletension_elevation_center)
+                and (cabletension_current < self._cabletension_elevation_max)
+                and (cabletension_current > self._cabletension_elevation_min)):
+                    nSteps-=1
+                    self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    cabletension_current = self._adc.read_adc(1)
+
+            print("Steps: " + str(nSteps))
+                  
+            self._elevation_current = 0
+            self._elevation_stepper_count = 0
+            cabletension_current = self._adc.read_adc(1)
+            print("Current Elevation Reading:"+str(self._elevation_current)+", Now Centered on Tripod with Cable Tension = " + str(cabletension_current))
+            
+        except Exception as e:
+            self.handle_exception(e)
 
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
-            elevation_tuple = divmod(self._elevation_target, .25)
+            elevation_tuple = divmod(self._elevation_target, (1/self._elevation_steps_per_degree))
             elevation_remainder = float(elevation_tuple[1])
             
             #round down to nearest half degree
@@ -326,28 +216,24 @@ class Rotator(object):
 
             elevation_actual = self.get_orientation_elevation()
             steps_estimated = self.calculate_elevation_steps()
-            steps_actual = 0
 
             #Move Up
             if elevation_target > self._elevation_current:
                 print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Upward by Estimated: " + str(steps_estimated) + " steps.")
                 
-                while(elevation_target > elevation_actual):
-                    self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                    elevation_actual = self.get_orientation_elevation()
-                    if self._verbose > 0: print("Elevation Actual: " + str(elevation_actual))
-                    steps_actual = steps_actual +1
+
+                self._stepperElevation.step(steps_estimated, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                self._elevation_current += 1
+                    
                 print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
 
             #Move Down    
             elif elevation_target < self._elevation_current:
                 print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Downward by Estimated: " + str(steps_estimated) + " steps.")
 
-                while(elevation_target < elevation_actual):
-                    self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    elevation_actual = self.get_orientation_elevation()
-                    if self._verbose > 0: print("Elevation Actual: " + str(elevation_actual))
-                    steps_actual = steps_actual +1
+                self._stepperElevation.step(steps_estimated, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                self._elevation_current -= 1
+                    
                 print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
 
             else:
@@ -364,7 +250,7 @@ class Rotator(object):
         try:
             degrees = float(self._elevation_target) - float(self._elevation_current)
             print("Elevation Degrees:" + str(degrees))
-            steps = abs(4 * int(degrees))
+            steps = abs(self._elevation_steps_per_degree * int(degrees))
             return steps
         except Exception as e:
             self.handle_exception(e)
@@ -382,17 +268,14 @@ class Rotator(object):
 ##########################################################################################
 #    Azimuth
 ##########################################################################################
+    # Return Azimuth in Degrees
     def get_orientation_azimuth(self):
-        azimuth_actual, elevation_actual, polarity_actual = self._orientation.read_euler()
-
-        #this is a hack because I mounted the chip sideways
-        #print "Azimuth Raw: " + str(azimuth_actual) + "Azimuth Offset: " + str(self._azimuth_stepper_calibration_offset)
-        azimuth_actual = azimuth_actual + self._azimuth_stepper_calibration_offset
+        self._azimuth_actual = float((self._azimuth_stepper_count / self._azimuth_steps_per_degree ) + self._azimuth_stepper_calibration_offset)
         
-        if azimuth_actual <0:
-            azimuth_actual = 360 + azimuth_actual
+        if self._azimuth_actual <0:
+            self._azimuth_actual = 360 + self._azimuth_actual
         #print "Azimuth Adusted: " + str(azimuth_actual)
-        return float(azimuth_actual)
+        return self._azimuth_actual
 
     
     def recenter_azimuth(self):
@@ -419,7 +302,8 @@ class Rotator(object):
 
             print("Steps: " + str(nSteps))
                   
-            self._azimuth_current = self.get_orientation_azimuth()   
+            self._azimuth_current = 0
+            self._azimuth_stepper_count = 0
             cabletension_current = self._adc.read_adc(0)
             print("Current Azimuth Reading:"+str(self._azimuth_current)+", Now Centered on Tripod with Cable Tension = " + str(cabletension_current))
             
@@ -493,7 +377,7 @@ class Rotator(object):
 
     def calculate_azimuth_steps(self, degrees_travel):
         try:
-            steps, remainder = divmod(degrees_travel, .5)
+            steps, remainder = divmod(degrees_travel, (1/self._azimuth_steps_per_degree))
             return steps            
         except Exception as e:
             self.handle_exception(e)
@@ -533,8 +417,8 @@ class Rotator(object):
               
                 if azimuth_target_rounded != self._azimuth_current:
                     cabletension_current = self._adc.read_adc(0)
-                    nSteps = self.calculate_azimuth_steps(degrees_travel)
-                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(nSteps) + " steps.")
+                    steps_planned = self.calculate_azimuth_steps(degrees_travel)
+                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(steps_planned) + " steps.")
 
                     # Scope Variables
                     steps_actual = 0
@@ -560,18 +444,19 @@ class Rotator(object):
                             self.recenter_azimuth()
                             cabletension_current = self._adc.read_adc(0)
                             is_clockwise = not is_clockwise
+                            keep_moving = False
 
                         # Update Object
-                        self._azimuth_current = self.get_orientation_azimuth()
-                        
-
+                        if(true == is_clockwise):
+                            self._azimuth_stepper_count += 1
+                        else:
+                            self._azimuth_stepper_count -= 1
+                            
                         # Keep Moving ?
-                        if ((is_clockwise) and (azimuth_current_rounded >= azimuth_target_rounded)):
-                            print "Stopping Clockwise Rotation at : " + str(azimuth_current_rounded)
+                        if (steps_actual >= steps_planned):
+                            print "Stopping Rotation at : " + str(steps_actual) + " Steps."
                             keep_moving = False
-                        elif ((not is_clockwise) and (azimuth_current_rounded  <=  azimuth_target_rounded)):
-                            print "Stopping Counter-Clockwise Rotation at : " + str(azimuth_current_rounded)
-                            keep_moving = False
+
 
                     print("Actual Azimuth Steps: "+ str(steps_actual))
 
@@ -579,8 +464,6 @@ class Rotator(object):
                 else:
                     print("Holding Azimuth Steady at: "+ str(azimuth))
 
-                # Set Azimuth Value to Be Returned to GPredict
-                self._azimuth_current = self.get_orientation_azimuth()
 
             else:
                 print "Orientation Sensor Not Running"
