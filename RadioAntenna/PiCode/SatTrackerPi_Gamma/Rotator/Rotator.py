@@ -39,7 +39,6 @@ from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_Step
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 
-from Adafruit_BNO055 import BNO055
 
 
 class Rotator(object):
@@ -70,12 +69,6 @@ class Rotator(object):
     SPI_PORT   = 0
     SPI_DEVICE = 0
 
-    _bOrientationRunning = False
-    
-    #Position in Degrees
-    _azimuth_current_degrees = 0
-    _elevation_current_degrees = 0
-    _polarity_current_degrees = 0
     
     _azimuth_target = 0
     _elevation_target = 0    
@@ -90,6 +83,9 @@ class Rotator(object):
     _elevation_steps_per_degree = 4
     _polarity_steps_per_degree = 2
 
+    _azimuth_degrees_per_step   = 1/self._azimuth_steps_per_degree
+    _elevation_degrees_per_step = 1/self._elevation_steps_per_degree
+    _polarity_degrees_per_step  = 1/self._polarity_steps_per_degree
 
     '''
     Constructor
@@ -106,8 +102,6 @@ class Rotator(object):
         # Analog Digital Converter
         self._adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(self.SPI_PORT, self.SPI_DEVICE))
 
-        #Ultimate Orientation Sensor
-        self._orientation = BNO055.BNO055(serial_port='/dev/serial0', rst=24)
 
         if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
             logging.basicConfig(level=logging.DEBUG)
@@ -128,10 +122,8 @@ class Rotator(object):
         self.recenter_elevation()
 
 
-        atexit.register(self.turnOffMotors)               
-
-
-            
+        atexit.register(self.turnOffMotors)
+        
 
     def turnOffMotors(self):
         self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
@@ -163,11 +155,16 @@ class Rotator(object):
 ##########################################################################################
 # Elevation
 ##########################################################################################    
-
-    
     def get_elevation_degrees(self):
-        self._elevation_current_degrees = float((self._elevation_stepper_count / self._elevation_steps_per_degree) + self._elevation_stepper_calibration_offset)
-        return self._elevation_current_degrees
+        return float((self.get_elevation_stepper_count() / self._elevation_steps_per_degree))
+
+    def get_elevation_stepper_count(self):
+        return self._elevation_stepper_count
+    
+    def set_elevation_stepper_count(self, stepper_count)
+        self._elevation_stepper_count = stepper_count
+    
+
 
     def recenter_elevation(self):
         try:
@@ -193,10 +190,10 @@ class Rotator(object):
 
             print("Steps: " + str(nSteps))
                   
-            self._elevation_current_degrees = 0
-            self._elevation_stepper_count = 0
+
+            self.set_elevation_stepper_count(0)
             encoderposition_elevation_current = self._adc.read_adc(1)
-            print("Current Elevation Reading:"+str(self._elevation_current_degrees)+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
+            print("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
             
         except Exception as e:
             self.handle_exception(e)
@@ -204,53 +201,43 @@ class Rotator(object):
     def set_elevation(self, elevation):
         try:       
             self._elevation_target = float(elevation)
-            elevation_tuple = divmod(self._elevation_target, (1/self._elevation_steps_per_degree))
+            elevation_tuple = divmod(self._elevation_target, self._elevation_degrees_per_step)
             elevation_remainder = float(elevation_tuple[1])
             
             #round down to nearest half degree
             elevation_target = float(self._elevation_target - elevation_remainder)
             
             #round back up if remainder was closer to upper bound
-            if elevation_remainder > .125:
-                elevation_target += .25
+            if elevation_remainder > (self._elevation_degrees_per_step / 2)):
+                elevation_target += self._elevation_degrees_per_step
 
-            elevation_actual = self.get_elevation_degrees()
-            steps_estimated = self.calculate_elevation_steps()
+            elevation_current_degrees = self.get_elevation_degrees()
+            steps_required = self.calculate_elevation_steps(elevation_target)
 
             #Move Up
-            if elevation_target > self._elevation_current_degrees:
-                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Upward by Estimated: " + str(steps_estimated) + " steps.")
-                
-
-                self._stepperElevation.step(steps_estimated, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                self._elevation_current_degrees += 1
-                    
-                print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
+            if elevation_target > elevation_current_degrees:
+                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
+                self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
 
             #Move Down    
-            elif elevation_target < self._elevation_current_degrees:
-                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_actual)+"; Moving Elevation Downward by Estimated: " + str(steps_estimated) + " steps.")
-
-                self._stepperElevation.step(steps_estimated, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                self._elevation_current_degrees -= 1
-                    
-                print("Current Elevation: "+str(elevation_actual)+", Actual Elevation Steps: "+ str(steps_actual))
+            elif elevation_target < elevation_current_degrees:
+                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Downward by Estimated: " + str(steps_required) + " steps.")
+                self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
 
             else:
                 print("Holding Elevation Steady at: "+ str(elevation))
 
             # Set Elevation Value to Be Returned to GPredict
-            self._elevation_current_degrees = self.get_elevation_degrees()
+            self.set_elevation_stepper_count(self.get_elevation_stepper_count() + steps_required)
 
             
         except Exception as e:
             self.handle_exception(e)
 
-    def calculate_elevation_steps(self):
+    def calculate_elevation_steps(self, elevation_target):
         try:
-            degrees = float(self._elevation_target) - float(self._elevation_current_degrees)
-            print("Elevation Degrees:" + str(degrees))
-            steps = abs(self._elevation_steps_per_degree * int(degrees))
+            degrees = float(elevation_target) - float(self.get_elevation_degrees())
+            steps = self._elevation_steps_per_degree * int(degrees)
             return steps
         except Exception as e:
             self.handle_exception(e)
@@ -270,14 +257,9 @@ class Rotator(object):
 ##########################################################################################
     # Return Azimuth in Degrees
     def get_azimuth_degrees(self):
-        self._azimuth_current_degrees = float((self._azimuth_stepper_count / self._azimuth_steps_per_degree ) + self._azimuth_stepper_calibration_offset)
-        
-        if self._azimuth_current_degrees <0:
-            self._azimuth_current_degrees = 360 + self._azimuth_actual
-        #print "Azimuth Adusted: " + str(azimuth_actual)
-        return self._azimuth_current_degrees
+        return = float(self._azimuth_stepper_count / self._azimuth_steps_per_degree)
 
-    
+    #Re-Center
     def recenter_azimuth(self):
         try:
             print("Recentering Azimuth")
@@ -302,15 +284,14 @@ class Rotator(object):
 
             print("Steps: " + str(nSteps))
                   
-            self._azimuth_current_degrees = 0
-            self._azimuth_stepper_count = 0
-            encoderposition_azimuth_current = self._adc.read_adc(0)
-            print("Current Azimuth Reading:"+str(self._azimuth_current_degrees)+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_azimuth_current))
+            self.set_azimuth_stepper_count(0)
+            print("Current Azimuth Reading:"+str(self.get_azimuth_degreess)+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
             self.handle_exception(e)
 
 
+    #Plan Horizontal Motion Based on encoder limits
     def plan_azimuth_movement(self, target_azimuth):
         
         # Init
@@ -329,7 +310,7 @@ class Rotator(object):
 
         #Start by setting motor direction to shortest linear route
         move_clockwise = True;
-        if target_azimuth < self._azimuth_current_degrees:
+        if target_azimuth < self.get_azimuth_degrees():
             move_clockwise = False;
 
         # Check for shortest Circular Route
@@ -377,7 +358,7 @@ class Rotator(object):
 
     def calculate_azimuth_steps(self, degrees_travel):
         try:
-            steps, remainder = divmod(degrees_travel, (1/self._azimuth_steps_per_degree))
+            steps, remainder = divmod(degrees_travel, (1/self._azimuth_degrees_per_step))
             return steps            
         except Exception as e:
             self.handle_exception(e)
@@ -390,11 +371,11 @@ class Rotator(object):
 
     def round_azimuth_value(self, azimuth):
         #round down to nearest half degree
-        azimuth_div, azimuth_remainder = divmod(azimuth, .5)
+        azimuth_div, azimuth_remainder = divmod(azimuth, self._azimuth_degrees_per_step)
         azimuth_rounded = float(azimuth - azimuth_remainder)
         #round back up if remainder was closer to upper bound
-        if azimuth_remainder > .25:
-            azimuth_rounded += .5
+        if azimuth_remainder > (self._azimuth_degrees_per_step / 2):
+            azimuth_rounded += self._azimuth_degrees_per_step
         return azimuth_rounded   
 
     def get_rounded_azimuth(self):
