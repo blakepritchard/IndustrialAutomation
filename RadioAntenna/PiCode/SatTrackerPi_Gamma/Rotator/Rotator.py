@@ -259,6 +259,12 @@ class Rotator(object):
     def get_azimuth_degrees(self):
         return = float(self._azimuth_stepper_count / self._azimuth_steps_per_degree)
 
+    def get_azimuth_stepper_count(self):
+        return self._azimuth_stepper_count
+    
+    def set_azimuth_stepper_count(self, stepper_count)
+        self._azimuth_stepper_count = stepper_count
+
     #Re-Center
     def recenter_azimuth(self):
         try:
@@ -294,8 +300,10 @@ class Rotator(object):
     #Plan Horizontal Motion Based on encoder limits
     def plan_azimuth_movement(self, target_azimuth):
         
-        # Init
-        target_is_safe = True
+        # Initial Plan is to travel shortest route
+        shortest_route_is_safe = True
+
+        # Set Up Loca; Variables        
         degrees_travel = 0
         estimated_tension = 0
         tension_ratio = (self._encoderposition_azimuth_max - self._encoderposition_azimuth_min) / 360
@@ -303,8 +311,9 @@ class Rotator(object):
         degrees_travel_simple = 0
         degrees_travel_alternate = 0
         degrees_travel_shortest = 0
+        degrees_travel_recommended = 0;     
         
-        #Use Magnetic Compass on BNO055 and Encoder on MCP3008
+        #Use Encoder on MCP3008
         encoderposition_azimuth_current = self._adc.read_adc(0)
         azimuth_actual = self.get_azimuth_degrees()
 
@@ -339,19 +348,26 @@ class Rotator(object):
             estimated_tension_total = encoderposition_azimuth_current + estimated_tension_change
             print "Predicted encoderposition Value: " + str(estimated_tension_total)
             if estimated_tension_total > self._encoderposition_azimuth_max:
-                target_is_safe = False
+                shortest_route_is_safe = False
                 print "Estiamte: "+str(estimated_tension_total)+ " Exceeds Maximum Value of " + str(self._encoderposition_azimuth_max) + ", Azimuth will track the long way around."
         else:
             estimated_tension_total = encoderposition_azimuth_current - estimated_tension_change
             print "Predicted encoderposition Value: " + str(estimated_tension_total)
             if estimated_tension_total < self._encoderposition_azimuth_min:
-                target_is_safe = False
+                shortest_route_is_safe = False
                 print "Estimate: "+str(estimated_tension_total)+ " Is Below Minimum Value of " + str(self._encoderposition_azimuth_min) + ", Azimuth will track the long way around."
 
-        if not target_is_safe:
+        if shortest_route_is_safe:
+            degrees_travel_recommended = degrees_travel_shortest
+        else:
             move_clockwise = not move_clockwise
+            degrees_travel_recommended = 360 - degrees_travel_shortest
+            
 
-        return (move_clockwise, degrees_travel, estimated_tension)
+        #calculate the number of steps required by the Stepper Motor
+        steps_planned = self.calculate_azimuth_steps(degrees_travel_recommended)
+
+        return (steps_planned, move_clockwise, degrees_travel_recommended, estimated_tension)
 
 
 
@@ -379,7 +395,7 @@ class Rotator(object):
         return azimuth_rounded   
 
     def get_rounded_azimuth(self):
-        azimuth_actual = self.get_azimuth_degrees()
+        azimuth_actual = self.get_azimut h_degrees()
         azimuth_current_rounded = self.round_azimuth_value(azimuth_actual)
         return azimuth_current_rounded 
 
@@ -388,66 +404,62 @@ class Rotator(object):
     def set_azimuth(self, azimuth):
         try:
 
-            if(self._isOrientationRunning):
-                #Find Nearest Half Degree Increment
-                self._azimuth_target = float(azimuth)
-                azimuth_target_rounded = self.round_azimuth_value(self._azimuth_target)
-                
+            #Find Nearest Half Degree Increment
+            self._azimuth_target = float(azimuth)
+            azimuth_target_rounded = self.round_azimuth_value(self._azimuth_target)
+            
+            if azimuth_target_rounded != self.get_azimuth_degrees():
+
                 # Plan Movement
-                is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded)
-              
-                if azimuth_target_rounded != self._azimuth_current_degrees:
-                    encoderposition_azimuth_current = self._adc.read_adc(0)
-                    steps_planned = self.calculate_azimuth_steps(degrees_travel)
-                    print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(steps_planned) + " steps.")
+                steps_planned, is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded)
+                
+                encoderposition_azimuth_current = self._adc.read_adc(0)
 
-                    # Scope Variables
-                    steps_actual = 0
-                    azimuth_current_rounded = self.get_rounded_azimuth()
+                print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(steps_planned) + " steps.")
 
-                    keep_moving = True
-                    while(keep_moving):
+                # Scope Variables
+                steps_actual = 0
+                azimuth_current_rounded = self.get_rounded_azimuth()
 
-                        if ((encoderposition_azimuth_current > self._encoderposition_azimuth_min) and (encoderposition_azimuth_current < self._encoderposition_azimuth_max)):
+                keep_moving = True
+                while(keep_moving):
 
-                            #Move Stepper
-                            motor_direction = self.motor_direction_driver_const(is_clockwise)
-                            self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
+                    if ((encoderposition_azimuth_current > self._encoderposition_azimuth_min) and (encoderposition_azimuth_current < self._encoderposition_azimuth_max)):
 
-                            # Echo Log 
-                            steps_actual = steps_actual +1
-                            azimuth_current_rounded = self.get_rounded_azimuth()
-                            encoderposition_azimuth_current = self._adc.read_adc(0)
-                            print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded) + ", encoderposition: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
-                            
-                        else:
-                            print "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
-                            self.recenter_azimuth()
-                            encoderposition_azimuth_current = self._adc.read_adc(0)
-                            is_clockwise = not is_clockwise
-                            keep_moving = False
+                        #Move Stepper
+                        motor_direction = self.motor_direction_driver_const(is_clockwise)
+                        self._stepperAzimuth.step(1, motor_direction,  Adafruit_MotorHAT.DOUBLE)
 
-                        # Update Object
-                        if(true == is_clockwise):
-                            self._azimuth_stepper_count += 1
-                        else:
-                            self._azimuth_stepper_count -= 1
-                            
-                        # Keep Moving ?
-                        if (steps_actual >= steps_planned):
-                            print "Stopping Rotation at : " + str(steps_actual) + " Steps."
-                            keep_moving = False
+                        # Increment Counters
+                        steps_actual = 1 + steps_actual 
+                        azimuth_current_rounded = self.get_rounded_azimuth()
+                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        
+                    else:
+                        print "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
+                        self.recenter_azimuth()
+                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        is_clockwise = not is_clockwise
+                        keep_moving = False
 
+                    # Update Object
+                    if(true == is_clockwise):
+                        self.set_azimuth_stepper_count(self.get_azimuth_stepper_count() + 1)
+                    else:
+                        self.set_azimuth_stepper_count(self.get_azimuth_stepper_count() - 1)
+                        
+                    # Keep Moving ?
+                    if (steps_actual >= steps_planned):
+                        print "Stopping Rotation at : " + str(steps_actual) + " Steps."
+                        keep_moving = False
 
-                    print("Actual Azimuth Steps: "+ str(steps_actual))
-
-
-                else:
-                    print("Holding Azimuth Steady at: "+ str(azimuth))
+                print("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoderposition: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
+                print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded))
 
 
             else:
-                print "Orientation Sensor Not Running"
+                print("Holding Azimuth Steady at: "+ str(azimuth))
+
 
         except Exception as e:
             self.handle_exception(e)
