@@ -255,15 +255,16 @@ class Rotator(object):
 ##########################################################################################
 #    Azimuth
 ##########################################################################################
-    # Return Azimuth in Degrees
-    def get_azimuth_degrees(self):
-        return = float(self._azimuth_stepper_count / self._azimuth_steps_per_degree)
-
     def get_azimuth_stepper_count(self):
         return self._azimuth_stepper_count
     
     def set_azimuth_stepper_count(self, stepper_count)
         self._azimuth_stepper_count = stepper_count
+
+    # Calculate Azimuth in Degrees
+    def get_azimuth_degrees(self):
+        return = float(self.get_azimuth_stepper_count() / self._azimuth_steps_per_degree)
+
 
     #Re-Center
     def recenter_azimuth(self):
@@ -318,20 +319,20 @@ class Rotator(object):
         azimuth_actual = self.get_azimuth_degrees()
 
         #Start by setting motor direction to shortest linear route
-        move_clockwise = True;
+        move_is_clockwise = True;
         if target_azimuth < self.get_azimuth_degrees():
-            move_clockwise = False;
+            move_is_clockwise = False;
 
         # Check for shortest Circular Route
         # Is it shorter to go the other way around ?
-        if (move_clockwise):
+        if (move_is_clockwise):
             degrees_travel_simple = target_azimuth - azimuth_actual
         else:
             degrees_travel_simple = azimuth_actual - target_azimuth
 
         degrees_travel_alternate = 360 - degrees_travel_simple               
         if degrees_travel_alternate < degrees_travel_simple:
-            move_clockwise = not move_clockwise
+            move_is_clockwise = not move_is_clockwise
             degrees_travel_shortest = degrees_travel_alternate
         else:
             degrees_travel_shortest = degrees_travel_simple
@@ -339,12 +340,12 @@ class Rotator(object):
         # Check Cable Tension
         # Is it physically safe to spin any farther in that direction?                
         estimated_tension_change = degrees_travel_shortest * tension_ratio
-        if (move_clockwise):
+        if (move_is_clockwise):
             print "Shortest Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel_shortest)+" Degrees Clockwise, Tension Ratio:" + str(tension_ratio) + " Per Degree"
         else:
             print "Shortest Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel_shortest)+" Degrees Counter-Clockwise, Tension Ratio:" + str(tension_ratio)+ " Per Degree"
 
-        if (move_clockwise):
+        if (move_is_clockwise):
             estimated_tension_total = encoderposition_azimuth_current + estimated_tension_change
             print "Predicted encoderposition Value: " + str(estimated_tension_total)
             if estimated_tension_total > self._encoderposition_azimuth_max:
@@ -360,15 +361,13 @@ class Rotator(object):
         if shortest_route_is_safe:
             degrees_travel_recommended = degrees_travel_shortest
         else:
-            move_clockwise = not move_clockwise
+            move_is_clockwise = not move_is_clockwise
             degrees_travel_recommended = 360 - degrees_travel_shortest
             
 
         #calculate the number of steps required by the Stepper Motor
         steps_planned = self.calculate_azimuth_steps(degrees_travel_recommended)
-
-        return (steps_planned, move_clockwise, degrees_travel_recommended, estimated_tension)
-
+        return (steps_planned, move_is_clockwise, degrees_travel_recommended, estimated_tension)
 
 
 
@@ -394,10 +393,7 @@ class Rotator(object):
             azimuth_rounded += self._azimuth_degrees_per_step
         return azimuth_rounded   
 
-    def get_rounded_azimuth(self):
-        azimuth_actual = self.get_azimut h_degrees()
-        azimuth_current_rounded = self.round_azimuth_value(azimuth_actual)
-        return azimuth_current_rounded 
+
 
     ##########################################
     # Execute Azimuth 
@@ -412,18 +408,16 @@ class Rotator(object):
 
                 # Plan Movement
                 steps_planned, is_clockwise, degrees_travel, estimated_tension = self.plan_azimuth_movement(azimuth_target_rounded)
-                
-                encoderposition_azimuth_current = self._adc.read_adc(0)
-
-                print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth  by Estimated: " + str(steps_planned) + " steps.")
+                print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth by Estimated: " + str(degrees_travel) + " Degrees, with" + str(steps_planned) + " Steps.")
 
                 # Scope Variables
                 steps_actual = 0
-                azimuth_current_rounded = self.get_rounded_azimuth()
-
+                encoderposition_azimuth_current = self._adc.read_adc(0)
+                
                 keep_moving = True
                 while(keep_moving):
 
+                    #Check Encoder Limits Before Moving
                     if ((encoderposition_azimuth_current > self._encoderposition_azimuth_min) and (encoderposition_azimuth_current < self._encoderposition_azimuth_max)):
 
                         #Move Stepper
@@ -434,7 +428,8 @@ class Rotator(object):
                         steps_actual = 1 + steps_actual 
                         azimuth_current_rounded = self.get_rounded_azimuth()
                         encoderposition_azimuth_current = self._adc.read_adc(0)
-                        
+
+                    # If Azimuth Travel Has Exceeded Limits, Reverse Direction, Recenter, then Stop Moving
                     else:
                         print "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Despite Predictions, Re-centering and Reversing Direction to unwind cable"
                         self.recenter_azimuth()
