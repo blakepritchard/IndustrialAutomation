@@ -161,7 +161,7 @@ class Rotator(object):
     def get_elevation_stepper_count(self):
         return self._elevation_stepper_count
     
-    def set_elevation_stepper_count(self, stepper_count)
+    def set_elevation_stepper_count(self, stepper_count):
         self._elevation_stepper_count = stepper_count
     
 
@@ -258,7 +258,7 @@ class Rotator(object):
     def get_azimuth_stepper_count(self):
         return self._azimuth_stepper_count
     
-    def set_azimuth_stepper_count(self, stepper_count)
+    def set_azimuth_stepper_count(self, stepper_count):
         self._azimuth_stepper_count = stepper_count
 
     # Calculate Azimuth in Degrees
