@@ -208,7 +208,7 @@ class Rotator(object):
             elevation_target = float(self._elevation_target - elevation_remainder)
             
             #round back up if remainder was closer to upper bound
-            if elevation_remainder > (self._elevation_degrees_per_step / 2)):
+            if elevation_remainder > (self._elevation_degrees_per_step / 2):
                 elevation_target += self._elevation_degrees_per_step
 
             elevation_current_degrees = self.get_elevation_degrees()
