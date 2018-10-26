@@ -292,7 +292,7 @@ class Rotator(object):
             print("Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
-            print("Current Azimuth Reading:"+str(self.get_azimuth_degreess())+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
+            print("Current Azimuth Reading:"+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
             self.handle_exception(e)
