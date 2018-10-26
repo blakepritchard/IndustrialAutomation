@@ -56,9 +56,9 @@ class Rotator(object):
     _encoderposition_azimuth_min = 640
     _encoderposition_azimuth_max = 745
 
-    _encoderposition_elevation_center = 423
+    _encoderposition_elevation_center = 421
     _encoderposition_elevation_min = 314
-    _encoderposition_elevation_max = 435
+    _encoderposition_elevation_max = 430
 
     _encoderposition_elevation_center = 700
     _encoderposition_elevation_min = 650
@@ -168,9 +168,9 @@ class Rotator(object):
 
     def recenter_elevation(self):
         try:
-            print("Recentering elevation")
+            print("Recentering Elevation at Value: " + str(_encoderposition_elevation_center))
             encoderposition_elevation_current = self._adc.read_adc(1)
-            print("Cable Tension = " + str(encoderposition_elevation_current))
+            print("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
             nSteps = 0;
             while ((encoderposition_elevation_current < self._encoderposition_elevation_center)
