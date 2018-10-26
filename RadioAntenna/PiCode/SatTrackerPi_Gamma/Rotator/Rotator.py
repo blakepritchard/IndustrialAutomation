@@ -269,7 +269,7 @@ class Rotator(object):
     #Re-Center
     def recenter_azimuth(self):
         try:
-            print("Recentering Azimuth")
+            print("Recentering Azimuth at Encoder Value: "+ str(self._encoderposition_azimuth_center))
             encoderposition_azimuth_current = self._adc.read_adc(0)
             print("Cable Tension = " + str(encoderposition_azimuth_current))
 
@@ -292,7 +292,7 @@ class Rotator(object):
             print("Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
-            print("Current Azimuth Reading:"+str(self.get_azimuth_degreess)+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
+            print("Current Azimuth Reading:"+str(self.get_azimuth_degreess())+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
             self.handle_exception(e)
