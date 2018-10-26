@@ -83,9 +83,9 @@ class Rotator(object):
     _elevation_steps_per_degree = 4
     _polarity_steps_per_degree = 2
 
-    _azimuth_degrees_per_step   = 1/self._azimuth_steps_per_degree
-    _elevation_degrees_per_step = 1/self._elevation_steps_per_degree
-    _polarity_degrees_per_step  = 1/self._polarity_steps_per_degree
+    _azimuth_degrees_per_step   = 1/_azimuth_steps_per_degree
+    _elevation_degrees_per_step = 1/_elevation_steps_per_degree
+    _polarity_degrees_per_step  = 1/_polarity_steps_per_degree
 
     '''
     Constructor
