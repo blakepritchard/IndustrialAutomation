@@ -426,7 +426,6 @@ class Rotator(object):
 
                         # Increment Counters
                         steps_actual = 1 + steps_actual 
-                        azimuth_current_rounded = self.get_rounded_azimuth()
                         encoderposition_azimuth_current = self._adc.read_adc(0)
 
                     # If Azimuth Travel Has Exceeded Limits, Reverse Direction, Recenter, then Stop Moving
@@ -449,7 +448,7 @@ class Rotator(object):
                         keep_moving = False
 
                 print("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoderposition: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
-                print("Azimuth Target Rounded: " + str(azimuth_target_rounded) + ", Azimuth Current Rounded: " + str(azimuth_current_rounded))
+                print("Azimuth Stepper Count: " + str(self.get_azimuth_stepper_count()) + ", Azimuth Current Degrees: " + str(self.get_azimuth_degrees()))
 
 
             else:
