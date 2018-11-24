@@ -437,7 +437,7 @@ class Rotator(object):
                         keep_moving = False
 
                     # Update Object
-                    if(true == is_clockwise):
+                    if(True == is_clockwise):
                         self.set_azimuth_stepper_count(self.get_azimuth_stepper_count() + 1)
                     else:
                         self.set_azimuth_stepper_count(self.get_azimuth_stepper_count() - 1)
