@@ -168,7 +168,7 @@ class Rotator(object):
 
     def recenter_elevation(self):
         try:
-            print("Recentering Elevation at Value: " + str(_encoderposition_elevation_center))
+            print("Recentering Elevation at Value: " + str(self._encoderposition_elevation_center))
             encoderposition_elevation_current = self._adc.read_adc(1)
             print("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
