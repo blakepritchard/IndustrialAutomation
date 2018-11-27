@@ -274,25 +274,21 @@ class Rotator(object):
             print("Cable Tension = " + str(encoderposition_azimuth_current))
 
             nSteps = 0;
-            while ((encoderposition_azimuth_current < self._encoderposition_azimuth_center)
-                and (encoderposition_azimuth_current < self._encoderposition_azimuth_max)
-                and (encoderposition_azimuth_current > self._encoderposition_azimuth_min)):
+            while (encoderposition_azimuth_current < self._encoderposition_azimuth_center):
                     nSteps+=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
 
             
-            while ((encoderposition_azimuth_current > self._encoderposition_azimuth_center)
-                and (encoderposition_azimuth_current < self._encoderposition_azimuth_max)
-                and (encoderposition_azimuth_current > self._encoderposition_azimuth_min)):
+            while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
-                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
 
             print("Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
-            print("Current Azimuth Reading:"+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Cable Tension = " + str(self._adc.read_adc(0)))
+            print("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
             self.handle_exception(e)
