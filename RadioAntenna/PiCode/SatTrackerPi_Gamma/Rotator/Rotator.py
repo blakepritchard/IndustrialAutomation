@@ -269,23 +269,24 @@ class Rotator(object):
     #Re-Center
     def recenter_azimuth(self):
         try:
-            print("Recentering Azimuth at Encoder Value: "+ str(self._encoderposition_azimuth_center))
+            print("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
             encoderposition_azimuth_current = self._adc.read_adc(0)
-            print("Cable Tension = " + str(encoderposition_azimuth_current))
+            print("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
             nSteps = 0;
             while (encoderposition_azimuth_current < self._encoderposition_azimuth_center):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
-
+                    print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
+                    print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
-            print("Steps: " + str(nSteps))
+            print("Total Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
             print("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
