@@ -263,7 +263,10 @@ class Rotator(object):
 
     # Calculate Azimuth in Degrees
     def get_azimuth_degrees(self):
-        return float(self.get_azimuth_stepper_count() / self._azimuth_steps_per_degree)
+        azimuth_current = float(self.get_azimuth_stepper_count() / self._azimuth_steps_per_degree)
+        if azimuth_current < 0: 
+            azimuth_current += 360
+        return azimuth_current
 
 
     #Re-Center
