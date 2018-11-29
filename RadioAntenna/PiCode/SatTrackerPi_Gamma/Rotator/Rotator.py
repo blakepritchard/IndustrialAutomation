@@ -53,8 +53,8 @@ class Rotator(object):
     _stepperElevation = 0
 
     _encoderposition_azimuth_center = 701
-    _encoderposition_azimuth_min = 640
-    _encoderposition_azimuth_max = 745
+    _encoderposition_azimuth_min = 600
+    _encoderposition_azimuth_max = 764
 
     _encoderposition_elevation_center = 421
     _encoderposition_elevation_min = 314
@@ -281,13 +281,13 @@ class Rotator(object):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
-                    print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    # print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
-                    print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    # print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             print("Total Steps: " + str(nSteps))
                   
