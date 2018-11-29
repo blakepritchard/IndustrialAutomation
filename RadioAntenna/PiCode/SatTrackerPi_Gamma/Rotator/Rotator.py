@@ -44,6 +44,7 @@ import Adafruit_MCP3008
 class Rotator(object):
 
     _verbose = False
+    _is_busy = False
     
     _encoder_A = 0
     _encoder_B = 0
@@ -121,8 +122,8 @@ class Rotator(object):
         self.recenter_azimuth()
         self.recenter_elevation()
 
-
         atexit.register(self.turnOffMotors)
+        self._is_busy = False
         
 
     def turnOffMotors(self):
@@ -130,18 +131,19 @@ class Rotator(object):
         self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+        self._is_busy = False
       
     def get_elevation(self):
         #print("returning elevation of: "+ str(self._elevation_current_degrees))
-        return self._elevation_current_degrees
+        return self.get_elevation_degrees()
     
     def get_azimuth(self):
         #print("returning azimuth of: "+ str(self._azimuth_current_degrees))
-        return self._azimuth_current_degrees
+        return self.get_azimuth_degrees()
     
     def get_polarity(self):
         #print("returning polarity of: "+ str(self._polarity_current_degrees))
-        return self._polarity_current_degrees
+        return self.get_polarity_degrees()
 
     def set_verbosity(self, verbose):
         self._verbose = verbose
@@ -173,6 +175,7 @@ class Rotator(object):
             print("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
             nSteps = 0;
+            self._is_busy = True
             while ((encoderposition_elevation_current < self._encoderposition_elevation_center)
                 and (encoderposition_elevation_current < self._encoderposition_elevation_max)
                 and (encoderposition_elevation_current > self._encoderposition_elevation_min)):
@@ -188,6 +191,7 @@ class Rotator(object):
                     self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
                     encoderposition_elevation_current = self._adc.read_adc(1)
 
+            self._is_busy = False
             print("Steps: " + str(nSteps))
                   
 
@@ -214,6 +218,8 @@ class Rotator(object):
             elevation_current_degrees = self.get_elevation_degrees()
             steps_required = self.calculate_elevation_steps(elevation_target)
 
+            self._is_busy = True
+            
             #Move Up
             if elevation_target > elevation_current_degrees:
                 print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
@@ -228,6 +234,7 @@ class Rotator(object):
                 print("Holding Elevation Steady at: "+ str(elevation))
 
             # Set Elevation Value to Be Returned to GPredict
+            self._is_busy = False
             self.set_elevation_stepper_count(self.get_elevation_stepper_count() + steps_required)
 
             
@@ -276,7 +283,8 @@ class Rotator(object):
             encoderposition_azimuth_current = self._adc.read_adc(0)
             print("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
-            nSteps = 0;
+            nSteps = 0
+            self._is_busy = True
             while (encoderposition_azimuth_current < self._encoderposition_azimuth_center):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
@@ -289,6 +297,7 @@ class Rotator(object):
                     encoderposition_azimuth_current = self._adc.read_adc(0)
                     # print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
+            self._is_busy = False
             print("Total Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
@@ -381,7 +390,8 @@ class Rotator(object):
                 # Scope Variables
                 steps_actual = 0
                 encoderposition_azimuth_current = self._adc.read_adc(0)
-                
+
+                self._is_busy = True
                 keep_moving = True
                 while(keep_moving):
 
@@ -414,6 +424,7 @@ class Rotator(object):
                         print "Stopping Rotation at : " + str(steps_actual) + " Steps."
                         keep_moving = False
 
+                self._is_busy = False
                 print("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoder Position: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
                 print("Azimuth Stepper Count: " + str(self.get_azimuth_stepper_count()) + ", Azimuth Current Degrees: " + str(self.get_azimuth_degrees()))
 
@@ -479,14 +490,16 @@ class Rotator(object):
                 elif len(rotator_command) > 2:
                     command_operation = rotator_command[:2]
                     command_parameters = rotator_command[2:]
-                        
-                    if "AZ" == command_operation:
-                        print("Recieved Azimuth Command: " + str(command_parameters))
-                        self.set_azimuth(command_parameters)
-                    elif "EL" == command_operation:
-                        print("Recieved Elevation Command: " + str(command_parameters))      
-                        self.set_elevation(command_parameters)       
 
+                    if not self._is_busy:    
+                        if "AZ" == command_operation:
+                            print("Recieved Azimuth Command: " + str(command_parameters))
+                            self.set_azimuth(command_parameters)
+                        elif "EL" == command_operation:
+                            print("Recieved Elevation Command: " + str(command_parameters))      
+                            self.set_elevation(command_parameters)       
+                    else:
+                        print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
             return 0       
         
         except Exception as e:
