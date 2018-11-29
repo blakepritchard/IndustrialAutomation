@@ -310,12 +310,17 @@ class Rotator(object):
         if target_azimuth < self.get_azimuth_degrees():
             move_is_clockwise = False;
 
-        # Check for shortest Circular Route
-        # Is it shorter to go the other way around ?
+        # Measure Rotation in Degrees
         if (move_is_clockwise):
             degrees_travel = target_azimuth - azimuth_actual
         else:
             degrees_travel = azimuth_actual - target_azimuth
+
+        # Check for shortest Circular Route
+        # Is it shorter to go the other way around ?
+        if degrees_travel > 180:
+            move_is_clockwise = not move_is_clockwise
+            degrees_travel = 360 - degrees_travel
 
         # Check Cable Tension
         # Is it physically safe to spin any farther in that direction?                
