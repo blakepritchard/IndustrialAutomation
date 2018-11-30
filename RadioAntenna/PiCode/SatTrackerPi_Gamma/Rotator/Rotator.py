@@ -350,7 +350,7 @@ class Rotator(object):
 
     def calculate_azimuth_steps(self, degrees_travel):
         try:
-            steps, remainder = divmod(degrees_travel, (1/self._azimuth_degrees_per_step))
+            steps, remainder = divmod(degrees_travel, (self._azimuth_degrees_per_step))
             return steps            
         except Exception as e:
             self.handle_exception(e)
