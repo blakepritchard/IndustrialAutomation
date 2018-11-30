@@ -486,7 +486,7 @@ class Rotator(object):
                     elif    "VE" == rotator_command: result = self.get_version_text()
                     elif    "HE" == rotator_command: result = self.get_help_text()
                     
-                    # EasyCommII uses longer commands to Set values on the Rotator        
+                # EasyCommII uses longer commands to Set values on the Rotator        
                 elif len(rotator_command) > 2:
                     command_operation = rotator_command[:2]
                     command_parameters = rotator_command[2:]
