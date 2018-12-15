@@ -18,7 +18,7 @@ path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
 echo "The rotctld servicer will write to: ${path_rotctld_out} "
 (`rotctld -m 202 -s 9600 -r ${path_rotctld_out}`)&
 
-echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Heading (Azimuth) and Inclination (Elevation)"
+echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Heading-Azimuth and Inclination-Elevation"
 
 
 echo "Opening Virtual Com Port for Website"
