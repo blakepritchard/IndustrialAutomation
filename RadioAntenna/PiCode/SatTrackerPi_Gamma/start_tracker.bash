@@ -15,6 +15,7 @@ mapfile -t arraySocatOutput < "$logfile"
 path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
 path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
 
+#Launch Rotor Control
 echo "The rotctld servicer will write to: ${path_rotctld_out} "
 (`rotctld -m 202 -s 9600 -r ${path_rotctld_out}`)&
 
@@ -32,9 +33,7 @@ mapfile -t arraySocatOutput < "$logfile"
 path_website_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
 path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
 
-echo "The rotctld servicer will write to: ${path_website_out} "
-(`rotctld -m 202 -s 9600 -r ${path_website_out}`)&
-
+echo "The WebSite will write to: ${path_website_out} "
 echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Polarity"
 
 
