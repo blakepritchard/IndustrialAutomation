@@ -95,7 +95,8 @@ USAGE
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-p", "--port", dest="port", help="set serial port [default: %(default)s]")
+        parser.add_argument("-r", "--rotctl", dest="port", help="set rotctl-gpredict serial port [default: %(default)s]")
+        parser.add_argument("-w", "--website", dest="website", help="set website serial port [default: %(default)s]")
         parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
 
@@ -106,6 +107,8 @@ USAGE
         verbose = args.verbose
         serial_port_dev = args.port
         serial_port_speed = args.speed
+
+        query_port = args.query
 
         #set rotator verbosity
         device_rotator.set_verbosity(verbose)
