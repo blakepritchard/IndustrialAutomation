@@ -30,11 +30,10 @@ sleep 2
 declare -a arraySocatOutput
 mapfile -t arraySocatOutput < "$logfile"
 
-path_website_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
-path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
+path_apache_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
+path_website_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
 
-echo "The WebSite will write to: ${path_website_out} "
-echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Polarity"
+echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to ${path_website_in} "
 
 
 python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in}
