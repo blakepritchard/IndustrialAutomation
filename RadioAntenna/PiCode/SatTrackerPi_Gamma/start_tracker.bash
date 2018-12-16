@@ -4,7 +4,7 @@ logfile=pseudoterminals.txt
 trap "kill 0 & rm $logfile" EXIT
 
 
-echo "Open Virtual Com Port for RotorContol-GPredict (rotctld)
+echo "Open Virtual Com Port to RotorContol-GPredict (rotctld)"
 (`socat -d -d -lf $logfile pty,raw,echo=0 pty,raw,echo=0`)&
 
 sleep 2
@@ -22,7 +22,7 @@ echo "The rotctld servicer will write to: ${path_rotctld_out} "
 echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Heading-Azimuth and Inclination-Elevation"
 
 
-echo "Opening Virtual Com Port for Website"
+echo "Opening Virtual Com Port to Website"
 (`socat -d -d -lf $logfile pty,raw,echo=0 pty,raw,echo=0`)&
 
 sleep 2
