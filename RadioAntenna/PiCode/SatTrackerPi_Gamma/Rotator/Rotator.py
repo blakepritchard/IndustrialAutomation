@@ -114,7 +114,7 @@ class Rotator(object):
         self._stepperElevation.setSpeed(15)                           # 10 RPM
 
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
-        self._stepperElevation.setSpeed(10)                           # 10 RPM
+        self._stepperPolarity.setSpeed(10)                           # 10 RPM
 
         print str(self._encoder_A)
         print str(self._encoder_B)
@@ -131,6 +131,11 @@ class Rotator(object):
         self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+
+        self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+        self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+        self._encoder_B.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+        self._encoder_B.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
         self._is_busy = False
       
     def get_elevation(self):
@@ -155,7 +160,7 @@ class Rotator(object):
 
 
 ##########################################################################################
-# Elevation
+# Elevation - Inclination
 ##########################################################################################    
     def get_elevation_degrees(self):
         return float((self.get_elevation_stepper_count() / self._elevation_steps_per_degree))
@@ -252,15 +257,15 @@ class Rotator(object):
     def stop_elevation(self):
         try:        
             print("EL Stop")
-            self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+            self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
             self.handle_exception(e)
             
 
 
 ##########################################################################################
-#    Azimuth
+#    Azimuth - Heading
 ##########################################################################################
     def get_azimuth_stepper_count(self):
         return self._azimuth_stepper_count
@@ -440,17 +445,136 @@ class Rotator(object):
         try: 
             print("AZ Stop")
             self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+            self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
             self.handle_exception(e)  
 
+
 ##########################################################################################
-#    Polarity
+#    Polarity - Radio Signal Rotation
 ##########################################################################################
+    def get_polarity_degrees(self):
+        return float((self.get_polarity_stepper_count() / self._polarity_steps_per_degree))
+
+    def get_polarity_stepper_count(self):
+        return self._polarity_stepper_count
+    
+    def set_polarity_stepper_count(self, stepper_count):
+        self._polarity_stepper_count = stepper_count
+    
+
+
+    def recenter_polarity(self):
+        try:
+            print("Recentering Polarity at Value: " + str(self._encoderposition_polarity_center))
+            encoderposition_polarity_current = self._adc.read_adc(2)
+            print("Polarity Encoder Reading = " + str(encoderposition_polarity_current))
+
+            nSteps = 0;
+            self._is_busy = True
+            while ((encoderposition_polarity_current < self._encoderposition_polarity_center)
+                and (encoderposition_polarity_current < self._encoderposition_polarity_max)
+                and (encoderposition_polarity_current > self._encoderposition_polarity_min)):
+                    nSteps+=1
+                    self._stepperPolarity.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+                    encoderposition_polarity_current = self._adc.read_adc(2)           
+
+            
+            while ((encoderposition_polarity_current > self._encoderposition_polarity_center)
+                and (encoderposition_polarity_current < self._encoderposition_polarity_max)
+                and (encoderposition_polarity_current > self._encoderposition_polarity_min)):
+                    nSteps-=1
+                    self._stepperPolarity.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+                    encoderposition_polarity_current = self._adc.read_adc(2)
+
+            self._is_busy = False
+            print("Steps: " + str(nSteps))
+                  
+
+            self.set_polarity_stepper_count(0)
+            encoderposition_polarity_current = self._adc.read_adc(2)
+            print("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
+            
+        except Exception as e:
+            self.handle_exception(e)
+
     def set_polarity(self, polarity):
-        self._polarity_target = polarity
-        '''ToDo: Remove this Hack'''
-        print("setting polarity to: "+ str(polarity))
-        self._polarity_current_degrees = polarity
+        try:       
+            self._polarity_target = float(polarity)
+            polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
+            polarity_remainder = float(polarity_tuple[1])
+            
+            #round down to nearest half degree
+            polarity_target = float(self._polarity_target - polarity_remainder)
+            
+            #round back up if remainder was closer to upper bound
+            if polarity_remainder > (self._polarity_degrees_per_step / 2):
+                polarity_target += self._polarity_degrees_per_step
+
+            polarity_current_degrees = self.get_polarity_degrees()
+            steps_required = self.calculate_polarity_steps(polarity_target)
+
+            
+            if polarity_target == polarity_current_degrees:
+                print("Holding polarity Steady at: "+ str(polarity))
+            else:
+                
+                #set direction
+                direction_required = Adafruit_MotorHAT.FORWARD
+                direction_label = "Forward"
+                stepper_incriment = 1
+                
+                if polarity_target > polarity_current_degrees:
+                    direction_required = Adafruit_MotorHAT.BACKWARD
+                    direction_label = "Backward"
+                    stepper_incriment = -1
+
+                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees)+"; Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+
+                #execute rotation    
+                self._is_busy = True               
+                for steps_taken in range(steps_required+1):         
+                    self._stepperpolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
+                    self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
+                    encoderposition_polarity_current = self._adc.read_adc(2)
+
+                    # check limits
+                    if (encoderposition_polarity_current > self._encoderposition_polarity_max):
+                        print("Polarity Exceeded Maximum Encoder Value at: " + str(encoderposition_polarity_current))
+                        break
+                        
+                    elif (encoderposition_polarity_current < self._encoderposition_polarity_max)):
+                        print("Polarity Exceeded Minimum Encoder Value at: " + str(encoderposition_polarity_current))
+                        break
+
+            # Set polarity Value to Be Returned to GPredict
+            self._is_busy = False
+            self.set_polarity_stepper_count(self.get_polarity_stepper_count() + steps_required)
+
+            
+        except Exception as e:
+            self.handle_exception(e)
+
+    def calculate_polarity_steps(self, polarity_target):
+        try:
+            degrees = float(polarity_target) - float(self.get_polarity_degrees())
+            steps = self._polarity_steps_per_degree * int(degrees)
+            return steps
+        except Exception as e:
+            self.handle_exception(e)
+
+    def stop_polarity(self):
+        try:        
+            print("Polarity Stop")
+            self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+            self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+        except Exception as e:
+            self.handle_exception(e)
+            
+
+
+
+
         
 
 ##########################################################################################
@@ -523,7 +647,7 @@ class Rotator(object):
                     elif    "PO" == rotator_command: result = str(self.get_polarity_degrees())
                     elif    "SA" == rotator_command: result = self.stop_azimuth()
                     elif    "SE" == rotator_command: result = self.stop_elevation()
-                    elif    "PS" == rotator_command: result = self.stop_polarity()
+                    elif    "SP" == rotator_command: result = self.stop_polarity()
                     elif    "VE" == rotator_command: result = self.get_version_text()
                     elif    "HE" == rotator_command: result = self.get_help_text()
                     
