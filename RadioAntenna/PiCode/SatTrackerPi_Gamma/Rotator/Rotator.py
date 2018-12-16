@@ -506,6 +506,47 @@ class Rotator(object):
             self.handle_exception(e)
 
 
+    def execute_website_command(self, rotator_commands):  
+
+        try:
+            array_commands = rotator_commands.split(" ")
+            hash_results = {}
+                
+            for rotator_command in array_commands: 
+                #print("Command: " + rotator_command)
+                result = ""
+                    
+                # Website uses short commands to Get values from the Rotator
+                if len(rotator_command) == 2:
+                    if      "AZ" == rotator_command: result = str(self.get_azimuth_degrees())
+                    elif    "EL" == rotator_command: result = str(self.get_elevation_degrees())
+                    elif    "PO" == rotator_command: result = str(self.get_polarity_degrees())
+                    elif    "SA" == rotator_command: result = self.stop_azimuth()
+                    elif    "SE" == rotator_command: result = self.stop_elevation()
+                    elif    "PS" == rotator_command: result = self.stop_polarity()
+                    elif    "VE" == rotator_command: result = self.get_version_text()
+                    elif    "HE" == rotator_command: result = self.get_help_text()
+                    
+                # WebSite uses longer commands to Set values on the Rotator        
+                elif len(rotator_command) > 2:
+                    command_operation = rotator_command[:2]
+                    command_parameters = rotator_command[2:]
+
+                    if not self._is_busy:    
+                        if "PP" == command_operation:
+                            print("Recieved Polarity Position Command: " + str(command_parameters))
+                            self.set_polarity(command_parameters)     
+                        if "PT" == command_operation:
+                            print("Recieved Polarity Tracking Command: " + str(command_parameters))
+                            self.set_polarity(command_parameters)     
+                    else:
+                        print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
+            return 0       
+        
+        except Exception as e:
+            self.handle_exception(e)
+
+
     def handle_exception(self, e):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

@@ -95,7 +95,7 @@ USAGE
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
         parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
-        parser.add_argument("-r", "--rotctl", dest="port", help="set rotctl-gpredict serial port [default: %(default)s]")
+        parser.add_argument("-r", "--rotctl", dest="rotctl", help="set rotctl-gpredict serial port [default: %(default)s]")
         parser.add_argument("-w", "--website", dest="website", help="set website serial port [default: %(default)s]")
         parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
@@ -105,26 +105,31 @@ USAGE
         # Process arguments
         args = parser.parse_args()
         verbose = args.verbose
-        serial_port_dev = args.port
-        serial_port_speed = args.speed
+        name_port_rotctl = args.rotctl
+        name_port_website = args.website
+        
+        speed_serial = args.speed
 
-        query_port = args.query
+
 
         #set rotator verbosity
         device_rotator.set_verbosity(verbose)
         
         if verbose > 0: 
                 print("Verbose mode on")       
-        if(''==serial_port_dev): 
-            serial_port_dev = '/dev/ttyUSB1'
-        print("Using Port: " + serial_port_dev)
+        if(''==name_port_rotctl): 
+            name_port_rotctl = '/dev/ttyUSB1'
+        print("Using Port: " + name_port_rotctl)
 
         """if(''==serial_port_speed): 
                 serial_port_speed = 9600
         print("Using Speed: " + serial_port_speed)
         """
-        print("Opening serial port.")
-        ser = serial.Serial(serial_port_dev, 9600, rtscts=True,dsrdtr=True)
+        print("Opening serial port for rotctl.")
+        serial_port_rotctl = serial.Serial(name_port_rotctl, 9600, rtscts=True,dsrdtr=True)
+
+        print("Opening serial port for website.")
+        ser = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True)
 
         print("Port Open. Setting Constants.")
         bytes_carraigereturn = bytes("\r")
@@ -135,7 +140,9 @@ USAGE
         command = ""
         print_newline = False
         while True:
-            byte_next = ser.read()
+
+            # Read rotctl port
+            byte_next = serial_port_rotctl.read()
             char_next = byte_next.decode("utf-8")
 
             if verbose > 0: print('-')
@@ -156,7 +163,29 @@ USAGE
                     
                 char_next = ''
                 byte_next = 0
+
+            # Read website port
+            byte_next = serial_port_website.read()
+            char_next = byte_next.decode("utf-8")
+
+            if verbose > 0: print('-')
+            if byte_next:
+                
+                if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
+                    if verbose > 0: print(command)
+                    device_rotator.execute_website_command(command)
+                    command = ""  
+                elif '!'==char_next:
+                    print('.'),
+                    print_newline = True 
+                else:
+                    command += char_next
+                    if print_newline:
+                        print','
+                        print_newline = False
                     
+                char_next = ''
+                byte_next = 0
     
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###

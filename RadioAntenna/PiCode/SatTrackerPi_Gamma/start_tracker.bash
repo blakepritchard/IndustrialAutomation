@@ -33,9 +33,9 @@ mapfile -t arraySocatOutput < "$logfile"
 path_apache_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
 path_website_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
 
-echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to ${path_website_in} "
+echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to: ${path_website_in} "
 
 
-python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in}
+python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in}
 
 wait
