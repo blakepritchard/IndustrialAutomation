@@ -519,14 +519,17 @@ class Rotator(object):
                 print("Holding polarity Steady at: "+ str(polarity))
             else:
                 
-                #set direction
+                # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
                 direction_label = "Forward"
+                limit_label = "Maximum"
                 stepper_incriment = 1
                 
+                # then check to see if we need to go backward
                 if polarity_target > polarity_current_degrees:
                     direction_required = Adafruit_MotorHAT.BACKWARD
                     direction_label = "Backward"
+                    limit_label = "Minimum"
                     stepper_incriment = -1
 
                 print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees)+"; Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
@@ -534,18 +537,15 @@ class Rotator(object):
                 #execute rotation    
                 self._is_busy = True               
                 for steps_taken in range(steps_required+1):         
-                    self._stepperpolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
+                    self._stepperPolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
 
                     # check limits
-                    if (encoderposition_polarity_current > self._encoderposition_polarity_max):
-                        print("Polarity Exceeded Maximum Encoder Value at: " + str(encoderposition_polarity_current))
+                    if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
+                        print("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
                         break
-                        
-                    elif (encoderposition_polarity_current < self._encoderposition_polarity_max)):
-                        print("Polarity Exceeded Minimum Encoder Value at: " + str(encoderposition_polarity_current))
-                        break
+
 
             # Set polarity Value to Be Returned to GPredict
             self._is_busy = False
