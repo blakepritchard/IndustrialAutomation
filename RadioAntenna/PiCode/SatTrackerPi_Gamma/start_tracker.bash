@@ -1,19 +1,20 @@
 #!/bin/bash
-logfile=pseudoterminals.txt
+logfileRotctl=pseudoterminalsRotctl.txt
+logfileWebsite=pseudoterminalsWebsite.txt
 
-trap "kill 0 & rm $logfile" EXIT
+trap "kill 0 & rm $logfileRotctl & rm $logfileWebsite" EXIT
 
 
 echo "Open Virtual Com Port to RotorContol-GPredict (rotctld)"
-(`socat -d -d -lf $logfile pty,raw,echo=0 pty,raw,echo=0`)&
+(`socat -d -d -lf $logfileRotctl pty,raw,echo=0 pty,raw,echo=0`)&
 
 sleep 2
 
-declare -a arraySocatOutput
-mapfile -t arraySocatOutput < "$logfile"
+declare -a arraySocatRotctlOutput
+mapfile -t arraySocatRotctlOutput < "$logfileRotctl"
 
-path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
-path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
+path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[0]}")"
+path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[1]}")"
 
 #Launch Rotor Control
 echo "The rotctld servicer will write to: ${path_rotctld_out} "
@@ -23,15 +24,15 @@ echo "The SatTrackerPi listener will listen to: ${path_tracker_in} for Heading-A
 
 
 echo "Opening Virtual Com Port to Website"
-(`socat -d -d -lf $logfile pty,raw,echo=0 pty,raw,echo=0`)&
+(`socat -d -d -lf $logfileWebsite pty,raw,echo=0 pty,raw,echo=0`)&
 
 sleep 2
 
-declare -a arraySocatOutput
-mapfile -t arraySocatOutput < "$logfile"
+declare -a arraySocatWebsiteOutput
+mapfile -t arraySocatWebsiteOutput < "$logfileWebsite"
 
-path_apache_out="$(cut -d' ' -f7 <<<"${arraySocatOutput[0]}")"
-path_website_in="$(cut -d' ' -f7 <<<"${arraySocatOutput[1]}")"
+path_apache_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
+path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
 echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to: ${path_website_in} "
 
