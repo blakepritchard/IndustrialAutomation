@@ -624,7 +624,7 @@ class Rotator(object):
                             self.set_elevation(command_parameters)       
                     else:
                         print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
-            return 0       
+            return result       
         
         except Exception as e:
             self.handle_exception(e)
@@ -665,7 +665,7 @@ class Rotator(object):
                             self.set_polarity(command_parameters)     
                     else:
                         print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
-            return 0       
+            return result       
         
         except Exception as e:
             self.handle_exception(e)

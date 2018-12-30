@@ -42,8 +42,8 @@ device_rotator = Rotator.Rotator()
 #Init Variables
 __all__ = []
 __version__ = 0.1
-__date__ = '2017-12-18'
-__updated__ = '2017-12-18'
+__date__ = '2018-12-28'
+__updated__ = '2018-12-28'
 
 DEBUG = 0
 TESTRUN = 0
@@ -129,7 +129,7 @@ USAGE
         serial_port_rotctl = serial.Serial(name_port_rotctl, 9600, rtscts=True,dsrdtr=True)
 
         print("Opening serial port for website.")
-        ser = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True)
+        serial_port_website = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True)
 
         print("Port Open. Setting Constants.")
         bytes_carraigereturn = bytes("\r")
@@ -150,7 +150,8 @@ USAGE
                 
                 if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
                     if verbose > 0: print(command)
-                    device_rotator.execute_easycomm2_command(command)
+                    rotator_response = device_rotator.execute_easycomm2_command(command)
+                    serial_port_rotctl.write(rotator_response)
                     command = ""  
                 elif '!'==char_next:
                     print('.'),
@@ -173,7 +174,8 @@ USAGE
                 
                 if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
                     if verbose > 0: print(command)
-                    device_rotator.execute_website_command(command)
+                    website_response = device_rotator.execute_website_command(command)
+                    serial_port_website.write(website_response)
                     command = ""  
                 elif '!'==char_next:
                     print('.'),
