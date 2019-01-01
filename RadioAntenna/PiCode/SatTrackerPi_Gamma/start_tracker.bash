@@ -1,7 +1,7 @@
 #!/bin/bash
 logfileRotctl=pseudoterminalsRotctl.txt
 logfileWebsite=pseudoterminalsWebsite.txt
-verbose = 1
+verbose = 5
 
 trap "kill 0 & rm $logfileRotctl & rm $logfileWebsite" EXIT
 

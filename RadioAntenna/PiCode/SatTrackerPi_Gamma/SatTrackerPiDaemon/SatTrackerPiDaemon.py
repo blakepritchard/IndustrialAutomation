@@ -143,53 +143,55 @@ USAGE
         while True:
 
             # Read rotctl port
-            byte_next = serial_port_rotctl.read()
-            char_next = byte_next.decode("utf-8")
+            byte_next_rotctl = serial_port_rotctl.read()
+            char_next_rotctl = byte_next_rotctl.decode("utf-8")
 
             if verbose > 0: print('-')
-            if byte_next:
+            if byte_next_rotctl:
                 
-                if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
+                if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
                     if verbose > 0: print(command)
                     rotator_response = device_rotator.execute_easycomm2_command(command)
                     serial_port_rotctl.write(rotator_response)
                     command = ""  
-                elif '!'==char_next:
-                    print('.'),
+                elif '!'==char_next_rotctl:
+                    print('!'),
                     print_newline = True 
                 else:
-                    command += char_next
+                    command += char_next_rotctl
                     if print_newline:
                         print','
                         print_newline = False
                     
-                char_next = ''
-                byte_next = 0
+                char_next_rotctl = ''
+                byte_next_rotctl = 0
 
             # Read website port
-            byte_next = serial_port_website.read()
-            char_next = byte_next.decode("utf-8")
+            byte_next_website = serial_port_website.read()
+            char_next_website = byte_next_website.decode("utf-8")
 
             if verbose > 0: print('-')
-            if byte_next:
+            if byte_next_website:
                 
-                if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
+                if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
                     if verbose > 0: print(command)
                     website_response = device_rotator.execute_website_command(command)
                     serial_port_website.write(website_response)
                     command = ""  
-                elif '!'==char_next:
-                    print('.'),
+                elif '!'==char_next_website:
+                    print('!'),
                     print_newline = True 
                 else:
-                    command += char_next
+                    command += char_next_website
                     if print_newline:
                         print','
                         print_newline = False
                     
-                char_next = ''
-                byte_next = 0
-    
+                char_next_website = ''
+                byte_next_website = 0
+        
+        if verbose > 4: print('.')
+
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###
         return 0
