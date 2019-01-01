@@ -152,7 +152,7 @@ USAGE
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
                     if verbose > 0: print(command)
                     rotator_response = device_rotator.execute_easycomm2_command(command)
-                    serial_port_rotctl.write(rotator_response)
+                    # serial_port_rotctl.write(rotator_response)
                     command = ""  
                 elif '!'==char_next_rotctl:
                     print('!'),
