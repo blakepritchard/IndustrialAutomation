@@ -94,7 +94,7 @@ USAGE
     try:
         # Setup argument parser
         parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
-        parser.add_argument("-v", "--verbose", dest="verbose", action="count", help="set verbosity level [default: %(default)s]")
+        parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
         parser.add_argument("-r", "--rotctl", dest="rotctl", help="set rotctl-gpredict serial port [default: %(default)s]")
         parser.add_argument("-w", "--website", dest="website", help="set website serial port [default: %(default)s]")
         parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
@@ -104,7 +104,7 @@ USAGE
 
         # Process arguments
         args = parser.parse_args()
-        verbose = args.verbose
+        verbose = args.loglevel
         name_port_rotctl = args.rotctl
         name_port_website = args.website
         
