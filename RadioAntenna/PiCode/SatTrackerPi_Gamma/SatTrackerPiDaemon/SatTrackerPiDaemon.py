@@ -190,7 +190,7 @@ USAGE
                 char_next_website = ''
                 byte_next_website = 0
         
-        if verbose > 4: print('.')
+            if verbose > 4: print('.')
 
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###
