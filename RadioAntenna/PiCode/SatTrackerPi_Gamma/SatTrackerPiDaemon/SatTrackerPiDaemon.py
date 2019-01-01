@@ -138,7 +138,8 @@ USAGE
 
         print("Reading Serial Port Loop")
         
-        command = ""
+        command_rotctl = ""
+        command_website = ""
         print_newline = False
         while True:
 
@@ -153,12 +154,12 @@ USAGE
                     if verbose > 0: print(command)
                     rotator_response = device_rotator.execute_easycomm2_command(command)
                     # serial_port_rotctl.write(rotator_response)
-                    command = ""  
+                    command_rotctl = ""  
                 elif '!'==char_next_rotctl:
                     print('!'),
                     print_newline = True 
                 else:
-                    command += char_next_rotctl
+                    command_rotctl += char_next_rotctl
                     if print_newline:
                         print','
                         print_newline = False
@@ -177,12 +178,12 @@ USAGE
                     if verbose > 0: print(command)
                     website_response = device_rotator.execute_website_command(command)
                     serial_port_website.write(website_response)
-                    command = ""  
+                    command_website = ""  
                 elif '!'==char_next_website:
                     print('!'),
                     print_newline = True 
                 else:
-                    command += char_next_website
+                    command_website += char_next_website
                     if print_newline:
                         print','
                         print_newline = False
