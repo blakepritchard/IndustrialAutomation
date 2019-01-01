@@ -37,5 +37,5 @@ path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to: ${path_website_in} "
 
 
-python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in} -v 1
+python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in} -v true
 wait
