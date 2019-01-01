@@ -1,7 +1,7 @@
 #!/bin/bash
 logfileRotctl=pseudoterminalsRotctl.txt
 logfileWebsite=pseudoterminalsWebsite.txt
-verbose = 5
+verbosityLevel=5
 
 trap "kill 0 & rm $logfileRotctl & rm $logfileWebsite" EXIT
 
@@ -17,7 +17,6 @@ mapfile -t arraySocatRotctlOutput < "$logfileRotctl"
 path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[0]}")"
 path_tracker_in="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[1]}")"
 
-#Launch Rotor Control
 echo "The rotctld servicer will write to: ${path_rotctld_out} "
 (`rotctld -m 202 -s 9600 -r ${path_rotctld_out}`)&
 
