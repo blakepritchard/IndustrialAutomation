@@ -532,7 +532,7 @@ class Rotator(object):
                     limit_label = "Minimum"
                     stepper_incriment = -1
 
-                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees)
+                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees))
                 print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
