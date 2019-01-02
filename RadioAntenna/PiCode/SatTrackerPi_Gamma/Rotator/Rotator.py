@@ -535,11 +535,11 @@ class Rotator(object):
                     stepper_incriment = -1
 
                 print("Polarity Target: "+str(polarity_target)+", Polarity Current: "+str(polarity_current_degrees))
-                print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+                print("Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
                 self._is_busy = True               
-                for steps_taken in range(steps_required+1):         
+                for steps_taken in range(abs(steps_required)):         
                     self._stepperPolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
@@ -557,7 +557,7 @@ class Rotator(object):
             self.set_polarity_stepper_count(self.get_polarity_stepper_count() + steps_required)
             
             if self._verbose > 1 :
-                print("New Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
+                print("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
             
         except Exception as e:
