@@ -48,7 +48,7 @@ class Rotator(object):
     
     _encoder_A = 0
     _encoder_B = 0
-    _adc = 0;
+    _adc = 0
     _orientation = 0
     _stepperAzimuth = 0
     _stepperElevation = 0
@@ -61,9 +61,9 @@ class Rotator(object):
     _encoderposition_elevation_min = 314
     _encoderposition_elevation_max = 430
 
-    _encoderposition_polarity_center = 700
-    _encoderposition_polarity_min = 650
-    _encoderposition_polarity_max = 750
+    _encoderposition_polarity_center = 854
+    _encoderposition_polarity_min = 775
+    _encoderposition_polarity_max = 891
     
 
     # Hardware SPI configuration:
