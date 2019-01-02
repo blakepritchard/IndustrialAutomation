@@ -116,7 +116,7 @@ USAGE
         device_rotator.set_verbosity(verbose)
         
         if verbose > 0: 
-                print("Verbose mode on")       
+                print("Verbose mode on Log Level: "+str(verbose))       
         if(''==name_port_rotctl): 
             name_port_rotctl = '/dev/ttyUSB1'
         print("RotCtl Port: " + name_port_rotctl)
@@ -126,11 +126,11 @@ USAGE
         print("Using Speed: " + serial_port_speed)
         """
         print("Opening serial port for rotctl.")
-        serial_port_rotctl = serial.Serial(name_port_rotctl, 9600, rtscts=True,dsrdtr=True)
+        serial_port_rotctl = serial.Serial(name_port_rotctl, 9600, rtscts=True,dsrdtr=True, inter_byte_timeout=200)
 
         print("WebSite Port: " + name_port_website)
         print("Opening serial port for website.")
-        serial_port_website = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True)
+        serial_port_website = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True, inter_byte_timeout=200)
 
         print("Port Open. Setting Constants.")
         bytes_carraigereturn = bytes("\r")
