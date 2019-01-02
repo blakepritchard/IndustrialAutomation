@@ -528,7 +528,7 @@ class Rotator(object):
                 stepper_incriment = 1
                 
                 # then check to see if we need to go backward
-                if polarity_target > polarity_current_degrees:
+                if steps_required < 0:
                     direction_required = Adafruit_MotorHAT.BACKWARD
                     direction_label = "Backward"
                     limit_label = "Minimum"
