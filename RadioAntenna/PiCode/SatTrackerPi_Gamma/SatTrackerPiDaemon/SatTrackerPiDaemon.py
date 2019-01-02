@@ -150,8 +150,6 @@ USAGE
             byte_next_rotctl = serial_port_rotctl.read()
             char_next_rotctl = byte_next_rotctl.decode("utf-8")
 
-            if verbose > 4: 
-                print('-')
             if byte_next_rotctl:
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
@@ -177,8 +175,7 @@ USAGE
             byte_next_website = serial_port_website.read()
             char_next_website = byte_next_website.decode("utf-8")
 
-            if verbose > 4: 
-                print('-')
+
             if byte_next_website:
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
@@ -200,9 +197,6 @@ USAGE
                     
                 char_next_website = ''
                 byte_next_website = 0
-        
-            if verbose > 5: 
-                print('.')
 
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###
