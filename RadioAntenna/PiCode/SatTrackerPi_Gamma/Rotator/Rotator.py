@@ -43,7 +43,7 @@ import Adafruit_MCP3008
 
 class Rotator(object):
 
-    _verbose = False
+    _verbose = 0
     _is_busy = False
     
     _encoder_A = 0
@@ -470,7 +470,7 @@ class Rotator(object):
             encoderposition_polarity_current = self._adc.read_adc(2)
             print("Polarity Encoder Reading = " + str(encoderposition_polarity_current))
 
-            nSteps = 0;
+            nSteps = 0
             self._is_busy = True
             while ((encoderposition_polarity_current < self._encoderposition_polarity_center)
                 and (encoderposition_polarity_current < self._encoderposition_polarity_max)
@@ -532,7 +532,8 @@ class Rotator(object):
                     limit_label = "Minimum"
                     stepper_incriment = -1
 
-                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees)+"; Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees)
+                print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
                 self._is_busy = True               
@@ -550,6 +551,9 @@ class Rotator(object):
             # Set polarity Value to Be Returned to GPredict
             self._is_busy = False
             self.set_polarity_stepper_count(self.get_polarity_stepper_count() + steps_required)
+            
+            if self._verbose > 1 :
+                print("New Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " steps.")
 
             
         except Exception as e:
