@@ -519,6 +519,8 @@ class Rotator(object):
                 print("Holding polarity Steady at: "+ str(polarity))
             else:
                 
+                encoderposition_polarity_current = self._adc.read_adc(2)
+                
                 # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
                 direction_label = "Forward"
