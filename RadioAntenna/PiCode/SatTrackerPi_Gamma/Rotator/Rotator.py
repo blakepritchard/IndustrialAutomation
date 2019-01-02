@@ -522,15 +522,15 @@ class Rotator(object):
                 encoderposition_polarity_current = self._adc.read_adc(2)
 
                 # set default direction forward
-                direction_required = Adafruit_MotorHAT.BACKWARD
-                direction_label = "CounterClockwise"
+                direction_required = Adafruit_MotorHAT.FORWARD
+                direction_label = "Clockwise"
                 limit_label = "Maximum"
                 stepper_incriment = 1
                 
                 # then check to see if we need to go backward
                 if steps_required < 0:
-                    direction_required = Adafruit_MotorHAT.FORWARD
-                    direction_label = "Clockwise"
+                    direction_required = Adafruit_MotorHAT.BACKWARD
+                    direction_label = "CounterClockwise"
                     limit_label = "Minimum"
                     stepper_incriment = -1
 
