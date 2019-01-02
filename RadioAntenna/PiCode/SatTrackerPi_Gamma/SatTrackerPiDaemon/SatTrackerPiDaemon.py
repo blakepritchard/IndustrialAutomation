@@ -153,19 +153,15 @@ USAGE
             if byte_next_rotctl:
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
-                    if verbose > 2: print(command_rotctl)
                     rotator_response = device_rotator.execute_easycomm2_command(command_rotctl)
-                    #serial_port_rotctl.write(rotator_response)
+                    serial_port_rotctl.write(rotator_response)
                     command_rotctl = ""  
                 elif '!'==char_next_rotctl:
                     print('!'),
                     print_newline = True 
                 else:
                     command_rotctl += char_next_rotctl
-                    if verbose > 3: 
-                        print(char_next_rotctl)
                     if print_newline:
-                        print','
                         print_newline = False
                     
                 char_next_rotctl = ''
@@ -179,8 +175,6 @@ USAGE
             if byte_next_website:
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
-                    if verbose > 2: 
-                        print(command_website)
                     website_response = device_rotator.execute_website_command(command_website)
                     serial_port_website.write(website_response)
                     command_website = ""  
@@ -189,10 +183,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_website += char_next_website
-                    if verbose > 3: 
-                        print(char_next_website)
                     if print_newline:
-                        print','
                         print_newline = False
                     
                 char_next_website = ''
