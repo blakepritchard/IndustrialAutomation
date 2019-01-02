@@ -147,20 +147,20 @@ USAGE
             byte_next_rotctl = serial_port_rotctl.read()
             char_next_rotctl = byte_next_rotctl.decode("utf-8")
 
-            if verbose > 0: print('-')
+            if verbose > 3: print('-')
             if byte_next_rotctl:
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
                     if verbose > 0: print(command_rotctl)
                     rotator_response = device_rotator.execute_easycomm2_command(command_rotctl)
-                    # serial_port_rotctl.write(rotator_response)
+                    #serial_port_rotctl.write(rotator_response)
                     command_rotctl = ""  
                 elif '!'==char_next_rotctl:
                     print('!'),
                     print_newline = True 
                 else:
                     command_rotctl += char_next_rotctl
-                    print(char_next_rotctl)
+                    if verbose > 2: print(char_next_rotctl)
                     if print_newline:
                         print','
                         print_newline = False
@@ -172,7 +172,7 @@ USAGE
             byte_next_website = serial_port_website.read()
             char_next_website = byte_next_website.decode("utf-8")
 
-            if verbose > 0: print('-')
+            if verbose > 3: print('-')
             if byte_next_website:
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
@@ -185,6 +185,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_website += char_next_website
+                    if verbose > 2: print(char_next_website)
                     if print_newline:
                         print','
                         print_newline = False
