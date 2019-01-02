@@ -520,7 +520,7 @@ class Rotator(object):
             else:
                 
                 encoderposition_polarity_current = self._adc.read_adc(2)
-                
+
                 # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
                 direction_label = "Forward"
@@ -534,7 +534,7 @@ class Rotator(object):
                     limit_label = "Minimum"
                     stepper_incriment = -1
 
-                print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees))
+                print("Polarity Target: "+str(polarity_target)+", Polarity Current: "+str(polarity_current_degrees))
                 print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
