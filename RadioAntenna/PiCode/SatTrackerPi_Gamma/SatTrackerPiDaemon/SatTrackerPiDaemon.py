@@ -160,6 +160,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_rotctl += char_next_rotctl
+                    print(char_next_rotctl)
                     if print_newline:
                         print','
                         print_newline = False
