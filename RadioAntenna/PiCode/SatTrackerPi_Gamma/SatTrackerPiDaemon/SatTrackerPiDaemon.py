@@ -147,11 +147,11 @@ USAGE
             byte_next_rotctl = serial_port_rotctl.read()
             char_next_rotctl = byte_next_rotctl.decode("utf-8")
 
-            if verbose > 3: print('-')
+            if verbose > 4: print('-')
             if byte_next_rotctl:
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
-                    if verbose > 0: print(command_rotctl)
+                    if verbose > 2: print(command_rotctl)
                     rotator_response = device_rotator.execute_easycomm2_command(command_rotctl)
                     #serial_port_rotctl.write(rotator_response)
                     command_rotctl = ""  
@@ -160,7 +160,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_rotctl += char_next_rotctl
-                    if verbose > 2: print(char_next_rotctl)
+                    if verbose > 3: print(char_next_rotctl)
                     if print_newline:
                         print','
                         print_newline = False
@@ -172,11 +172,11 @@ USAGE
             byte_next_website = serial_port_website.read()
             char_next_website = byte_next_website.decode("utf-8")
 
-            if verbose > 3: print('-')
+            if verbose > 4: print('-')
             if byte_next_website:
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
-                    if verbose > 0: print(command_website)
+                    if verbose > 2: print(command_website)
                     website_response = device_rotator.execute_website_command(command_website)
                     serial_port_website.write(website_response)
                     command_website = ""  
@@ -185,7 +185,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_website += char_next_website
-                    if verbose > 2: print(char_next_website)
+                    if verbose > 3: print(char_next_website)
                     if print_newline:
                         print','
                         print_newline = False
@@ -193,7 +193,7 @@ USAGE
                 char_next_website = ''
                 byte_next_website = 0
         
-            if verbose > 4: print('.')
+            if verbose > 5: print('.')
 
     except KeyboardInterrupt:
         ### handle keyboard interrupt ###
