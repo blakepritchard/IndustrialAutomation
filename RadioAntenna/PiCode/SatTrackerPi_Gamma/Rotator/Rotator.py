@@ -61,7 +61,7 @@ class Rotator(object):
     _encoderposition_elevation_min = 314
     _encoderposition_elevation_max = 430
 
-    _encoderposition_polarity_center = 854
+    _encoderposition_polarity_center = 855
     _encoderposition_polarity_min = 625
     _encoderposition_polarity_max = 920
     
@@ -533,7 +533,7 @@ class Rotator(object):
                     stepper_incriment = -1
 
                 print("polarity Target: "+str(polarity_target)+", polarity Current:"+str(polarity_current_degrees))
-                print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+                print("Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
                 self._is_busy = True               
@@ -541,6 +541,8 @@ class Rotator(object):
                     self._stepperPolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
+                    if self._verbose > 1 :
+                        print("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
                     # check limits
                     if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
@@ -553,7 +555,7 @@ class Rotator(object):
             self.set_polarity_stepper_count(self.get_polarity_stepper_count() + steps_required)
             
             if self._verbose > 1 :
-                print("New Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " steps.")
+                print("New Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
             
         except Exception as e:
