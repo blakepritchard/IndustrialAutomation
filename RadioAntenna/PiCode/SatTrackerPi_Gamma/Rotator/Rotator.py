@@ -540,21 +540,22 @@ class Rotator(object):
                 #execute rotation    
                 self._is_busy = True               
                 for steps_taken in range(abs(steps_required)):         
-                    self._stepperPolarity.step(1, direction_required,  Adafruit_MotorHAT.DOUBLE)
+                    
+                    # Step Motor
+                    self._stepperPolarity.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
+
+                    # Set Polarity Value to Be Returned to GPredict                    
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
                     if self._verbose > 1 :
                         print("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
-                    # check limits
+                    # Check Limits
                     if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
                         print("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
                         break
 
-
-            # Set polarity Value to Be Returned to GPredict
             self._is_busy = False
-            self.set_polarity_stepper_count(self.get_polarity_stepper_count() + steps_required)
             
             if self._verbose > 1 :
                 print("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
