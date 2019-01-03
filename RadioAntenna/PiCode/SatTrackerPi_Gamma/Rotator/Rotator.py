@@ -463,7 +463,7 @@ class Rotator(object):
         self._polarity_stepper_count = stepper_count
     
 
-
+    # Find Centerline Based on Analog Encoder
     def recenter_polarity(self):
         try:
             print("Recentering Polarity at Value: " + str(self._encoderposition_polarity_center))
@@ -498,6 +498,7 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
 
+    # Set Polarity Position Based On Stepper Count
     def set_polarity(self, polarity):
         try:       
             self._polarity_target = float(polarity)
