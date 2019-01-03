@@ -121,6 +121,7 @@ class Rotator(object):
 
         self.recenter_azimuth()
         self.recenter_elevation()
+        self.recenter_polarity()
 
         atexit.register(self.turnOffMotors)
         self._is_busy = False
