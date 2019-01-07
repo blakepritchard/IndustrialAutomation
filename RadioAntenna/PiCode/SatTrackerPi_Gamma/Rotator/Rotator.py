@@ -549,7 +549,7 @@ class Rotator(object):
                     # Set Polarity Value to Be Returned to GPredict                    
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
-                    if self._verbose > 1 :
+                    if self._verbose > 3 :
                         print("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
                     # Check Limits
