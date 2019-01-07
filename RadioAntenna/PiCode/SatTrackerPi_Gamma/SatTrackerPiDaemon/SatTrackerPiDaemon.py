@@ -183,6 +183,7 @@ USAGE
                     print_newline = True 
                 else:
                     command_website += char_next_website
+                    print(char_next_website)
                     if print_newline:
                         print_newline = False
                     
