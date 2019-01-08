@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <title>Polarity</title>
+        <br>Polarity Control<br>
+        {% if name %}
+        <h1>Current Polarity: {{currentpolarity}} </h1>
+        {% endif %}
+        <form action="set_polarity" method="POST">
+        New Polarity: <input type="text" name="newpolarity"><br>
+        <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
