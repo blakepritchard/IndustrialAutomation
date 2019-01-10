@@ -31,11 +31,11 @@ sleep 2
 declare -a arraySocatWebsiteOutput
 mapfile -t arraySocatWebsiteOutput < "$logfileWebsite"
 
-path_apache_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
+path_nginx_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
 path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
-echo "The WebSite will write to: ${path_apache_out} and the Tracker will listen to: ${path_website_in} "
-
+echo "The WebSite will write to: ${path_nginx_out} and the Tracker will listen to: ${path_website_in} "
+(`export SAT_TRACKER_WEB_OUT=$path_nginx_out`)&
 
 python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in} -l ${verbosityLevel}
 wait

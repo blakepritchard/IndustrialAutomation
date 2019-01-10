@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import serial
+import os
 
 first_app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def set_polarity():
   return render_template("polarity.html")
 
 def send_serial_command(serial_command):
- port_name="/dev/pts/6"
+ port_name=os.environ["SAT_TRACKER_WEB_OUT"]
  serial_port_website = serial.Serial(port_name, 9600, rtscts=True,dsrdtr=True, timeout=0) 
  serial_port_website.write(serial_command.encode())
  return render_template("polarity.html")
