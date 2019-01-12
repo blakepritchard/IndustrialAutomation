@@ -6,6 +6,8 @@ import os
 import logging
 
 logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG)
+serial_config = open("serial_output.config")
+serial_port_name = serial_config.read()
 
 first_app = Flask(__name__)
 if __name__ == "__main__":
@@ -29,8 +31,7 @@ def set_polarity():
 
 def send_serial_command(serial_command):
     try:
-        port_name=os.environ["SAT_TRACKER_WEB_OUT"]
-        serial_port_website = serial.Serial(port_name, 9600, rtscts=True,dsrdtr=True, timeout=0) 
+        serial_port_website = serial.Serial(serial_port_name, 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
         return render_template("polarity.html")
 
