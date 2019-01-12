@@ -204,14 +204,19 @@ USAGE
     except serial.SerialException as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        logging.info(exc_type, fname, exc_tb.tb_lineno)
-        logging.info(e)
+        logging.critical(exc_type, fname, exc_tb.tb_lineno)
+        logging.critical(e)
+        sys.stderr.write(program_name + ": " + repr(e) + "\n")
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(e)
 
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        logging.info(exc_type, fname, exc_tb.tb_lineno)
-        logging.info(e)
+        logging.critical(exc_type, fname, exc_tb.tb_lineno)
+        logging.critical(e)
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(e)
         
         if DEBUG or TESTRUN:
             raise(e)
