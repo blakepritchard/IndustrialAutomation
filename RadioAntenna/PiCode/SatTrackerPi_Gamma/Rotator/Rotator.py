@@ -92,6 +92,7 @@ class Rotator(object):
     Constructor
     '''
     def __init__(self):
+        logging.info("Initializing SatTrackerPi Rotator")
 
         # bottom hat is default address 0x60
         # create a default object, no changes to I2C address or frequency

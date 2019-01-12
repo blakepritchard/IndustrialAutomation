@@ -37,8 +37,6 @@ sys.path.insert(0, os.path.abspath(path_parent))
 sys.path.insert(0, os.path.abspath(path_lib_rotor))
 # logging.info(sys.path)
 
-import Rotator
-device_rotator = Rotator.Rotator()
 
 
 #Init Variables
@@ -113,11 +111,16 @@ USAGE
 
         
         #Initialize Log File
-        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=verbose, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-        logging.info("Verbose mode on Log Level: "+str(verbose))
+        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=args.loglevel, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        logging.info("Verbose mode on Log Level: "+str(args.loglevel))
+
+        # Initialize Hardware
+        import Rotator
+        device_rotator = Rotator.Rotator()
+
 
         #set rotator verbosity
-        device_rotator.set_verbosity(verbose)
+        device_rotator.set_verbosity(args.loglevel)
         
         #set default serial ports to USB converter for debugging       
         if(''==name_port_rotctl): 

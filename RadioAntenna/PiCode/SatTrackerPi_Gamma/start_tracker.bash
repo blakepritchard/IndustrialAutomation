@@ -1,7 +1,7 @@
 #!/bin/bash
 logfileRotctl=pseudoterminalsRotctl.txt
 logfileWebsite=pseudoterminalsWebsite.txt
-verbosityLevel="20"
+verbosityLevel="10"
 
 trap "kill 0 & rm $logfileRotctl & rm $logfileWebsite" EXIT
 
