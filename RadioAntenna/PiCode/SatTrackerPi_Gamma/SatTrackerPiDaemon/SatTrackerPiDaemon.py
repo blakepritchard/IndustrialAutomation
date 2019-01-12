@@ -111,7 +111,7 @@ USAGE
 
         
         #Initialize Log File
-        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=args.loglevel, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
         # Initialize Hardware
