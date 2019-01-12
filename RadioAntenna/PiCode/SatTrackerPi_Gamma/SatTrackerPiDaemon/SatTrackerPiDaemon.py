@@ -21,6 +21,8 @@ It defines classes_and_methods
 import sys
 import os
 import serial
+import logging
+
 
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
@@ -33,7 +35,7 @@ path_lib_rotor = os.path.join(path_parent, "Rotator")
 
 sys.path.insert(0, os.path.abspath(path_parent))
 sys.path.insert(0, os.path.abspath(path_lib_rotor))
-# print(sys.path)
+# logging.info(sys.path)
 
 import Rotator
 device_rotator = Rotator.Rotator()
@@ -48,6 +50,9 @@ __updated__ = '2018-12-28'
 DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
+
+#Initialize Log File
+logging.basicConfig(filename='sat_tracker_daemon.log',level=logging.DEBUG)
 
 
 class CLIError(Exception):
@@ -100,7 +105,7 @@ USAGE
         parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
 
-        print("Processing Arguments")
+        logging.info("Processing Arguments")
 
         # Process arguments
         args = parser.parse_args()
@@ -110,36 +115,38 @@ USAGE
         
         speed_serial = args.speed
 
+        
+
 
 
         #set rotator verbosity
         device_rotator.set_verbosity(verbose)
         
         if verbose > 0: 
-                print("Verbose mode on Log Level: "+str(verbose))       
+                logging.info("Verbose mode on Log Level: "+str(verbose))       
         if(''==name_port_rotctl): 
             name_port_rotctl = '/dev/ttyUSB1'
         if(''==name_port_website): 
             name_port_rotctl = '/dev/ttyUSB2'    
 
-        print("RotCtl Port: " + name_port_rotctl)
-        print("WebSite Port: " + name_port_website)
+        logging.info("RotCtl Port: " + name_port_rotctl)
+        logging.info("WebSite Port: " + name_port_website)
 
         """if(''==serial_port_speed): 
                 serial_port_speed = 9600
-        print("Using Speed: " + serial_port_speed)
+        logging.info("Using Speed: " + serial_port_speed)
         """
-        print("Opening serial port for rotctl.")
+        logging.info("Opening serial port for rotctl.")
         serial_port_rotctl = serial.Serial(name_port_rotctl, 9600, rtscts=True,dsrdtr=True, timeout=0)
 
-        print("Opening serial port for website.")
+        logging.info("Opening serial port for website.")
         serial_port_website = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True, timeout=0)
 
-        print("Port Open. Setting Constants.")
+        logging.info("Port Open. Setting Constants.")
         bytes_carraigereturn = bytes("\r")
         bytes_linefeed = bytes("\n")    
 
-        print("Reading Serial Port Loop")
+        logging.info("Reading Serial Port Loop")
         
         command_rotctl = ""
         command_website = ""
@@ -157,7 +164,7 @@ USAGE
                     serial_port_rotctl.write(rotator_response)
                     command_rotctl = ""  
                 elif '!'==char_next_rotctl:
-                    print('!'),
+                    logging.info('!'),
                     print_newline = True 
                 else:
                     command_rotctl += char_next_rotctl
@@ -179,7 +186,7 @@ USAGE
                     serial_port_website.write(website_response)
                     command_website = ""  
                 elif '!'==char_next_website:
-                    print('!'),
+                    logging.info('!'),
                     print_newline = True 
                 else:
                     command_website += char_next_website
@@ -196,14 +203,14 @@ USAGE
     except serial.SerialException as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)
-        print(e)
+        logging.info(exc_type, fname, exc_tb.tb_lineno)
+        logging.info(e)
 
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, fname, exc_tb.tb_lineno)
-        print(e)
+        logging.info(exc_type, fname, exc_tb.tb_lineno)
+        logging.info(e)
         
         if DEBUG or TESTRUN:
             raise(e)

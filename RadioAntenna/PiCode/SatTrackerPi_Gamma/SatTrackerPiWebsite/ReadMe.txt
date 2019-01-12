@@ -12,6 +12,6 @@ create a symlink to enable nginx:
 
 to configure the Pi to run the website automatically add the following text to: /etc/rc.local
 
-   cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
-   bash start_tracker.bash
-   /usr/local/bin/uwsgi --ini /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize /var/log/uwsgi.log
+cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
+bash start_tracker.bash > /home/pi/logs/SatTrackerPi/satTrackerPi.log &
+/usr/local/bin/uwsgi --ini /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize /var/log/uwsgi.log
