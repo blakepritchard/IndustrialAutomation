@@ -5,16 +5,16 @@ import serial
 import os
 
 
-first_app = Flask(__name__)
+sat_tracker_app = Flask(__name__)
 if __name__ == "__main__":
- first_app.run(host='0.0.0.0')
+ sat_tracker_app.run(host='0.0.0.0')
 
-@first_app.route("/")
-@first_app.route("/polarity/", methods=["GET"])
+@sat_tracker_app.route("/")
+@sat_tracker_app.route("/polarity/", methods=["GET"])
 def polarity_control():
  return render_template("polarity.html")
 
-@first_app.route("/set_polarity", methods=["POST"])
+@sat_tracker_app.route("/set_polarity", methods=["POST"])
 def set_polarity():
     try:
         if request.method == 'POST':
@@ -23,20 +23,13 @@ def set_polarity():
         else:
             return render_template("polarity.html")
     except Exception as exception:
-        error_file = open("sat_tracker_web.error", "a")
-        error_file.write(exception)
-        error_file.close()
+        sat_tracker_app.log_exception(exception)
 
 def send_serial_command(serial_command):
     try:
-
-        serial_config = open("serial_output.config")
-        serial_port_name = serial_config.read()
-        serial_port_website = serial.Serial(serial_port_name, 9600, rtscts=True,dsrdtr=True, timeout=0) 
+        serial_port_website = serial.Serial("/dev/pts/0", 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
         return render_template("polarity.html")
 
     except Exception as exception:
-        error_file = open("sat_tracker_web.error", "a")
-        error_file.write(exception)
-        error_file.close()
+        sat_tracker_app.log_exception(exception)
