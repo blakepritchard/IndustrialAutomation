@@ -3,12 +3,7 @@ from flask import render_template
 from flask import request
 import serial
 import os
-import logging
 
-logging.basicConfig(filename='sat_tracker_web.log', filemode='w', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-
-serial_config = open("serial_output.config")
-serial_port_name = serial_config.read()
 
 first_app = Flask(__name__)
 if __name__ == "__main__":
@@ -28,15 +23,20 @@ def set_polarity():
         else:
             return render_template("polarity.html")
     except Exception as exception:
-        logging.warning(exception)
+        error_file = open("sat_tracker_web.error", "a")
+        error_file.write(exception)
+        error_file.close()
 
 def send_serial_command(serial_command):
     try:
+
+        serial_config = open("serial_output.config")
+        serial_port_name = serial_config.read()
         serial_port_website = serial.Serial(serial_port_name, 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
         return render_template("polarity.html")
 
     except Exception as exception:
-        logging.warning(exception)
-
- 
+        error_file = open("sat_tracker_web.error", "a")
+        error_file.write(exception)
+        error_file.close()
