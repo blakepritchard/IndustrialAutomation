@@ -685,8 +685,8 @@ class Rotator(object):
     def handle_exception(self, e):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            logging.info(exc_type, fname, exc_tb.tb_lineno)
-            logging.info(e)
+            logging.critical(exc_type, fname, exc_tb.tb_lineno)
+            logging.critical(e)
             
             sys.stderr.write("Rotator.py: " + repr(e) + "\n")
             return 2

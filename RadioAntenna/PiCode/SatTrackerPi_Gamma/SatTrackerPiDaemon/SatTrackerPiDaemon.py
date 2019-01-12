@@ -51,8 +51,7 @@ DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
 
-#Initialize Log File
-logging.basicConfig(filename='sat_tracker_daemon.log',level=logging.DEBUG)
+
 
 
 class CLIError(Exception):
@@ -116,18 +115,20 @@ USAGE
         speed_serial = args.speed
 
         
-
-
+        #Initialize Log File
+        logging.basicConfig(filename='sat_tracker_daemon.log',level=verbose)
+        logging.info("Verbose mode on Log Level: "+str(verbose))
 
         #set rotator verbosity
         device_rotator.set_verbosity(verbose)
         
-        if verbose > 0: 
-                logging.info("Verbose mode on Log Level: "+str(verbose))       
+        #set default serial ports to USB converter       
         if(''==name_port_rotctl): 
             name_port_rotctl = '/dev/ttyUSB1'
         if(''==name_port_website): 
             name_port_rotctl = '/dev/ttyUSB2'    
+
+
 
         logging.info("RotCtl Port: " + name_port_rotctl)
         logging.info("WebSite Port: " + name_port_website)
