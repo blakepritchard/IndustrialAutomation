@@ -3,15 +3,15 @@ from flask import render_template
 from flask import request
 import serial
 import os
-
+import logging
 
 sat_tracker_app = Flask(__name__)
 
 if __name__ == "__main__":
  sat_tracker_app.run(host='0.0.0.0')
 
-import logging
-logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG, filemode='w', format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+# logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG, filemode='w', format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 @sat_tracker_app.route("/")
 @sat_tracker_app.route("/polarity/", methods=["GET"])
