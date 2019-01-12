@@ -5,7 +5,8 @@ import serial
 import os
 import logging
 
-logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG)
+logging.basicConfig(filename='sat_tracker_web.log', filemode='w', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
 serial_config = open("serial_output.config")
 serial_port_name = serial_config.read()
 
