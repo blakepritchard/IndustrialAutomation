@@ -9,15 +9,21 @@ sat_tracker_app = Flask(__name__)
 sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
- sat_tracker_app.run(host='0.0.0.0')
+    sat_tracker_app.run(host='0.0.0.0')
 
 
+handler = logging.FileHandler("sat_tracker_web.log")
+handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(message)s"))
+logger = logging.getLogger(sat_tracker_app.logger_name)
+logger.setLevel(logging.DEBUG)
+del logger.handlers[:]
+logger.addHandler(handler)
 # logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG, filemode='w', format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 @sat_tracker_app.route("/")
 @sat_tracker_app.route("/polarity/", methods=["GET"])
 def polarity_control():
- return render_template("polarity.html")
+    return render_template("polarity.html")
 
 @sat_tracker_app.route("/set_polarity", methods=["POST"])
 def set_polarity():
