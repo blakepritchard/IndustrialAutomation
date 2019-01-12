@@ -116,8 +116,8 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperPolarity.setSpeed(10)                           # 10 RPM
 
-        print str(self._encoder_A)
-        print str(self._encoder_B)
+        logging.info str(self._encoder_A)
+        logging.info str(self._encoder_B)
 
         self.recenter_azimuth()
         self.recenter_elevation()
@@ -140,15 +140,15 @@ class Rotator(object):
         self._is_busy = False
       
     def get_elevation(self):
-        #print("returning elevation of: "+ str(self._elevation_current_degrees))
+        #logging.info("returning elevation of: "+ str(self._elevation_current_degrees))
         return self.get_elevation_degrees()
     
     def get_azimuth(self):
-        #print("returning azimuth of: "+ str(self._azimuth_current_degrees))
+        #logging.info("returning azimuth of: "+ str(self._azimuth_current_degrees))
         return self.get_azimuth_degrees()
     
     def get_polarity(self):
-        #print("returning polarity of: "+ str(self._polarity_current_degrees))
+        #logging.info("returning polarity of: "+ str(self._polarity_current_degrees))
         return self.get_polarity_degrees()
 
     def set_verbosity(self, verbose):
@@ -176,9 +176,9 @@ class Rotator(object):
 
     def recenter_elevation(self):
         try:
-            print("Recentering Elevation at Value: " + str(self._encoderposition_elevation_center))
+            logging.info("Recentering Elevation at Value: " + str(self._encoderposition_elevation_center))
             encoderposition_elevation_current = self._adc.read_adc(1)
-            print("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
+            logging.info("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
             nSteps = 0;
             self._is_busy = True
@@ -198,12 +198,12 @@ class Rotator(object):
                     encoderposition_elevation_current = self._adc.read_adc(1)
 
             self._is_busy = False
-            print("Steps: " + str(nSteps))
+            logging.info("Steps: " + str(nSteps))
                   
 
             self.set_elevation_stepper_count(0)
             encoderposition_elevation_current = self._adc.read_adc(1)
-            print("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
+            logging.info("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
             
         except Exception as e:
             self.handle_exception(e)
@@ -228,16 +228,16 @@ class Rotator(object):
             
             #Move Up
             if elevation_target > elevation_current_degrees:
-                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
+                logging.info("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
                 self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
 
             #Move Down    
             elif elevation_target < elevation_current_degrees:
-                print("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Downward by Estimated: " + str(steps_required) + " steps.")
+                logging.info("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Downward by Estimated: " + str(steps_required) + " steps.")
                 self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
 
             else:
-                print("Holding Elevation Steady at: "+ str(elevation))
+                logging.info("Holding Elevation Steady at: "+ str(elevation))
 
             # Set Elevation Value to Be Returned to GPredict
             self._is_busy = False
@@ -257,7 +257,7 @@ class Rotator(object):
 
     def stop_elevation(self):
         try:        
-            print("EL Stop")
+            logging.info("EL Stop")
             self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
@@ -285,9 +285,9 @@ class Rotator(object):
     #Re-Center
     def recenter_azimuth(self):
         try:
-            print("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
+            logging.info("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
             encoderposition_azimuth_current = self._adc.read_adc(0)
-            print("Cable Tension Start = " + str(encoderposition_azimuth_current))
+            logging.info("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
             nSteps = 0
             self._is_busy = True
@@ -295,19 +295,19 @@ class Rotator(object):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
-                    # print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    # logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
-                    # print("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    # logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             self._is_busy = False
-            print("Total Steps: " + str(nSteps))
+            logging.info("Total Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
-            print("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
+            logging.info("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
             self.handle_exception(e)
@@ -343,9 +343,9 @@ class Rotator(object):
         # Check Cable Tension
         # Is it physically safe to spin any farther in that direction?                
         if (move_is_clockwise):
-            print "Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Clockwise"
+            logging.info "Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Clockwise"
         else:
-            print "Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Counter-Clockwise"
+            logging.info "Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Counter-Clockwise"
 
 
         #calculate the number of steps required by the Stepper Motor
@@ -391,7 +391,7 @@ class Rotator(object):
 
                 # Plan Movement
                 steps_planned, is_clockwise, degrees_travel = self.plan_azimuth_movement(azimuth_target_rounded)
-                print("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth by: " + str(degrees_travel) + " Degrees, with: " + str(steps_planned) + " Steps.")
+                logging.info("Azimuth Target: " + str(azimuth_target_rounded) + "; Moving Azimuth by: " + str(degrees_travel) + " Degrees, with: " + str(steps_planned) + " Steps.")
 
                 # Scope Variables
                 steps_actual = 0
@@ -414,7 +414,7 @@ class Rotator(object):
 
                     # If Azimuth Travel Has Exceeded Limits, Reverse Direction, Recenter, then Stop Moving
                     else:
-                        print "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Re-centering to unwind cable"
+                        logging.info "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Re-centering to unwind cable"
                         self.recenter_azimuth()
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         keep_moving = False
@@ -427,16 +427,16 @@ class Rotator(object):
                         
                     # Keep Moving ?
                     if (steps_actual >= steps_planned):
-                        print "Stopping Rotation at : " + str(steps_actual) + " Steps."
+                        logging.info "Stopping Rotation at : " + str(steps_actual) + " Steps."
                         keep_moving = False
 
                 self._is_busy = False
-                print("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoder Position: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
-                print("Azimuth Stepper Count: " + str(self.get_azimuth_stepper_count()) + ", Azimuth Current Degrees: " + str(self.get_azimuth_degrees()))
+                logging.info("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoder Position: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
+                logging.info("Azimuth Stepper Count: " + str(self.get_azimuth_stepper_count()) + ", Azimuth Current Degrees: " + str(self.get_azimuth_degrees()))
 
 
             else:
-                print("Holding Azimuth Steady at: "+ str(azimuth))
+                logging.info("Holding Azimuth Steady at: "+ str(azimuth))
 
 
         except Exception as e:
@@ -444,7 +444,7 @@ class Rotator(object):
 
     def stop_azimuth(self):
         try: 
-            print("AZ Stop")
+            logging.info("AZ Stop")
             self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
@@ -467,9 +467,9 @@ class Rotator(object):
     # Find Centerline Based on Analog Encoder
     def recenter_polarity(self):
         try:
-            print("Recentering Polarity at Value: " + str(self._encoderposition_polarity_center))
+            logging.info("Recentering Polarity at Value: " + str(self._encoderposition_polarity_center))
             encoderposition_polarity_current = self._adc.read_adc(2)
-            print("Polarity Encoder Reading = " + str(encoderposition_polarity_current))
+            logging.info("Polarity Encoder Reading = " + str(encoderposition_polarity_current))
 
             nSteps = 0
             self._is_busy = True
@@ -489,12 +489,12 @@ class Rotator(object):
                     encoderposition_polarity_current = self._adc.read_adc(2)
 
             self._is_busy = False
-            print("Steps: " + str(nSteps))
+            logging.info("Steps: " + str(nSteps))
                   
 
             self.set_polarity_stepper_count(0)
             encoderposition_polarity_current = self._adc.read_adc(2)
-            print("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
+            logging.info("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
             
         except Exception as e:
             self.handle_exception(e)
@@ -518,7 +518,7 @@ class Rotator(object):
 
             
             if polarity_target == polarity_current_degrees:
-                print("Holding polarity Steady at: "+ str(polarity))
+                logging.info("Holding polarity Steady at: "+ str(polarity))
             else:
                 
                 encoderposition_polarity_current = self._adc.read_adc(2)
@@ -536,8 +536,8 @@ class Rotator(object):
                     limit_label = "Minimum"
                     stepper_incriment = -1
 
-                print("Polarity Target: "+str(polarity_target)+", Polarity Current: "+str(polarity_current_degrees))
-                print("Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+                logging.info("Polarity Target: "+str(polarity_target)+", Polarity Current: "+str(polarity_current_degrees))
+                logging.info("Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+", Moving polarity "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
                 #execute rotation    
                 self._is_busy = True               
@@ -550,17 +550,17 @@ class Rotator(object):
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
                     if self._verbose > 3 :
-                        print("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
+                        logging.info("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
                     # Check Limits
                     if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
-                        print("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
+                        logging.info("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
                         break
 
             self._is_busy = False
             
             if self._verbose > 1 :
-                print("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
+                logging.info("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
             
         except Exception as e:
@@ -576,7 +576,7 @@ class Rotator(object):
 
     def stop_polarity(self):
         try:        
-            print("Polarity Stop")
+            logging.info("Polarity Stop")
             self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
         except Exception as e:
@@ -599,7 +599,7 @@ class Rotator(object):
     
     def get_unsupported_command_text(self):
         msg_text = "Unsupported Command..."
-        print(msg_text)
+        logging.info(msg_text)
         return msg_text    
                   
     def execute_easycomm2_command(self, rotator_commands):  
@@ -609,7 +609,7 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                #print("Command: " + rotator_command)
+                #logging.info("Command: " + rotator_command)
                 result = ""
                     
                 # EasyCommII uses short commands to Get values from the Rotator
@@ -628,13 +628,13 @@ class Rotator(object):
 
                     if not self._is_busy:    
                         if "AZ" == command_operation:
-                            print("Recieved Azimuth Command: " + str(command_parameters))
+                            logging.info("Recieved Azimuth Command: " + str(command_parameters))
                             self.set_azimuth(command_parameters)
                         elif "EL" == command_operation:
-                            print("Recieved Elevation Command: " + str(command_parameters))      
+                            logging.info("Recieved Elevation Command: " + str(command_parameters))      
                             self.set_elevation(command_parameters)       
                     else:
-                        print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
+                        logging.info("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
             return result       
         
         except Exception as e:
@@ -648,7 +648,7 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                #print("Command: " + rotator_command)
+                #logging.info("Command: " + rotator_command)
                 result = ""
                     
                 # Website uses short commands to Get values from the Rotator
@@ -669,13 +669,13 @@ class Rotator(object):
 
                     if not self._is_busy:    
                         if "PP" == command_operation:
-                            print("Recieved Polarity Position Command: " + str(command_parameters))
+                            logging.info("Recieved Polarity Position Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                         if "PT" == command_operation:
-                            print("Recieved Polarity Tracking Command: " + str(command_parameters))
+                            logging.info("Recieved Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                     else:
-                        print("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
+                        logging.info("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
             return result       
         
         except Exception as e:
@@ -685,8 +685,8 @@ class Rotator(object):
     def handle_exception(self, e):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno)
-            print(e)
+            logging.info(exc_type, fname, exc_tb.tb_lineno)
+            logging.info(e)
             
             sys.stderr.write("Rotator.py: " + repr(e) + "\n")
             return 2
