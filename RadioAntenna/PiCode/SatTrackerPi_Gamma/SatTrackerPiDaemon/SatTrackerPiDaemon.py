@@ -111,7 +111,6 @@ USAGE
         verbose = args.loglevel
         name_port_rotctl = args.rotctl
         name_port_website = args.website
-        
         speed_serial = args.speed
 
         
@@ -122,7 +121,7 @@ USAGE
         #set rotator verbosity
         device_rotator.set_verbosity(verbose)
         
-        #set default serial ports to USB converter       
+        #set default serial ports to USB converter for debugging       
         if(''==name_port_rotctl): 
             name_port_rotctl = '/dev/ttyUSB1'
         if(''==name_port_website): 

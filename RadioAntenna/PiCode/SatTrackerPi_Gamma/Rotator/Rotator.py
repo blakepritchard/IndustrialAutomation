@@ -140,15 +140,15 @@ class Rotator(object):
         self._is_busy = False
       
     def get_elevation(self):
-        #logging.info("returning elevation of: "+ str(self._elevation_current_degrees))
+        #logging.debug("returning elevation of: "+ str(self._elevation_current_degrees))
         return self.get_elevation_degrees()
     
     def get_azimuth(self):
-        #logging.info("returning azimuth of: "+ str(self._azimuth_current_degrees))
+        #logging.debug("returning azimuth of: "+ str(self._azimuth_current_degrees))
         return self.get_azimuth_degrees()
     
     def get_polarity(self):
-        #logging.info("returning polarity of: "+ str(self._polarity_current_degrees))
+        #logging.debug("returning polarity of: "+ str(self._polarity_current_degrees))
         return self.get_polarity_degrees()
 
     def set_verbosity(self, verbose):
@@ -295,13 +295,13 @@ class Rotator(object):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
-                    # logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    logging.debug("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
-                    # logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    logging.debug("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
@@ -609,7 +609,7 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                #logging.info("Command: " + rotator_command)
+                #logging.debug("Command: " + rotator_command)
                 result = ""
                     
                 # EasyCommII uses short commands to Get values from the Rotator
@@ -648,7 +648,7 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                #logging.info("Command: " + rotator_command)
+                #logging.debug("Command: " + rotator_command)
                 result = ""
                     
                 # Website uses short commands to Get values from the Rotator
