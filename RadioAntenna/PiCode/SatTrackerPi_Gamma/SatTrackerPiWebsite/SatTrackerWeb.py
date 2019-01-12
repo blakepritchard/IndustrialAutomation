@@ -17,19 +17,23 @@ def polarity_control():
 @sat_tracker_app.route("/set_polarity", methods=["POST"])
 def set_polarity():
     try:
+        sat_tracker_app.logger.debug("a POST to set_polarity Has Been Recieved")
         if request.method == 'POST':
             polarity_command= "PP" + request.form['newpolarity'] + "\n"
             return send_serial_command(polarity_command)
         else:
             return render_template("polarity.html")
     except Exception as exception:
+        sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
 
 def send_serial_command(serial_command):
     try:
+        sat_tracker_app.logger.warning("About to Send Serial Command")
         serial_port_website = serial.Serial("/dev/pts/0", 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
         return render_template("polarity.html")
 
     except Exception as exception:
+        sat_tracker_app.logger.error("An Exception Has Occurred!")
         sat_tracker_app.log_exception(exception)
