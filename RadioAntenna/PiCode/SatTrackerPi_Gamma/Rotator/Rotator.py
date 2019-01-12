@@ -116,8 +116,8 @@ class Rotator(object):
         self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperPolarity.setSpeed(10)                           # 10 RPM
 
-        logging.info str(self._encoder_A)
-        logging.info str(self._encoder_B)
+        logging.info(str(self._encoder_A))
+        logging.info(str(self._encoder_B))
 
         self.recenter_azimuth()
         self.recenter_elevation()
@@ -343,9 +343,9 @@ class Rotator(object):
         # Check Cable Tension
         # Is it physically safe to spin any farther in that direction?                
         if (move_is_clockwise):
-            logging.info "Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Clockwise"
+            logging.info("Path from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Clockwise")
         else:
-            logging.info "Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Counter-Clockwise"
+            logging.info("Path: from: "+str(azimuth_actual)+" to: "+str(target_azimuth)+" is: "+str(degrees_travel)+" Degrees Counter-Clockwise")
 
 
         #calculate the number of steps required by the Stepper Motor
@@ -414,7 +414,7 @@ class Rotator(object):
 
                     # If Azimuth Travel Has Exceeded Limits, Reverse Direction, Recenter, then Stop Moving
                     else:
-                        logging.info "Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Re-centering to unwind cable"
+                        logging.info("Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Re-centering to unwind cable")
                         self.recenter_azimuth()
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         keep_moving = False
@@ -427,7 +427,7 @@ class Rotator(object):
                         
                     # Keep Moving ?
                     if (steps_actual >= steps_planned):
-                        logging.info "Stopping Rotation at : " + str(steps_actual) + " Steps."
+                        logging.info("Stopping Rotation at : " + str(steps_actual) + " Steps.")
                         keep_moving = False
 
                 self._is_busy = False
