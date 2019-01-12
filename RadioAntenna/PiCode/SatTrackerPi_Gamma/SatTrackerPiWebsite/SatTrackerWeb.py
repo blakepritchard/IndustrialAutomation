@@ -6,6 +6,7 @@ import os
 import logging
 
 sat_tracker_app = Flask(__name__)
+sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
  sat_tracker_app.run(host='0.0.0.0')
