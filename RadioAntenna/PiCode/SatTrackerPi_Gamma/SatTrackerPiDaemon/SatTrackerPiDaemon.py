@@ -104,8 +104,6 @@ USAGE
         parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
         parser.add_argument('-V', '--version', action='version', version=program_version_message)       
 
-        logging.info("Processing Arguments")
-
         # Process arguments
         args = parser.parse_args()
         verbose = args.loglevel
@@ -115,7 +113,7 @@ USAGE
 
         
         #Initialize Log File
-        logging.basicConfig(filename='sat_tracker_daemon.log',level=verbose)
+        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=verbose, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.info("Verbose mode on Log Level: "+str(verbose))
 
         #set rotator verbosity
