@@ -88,6 +88,10 @@ class Rotator(object):
     _elevation_degrees_per_step = 1/_elevation_steps_per_degree
     _polarity_degrees_per_step  = 1/_polarity_steps_per_degree
 
+    _azimuth_requires_calibration = True
+    _elevation_requires_calibration = True
+    _polarity_requires_calibration = True
+
     '''
     Constructor
     '''
@@ -181,7 +185,7 @@ class Rotator(object):
             encoderposition_elevation_current = self._adc.read_adc(1)
             logging.info("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
-            nSteps = 0;
+            nSteps = 0
             self._is_busy = True
             while ((encoderposition_elevation_current < self._encoderposition_elevation_center)
                 and (encoderposition_elevation_current < self._encoderposition_elevation_max)
@@ -210,7 +214,9 @@ class Rotator(object):
             self.handle_exception(e)
 
     def set_elevation(self, elevation):
-        try:       
+        try:
+            if(self._elevation_requires_calibration == True):
+                self.recenter_elevation()       
             self._elevation_target = float(elevation)
             elevation_tuple = divmod(self._elevation_target, self._elevation_degrees_per_step)
             elevation_remainder = float(elevation_tuple[1])
@@ -261,6 +267,7 @@ class Rotator(object):
             logging.info("EL Stop")
             self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+            self._elevation_requires_calibration = True
         except Exception as e:
             self.handle_exception(e)
             
@@ -325,9 +332,9 @@ class Rotator(object):
         azimuth_actual = self.get_azimuth_degrees()
 
         #Start by setting motor direction to shortest linear route
-        move_is_clockwise = True;
+        move_is_clockwise = True
         if target_azimuth < self.get_azimuth_degrees():
-            move_is_clockwise = False;
+            move_is_clockwise = False
 
         # Measure Rotation in Degrees
         if (move_is_clockwise):
@@ -383,6 +390,8 @@ class Rotator(object):
     # Execute Azimuth 
     def set_azimuth(self, azimuth):
         try:
+            if(self._azimuth_requires_calibration == True):
+                self.recenter_azimuth()
 
             #Find Nearest Half Degree Increment
             self._azimuth_target = float(azimuth)
@@ -448,6 +457,8 @@ class Rotator(object):
             logging.info("AZ Stop")
             self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+            self._azimuth_requires_calibration = True
+    
         except Exception as e:
             self.handle_exception(e)  
 
@@ -503,6 +514,9 @@ class Rotator(object):
     # Set Polarity Position Based On Stepper Count
     def set_polarity(self, polarity):
         try:       
+            if(self._polarity_requires_calibration == True):
+                self.recenter_polarity()
+                
             self._polarity_target = float(polarity)
             polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
             polarity_remainder = float(polarity_tuple[1])
@@ -580,6 +594,7 @@ class Rotator(object):
             logging.info("Polarity Stop")
             self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+            self._polarity_requires_calibration = True
         except Exception as e:
             self.handle_exception(e)
             
