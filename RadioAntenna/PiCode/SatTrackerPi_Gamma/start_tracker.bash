@@ -22,7 +22,6 @@ echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} "
 
 echo $(date -u) " The SatTrackerPi listener will listen to: ${path_tracker_in} for Heading-Azimuth and Inclination-Elevation"
 
-
 echo $(date -u) " Opening Virtual Com Port to Website"
 (`socat -d -d -lf $logfileWebsite pty,raw,echo=0 pty,raw,echo=0`)&
 
@@ -36,6 +35,10 @@ path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
 echo $(date -u) " The WebSite will write to: ${path_nginx_out} and the Tracker will listen to: ${path_website_in} "
 (`echo SERIAL_PORT_NAME=\"${path_nginx_out}\" > ./SatTrackerPiWebsite/serial_output.config`)&
+
+sleep 2
+
+(`sudo chown www-data ${path_nginx_out}`)&
 
 sleep 2
 
