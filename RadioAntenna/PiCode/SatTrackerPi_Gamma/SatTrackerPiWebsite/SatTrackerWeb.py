@@ -21,11 +21,14 @@ if __name__ == "__main__":
 
 
 @sat_tracker_app.route("/")
+def default_page():
+    return redirect("http://localhost/polarity", code=302)
+
 @sat_tracker_app.route("/polarity/", methods=["GET"])
 def polarity_control():
     return render_template("polarity.html")
 
-@sat_tracker_app.route("/set_polarity", methods=["POST"])
+@sat_tracker_app.route("/polarity/set_polarity", methods=["POST"])
 def set_polarity():
     try:
         sat_tracker_app.logger.debug("a POST to set_polarity Has Been Recieved")
