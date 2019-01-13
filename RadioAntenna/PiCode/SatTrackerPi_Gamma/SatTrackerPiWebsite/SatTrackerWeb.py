@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask import render_template
 from flask import request
 import serial
@@ -7,6 +7,9 @@ import logging
 
 sat_tracker_app = Flask(__name__)
 sat_tracker_app.logger.setLevel(logging.DEBUG)
+sat_tracker_app.testing = True
+#sat_tracker_app.config.from_envvar("SAT_TRACKER_WEB_SERIAL_CONFIG")
+sat_tracker_app.config.from_pyfile("serial_output.config")
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
@@ -35,9 +38,9 @@ def set_polarity():
 def send_serial_command(serial_command):
     try:
         sat_tracker_app.logger.warning("About to Send Serial Command")
-        # serial_port_website = serial.Serial("/dev/pts/0", 9600, rtscts=True,dsrdtr=True, timeout=0) 
-        # serial_port_website.write(serial_command.encode())
-        return render_template("polarity.html")
+        serial_port_website = serial.Serial(sat_tracker_app.config['SERIAL_PORT_NAME'], 9600, rtscts=True,dsrdtr=True, timeout=0) 
+        serial_port_website.write(serial_command.encode())
+        return redirect("http://localhost/polarity", code=302)
 
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")

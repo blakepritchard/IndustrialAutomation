@@ -14,4 +14,6 @@ to configure the Pi to run the website automatically add the following text to: 
 
 cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
 bash start_tracker.bash > start_tracker.log &
+
+export SAT_TRACKER_WEB_SERIAL_CONFIG = /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/serial_output.config
 /usr/local/bin/uwsgi --ini /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize /var/log/uwsgi.log
