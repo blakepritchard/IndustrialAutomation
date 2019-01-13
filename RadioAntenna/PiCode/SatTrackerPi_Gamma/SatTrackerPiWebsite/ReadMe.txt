@@ -17,4 +17,8 @@ to configure the Pi to run the website automatically add the following text to: 
     cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
     bash start_tracker.bash > start_tracker.log &
 
-    /usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize /var/log/uwsgi.log
+    /usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
+
+
+to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
+   @chromium-browser --kiosk http://sat-tracker-pi/polarity
