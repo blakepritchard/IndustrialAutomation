@@ -12,14 +12,6 @@ if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
 
 
-handler = logging.FileHandler("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/sat_tracker_web.log")
-handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(message)s"))
-logger = logging.getLogger(sat_tracker_app.logger_name)
-logger.setLevel(logging.DEBUG)
-del logger.handlers[:]
-logger.addHandler(handler)
-# logging.basicConfig(filename='sat_tracker_web.log',level=logging.DEBUG, filemode='w', format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-
 @sat_tracker_app.route("/")
 @sat_tracker_app.route("/polarity/", methods=["GET"])
 def polarity_control():
@@ -37,6 +29,7 @@ def set_polarity():
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
+        return(exception)
 
 def send_serial_command(serial_command):
     try:
@@ -48,3 +41,4 @@ def send_serial_command(serial_command):
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")
         sat_tracker_app.log_exception(exception)
+        return(exception)
