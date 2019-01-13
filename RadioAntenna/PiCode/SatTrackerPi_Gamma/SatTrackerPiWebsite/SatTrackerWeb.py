@@ -9,7 +9,7 @@ sat_tracker_app = Flask(__name__)
 sat_tracker_app.logger.setLevel(logging.DEBUG)
 sat_tracker_app.testing = True
 #sat_tracker_app.config.from_envvar("SAT_TRACKER_WEB_SERIAL_CONFIG")
-sat_tracker_app.config.from_pyfile("serial_output.config")
+sat_tracker_app.config.from_pyfile("./serial_output.config")
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
