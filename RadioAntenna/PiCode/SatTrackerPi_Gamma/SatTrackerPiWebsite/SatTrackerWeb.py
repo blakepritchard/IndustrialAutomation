@@ -4,6 +4,7 @@ from flask import request
 import serial
 import os
 import logging
+import socket
 
 sat_tracker_app = Flask(__name__)
 
@@ -22,7 +23,7 @@ if __name__ == "__main__":
 
 @sat_tracker_app.route("/")
 def default_page():
-    return redirect("http://localhost/polarity", code=302)
+    return redirect("http://"+socket.gethostname()+"/polarity", code=302)
 
 @sat_tracker_app.route("/polarity/", methods=["GET"])
 def polarity_control():
@@ -48,7 +49,7 @@ def send_serial_command(serial_command):
         print("About to Send Serial Command to: "+ str(serial_port_name) )
         serial_port_website = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
-        return redirect("http://localhost/polarity", code=302)
+        return redirect("http://"+socket.gethostname()+"/polarity", code=302)
 
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")
