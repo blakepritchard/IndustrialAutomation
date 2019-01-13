@@ -35,7 +35,7 @@ path_nginx_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
 path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
 echo $(date -u) " The WebSite will write to: ${path_nginx_out} and the Tracker will listen to: ${path_website_in} "
-(`echo SERIAL_PORT_NAME=${path_nginx_out} > ./SatTrackerPiWebsite/serial_output.config`)&
+(`echo SERIAL_PORT_NAME="${path_nginx_out}" > ./SatTrackerPiWebsite/serial_output.config`)&
 
 python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in} -l ${verbosityLevel}
 wait
