@@ -1,0 +1,1 @@
+chromium-browser --kiosk http://sat-tracker-pi/polarity
