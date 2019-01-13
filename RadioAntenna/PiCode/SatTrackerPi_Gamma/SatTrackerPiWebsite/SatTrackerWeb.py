@@ -30,7 +30,7 @@ def set_polarity():
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
-        return(exception)
+        return(exception.message)
 
 def send_serial_command(serial_command):
     try:
@@ -42,4 +42,4 @@ def send_serial_command(serial_command):
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")
         sat_tracker_app.log_exception(exception)
-        return(exception)
+        return(exception.message)
