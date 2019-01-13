@@ -38,7 +38,7 @@ echo $(date -u) " The WebSite will write to: ${path_nginx_out} and the Tracker w
 
 sleep 2
 
-(`sudo chown www-data ${path_nginx_out}`)&
+(`chown www-data ${path_nginx_out}`)&
 
 sleep 2
 
