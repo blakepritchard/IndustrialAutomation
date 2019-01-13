@@ -12,7 +12,7 @@ if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
 
 
-handler = logging.FileHandler("sat_tracker_web.log")
+handler = logging.FileHandler("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/sat_tracker_web.log")
 handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-8s %(message)s"))
 logger = logging.getLogger(sat_tracker_app.logger_name)
 logger.setLevel(logging.DEBUG)
