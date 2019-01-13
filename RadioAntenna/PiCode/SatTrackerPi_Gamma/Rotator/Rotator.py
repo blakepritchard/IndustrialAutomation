@@ -208,6 +208,7 @@ class Rotator(object):
 
             self.set_elevation_stepper_count(0)
             encoderposition_elevation_current = self._adc.read_adc(1)
+            self._elevation_requires_calibration = False
             logging.info("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
             
         except Exception as e:
@@ -315,6 +316,7 @@ class Rotator(object):
             logging.info("Total Steps: " + str(nSteps))
                   
             self.set_azimuth_stepper_count(0)
+            self._azimuth_requires_calibration = False
             logging.info("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
             
         except Exception as e:
@@ -506,6 +508,7 @@ class Rotator(object):
 
             self.set_polarity_stepper_count(0)
             encoderposition_polarity_current = self._adc.read_adc(2)
+            self._polarity_requires_calibration = False
             logging.info("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
             
         except Exception as e:
@@ -516,7 +519,7 @@ class Rotator(object):
         try:       
             if(self._polarity_requires_calibration == True):
                 self.recenter_polarity()
-                
+
             self._polarity_target = float(polarity)
             polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
             polarity_remainder = float(polarity_tuple[1])
