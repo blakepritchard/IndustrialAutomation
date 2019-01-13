@@ -3,6 +3,8 @@ from flask import render_template
 from flask import request
 import serial
 import os
+import pwd
+
 import logging
 import socket
 
@@ -46,7 +48,7 @@ def set_polarity():
 def send_serial_command(serial_command):
     try:
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
-        print("User: " + os.environ.get('USER')+ " is about to Send Serial Command to: "+ str(serial_port_name) )
+        print("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command to: "+ str(serial_port_name) )
         serial_port_website = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=0) 
         serial_port_website.write(serial_command.encode())
         return redirect("http://"+socket.gethostname()+"/polarity", code=302)
