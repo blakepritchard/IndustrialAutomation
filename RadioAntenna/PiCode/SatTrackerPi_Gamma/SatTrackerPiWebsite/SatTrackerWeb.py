@@ -6,9 +6,7 @@ import os
 import logging
 
 sat_tracker_app = Flask(__name__)
-file_handler = logging.FileHandler("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/sat_tracker_web.log", mode='w')
-file_handler.setLevel(logging.DEBUG)
-sat_tracker_app.logger.addHandler(file_handler)
+sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
