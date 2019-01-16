@@ -21,4 +21,4 @@ to configure the Pi to run the website automatically add the following text to: 
 
 
 to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
-   @chromium-browser --kiosk http://sat-tracker-pi/polarity
+   @chromium-browser --kiosk http://sat-tracker-pi
