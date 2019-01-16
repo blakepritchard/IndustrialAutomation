@@ -25,9 +25,9 @@ if __name__ == "__main__":
 
 @sat_tracker_app.route("/")
 def default_page():
-    return redirect("http://"+socket.gethostname()+"/sat_tracker_web/", code=302)
+    return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
 
-@sat_tracker_app.route("/sat_tracker_web/", methods=["GET"])
+@sat_tracker_app.route("/sat_tracker/", methods=["GET"])
 def sat_tracker_web():
     return render_template("sat_tracker_web.html")
 
