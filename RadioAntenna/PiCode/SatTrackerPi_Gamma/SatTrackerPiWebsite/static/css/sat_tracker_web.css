@@ -37,16 +37,19 @@ header h1.logo:hover {
     height: 50%;
 }
 .azimuth{
+    display: inline-block;
     height: 90%;
-    width: 30;
+    width: 30%;
 }
 .elevation{
+    display: inline-block;
     height: 90%;
-    width: 30;
+    width: 30%;
 }
 .polarity{
+    display: inline-block;
     height: 90%;
-    width: 30;
+    width: 30%;
 }
 .logview {
     width: 100%;

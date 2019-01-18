@@ -10,7 +10,7 @@
         <h1 class="logo">Satellite Tracker</h1>
         <strong><nav>
           <ul class="menu">
-            
+            <li><a href="{{ url_for('polarity') }}">Polarity</a></li>
           </ul>
         </nav></strong>
         
@@ -18,14 +18,18 @@
     <div class="container">
         <div class="dashboard">
             <div class="azimuth">
+                Azimuth - Heading
             </div>
             <div class="elevation">
+                Elevation
             </div> 
             <div class="polarity">
+                Polarity
             </div>
         </div>
         <div class="logview">
         </div>
+    </div>
     </div>
       {% block content %}
       {% endblock %}
