@@ -8,7 +8,7 @@ body {
  * Formatting the header area
  */
 header {
-  background-color: #DFB887;
+  background-color: rgb(26, 32, 83);
   height: 35px;
   width: 100%;
   opacity: .9;
