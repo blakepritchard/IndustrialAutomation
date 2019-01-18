@@ -20,5 +20,6 @@ to configure the Pi to run the website automatically add the following text to: 
     /usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
 
 
+(https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html)
 to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
    @chromium-browser --kiosk http://sat-tracker-pi
