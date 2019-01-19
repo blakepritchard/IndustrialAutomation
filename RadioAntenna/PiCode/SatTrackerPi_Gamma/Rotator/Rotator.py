@@ -521,7 +521,7 @@ class Rotator(object):
             self._polarity_requires_calibration = False
             logging.info("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
             return self.get_polarity_degrees()
-            
+
         except Exception as e:
             self.handle_exception(e)
             return e.message
@@ -589,7 +589,7 @@ class Rotator(object):
                         break
 
             self._is_busy = False
-            logging.info("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current)
+            logging.info("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
             return self.get_polarity_degrees()
             
         except Exception as e:
