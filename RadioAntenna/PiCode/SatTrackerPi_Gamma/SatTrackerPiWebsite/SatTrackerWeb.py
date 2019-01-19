@@ -38,7 +38,7 @@ def sat_tracker_web():
 def polarity_control():
     return render_template("polarity.html")
 
-@sat_tracker_app.route("/sat_tracker/set_azimuth", methods=["POST"])
+@sat_tracker_app.route("/sat_tracker/set_azimuth", methods=["GET","POST"])
 @sat_tracker_app.route("/azimuth/set_azimuth", methods=["POST"])
 def set_azimuth():
     try:
@@ -54,7 +54,7 @@ def set_azimuth():
         return(exception.message)
 
 
-@sat_tracker_app.route("/sat_tracker/set_elevation", methods=["POST"])
+@sat_tracker_app.route("/sat_tracker/set_elevation", methods=["GET","POST"])
 @sat_tracker_app.route("/elevation/set_elevation", methods=["POST"])
 def set_elevation():
     try:
@@ -70,7 +70,7 @@ def set_elevation():
         return(exception.message)
 
 
-@sat_tracker_app.route("/sat_tracker/set_polarity", methods=["POST"])
+@sat_tracker_app.route("/sat_tracker/set_polarity", methods=["GET","POST"])
 @sat_tracker_app.route("/polarity/set_polarity", methods=["POST"])
 def set_polarity():
     try:
