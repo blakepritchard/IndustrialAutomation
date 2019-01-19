@@ -89,13 +89,13 @@ def set_polarity():
 # Send Serial Command, Get Serial Response
 def execute_serial_command(serial_command, serial_timeout=0):
     try:
-        serial_command += "\n"
         serial_response = ""
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
         serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
+        sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(serial_port_name) )
 
         # Send Command
-        sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command"+str(serial_command)+" to: "+ str(serial_port_name) )
+        serial_command += "\n"
         serial_port.write(serial_command.encode())
 
         # If TimeOut Is 0 Then Return Immediately, Otherwise Wait For a Response to Arrive On the Serial Port
@@ -119,6 +119,7 @@ def execute_serial_command(serial_command, serial_timeout=0):
                     char_next = ''
                     byte_next = 0
             serial_response = characters_recieved
+            sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(serial_port_name) )
 
         #Close Port, Return Result
         serial_port.close()
