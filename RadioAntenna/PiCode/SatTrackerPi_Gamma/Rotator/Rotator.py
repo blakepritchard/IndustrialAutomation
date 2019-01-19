@@ -210,9 +210,11 @@ class Rotator(object):
             encoderposition_elevation_current = self._adc.read_adc(1)
             self._elevation_requires_calibration = False
             logging.info("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
-            
+            return self.get_elevation_degrees()
+
         except Exception as e:
             self.handle_exception(e)
+            return e.message
 
     def set_elevation(self, elevation):
         try:
@@ -250,10 +252,13 @@ class Rotator(object):
             # Set Elevation Value to Be Returned to GPredict
             self._is_busy = False
             self.set_elevation_stepper_count(self.get_elevation_stepper_count() + steps_required)
-
+        
+            return self.get_elevation_degrees()
             
         except Exception as e:
             self.handle_exception(e)
+            return e.message
+
 
     def calculate_elevation_steps(self, elevation_target):
         try:
@@ -318,9 +323,12 @@ class Rotator(object):
             self.set_azimuth_stepper_count(0)
             self._azimuth_requires_calibration = False
             logging.info("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
-            
+            return self.get_azimuth_degrees()
+
         except Exception as e:
             self.handle_exception(e)
+            return e.message
+
 
 
     #Plan Horizontal Motion Based on encoder limits
@@ -446,13 +454,14 @@ class Rotator(object):
                 logging.info("Actual Azimuth Steps: "+ str(steps_actual) + ", Encoder Position: " + str(encoderposition_azimuth_current) + ", Direction: " + str(motor_direction))
                 logging.info("Azimuth Stepper Count: " + str(self.get_azimuth_stepper_count()) + ", Azimuth Current Degrees: " + str(self.get_azimuth_degrees()))
 
-
             else:
                 logging.info("Holding Azimuth Steady at: "+ str(azimuth))
-
+            
+            return self.get_azimuth_degrees()
 
         except Exception as e:
             self.handle_exception(e)
+            return e.message
 
     def stop_azimuth(self):
         try: 
@@ -462,7 +471,8 @@ class Rotator(object):
             self._azimuth_requires_calibration = True
     
         except Exception as e:
-            self.handle_exception(e)  
+            self.handle_exception(e) 
+            return e.message 
 
 
 ##########################################################################################
@@ -510,9 +520,12 @@ class Rotator(object):
             encoderposition_polarity_current = self._adc.read_adc(2)
             self._polarity_requires_calibration = False
             logging.info("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
+            return self.get_polarity_degrees()
             
         except Exception as e:
             self.handle_exception(e)
+            return e.message
+
 
     # Set Polarity Position Based On Stepper Count
     def set_polarity(self, polarity):
@@ -576,13 +589,12 @@ class Rotator(object):
                         break
 
             self._is_busy = False
-            
-            if self._verbose > 1 :
-                logging.info("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
-
+            logging.info("New Polarity Stepper Count: "+str(self.get_polarity_stepper_count())+"; New Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current)
+            return self.get_polarity_degrees()
             
         except Exception as e:
             self.handle_exception(e)
+            return e.message
 
     def calculate_polarity_steps(self, polarity_target):
         try:
@@ -667,17 +679,29 @@ class Rotator(object):
             hash_results = {}
                 
             for rotator_command in array_commands: 
-                #logging.debug("Command: " + rotator_command)
+                logging.debug("Command: " + rotator_command)
                 result = ""
                     
                 # Website uses short commands to Get values from the Rotator
                 if len(rotator_command) == 2:
-                    if      "AZ" == rotator_command: result = str(self.get_azimuth_degrees())
-                    elif    "EL" == rotator_command: result = str(self.get_elevation_degrees())
-                    elif    "PO" == rotator_command: result = str(self.get_polarity_degrees())
-                    elif    "SA" == rotator_command: result = self.stop_azimuth()
-                    elif    "SE" == rotator_command: result = self.stop_elevation()
-                    elif    "SP" == rotator_command: result = self.stop_polarity()
+                    if      "AZ" == rotator_command: 
+                        result = str(self.get_azimuth_degrees())
+                        logging.debug("Received Azimuth Request, Result: " + str(result))
+                    elif    "EL" == rotator_command: 
+                        result = str(self.get_elevation_degrees())
+                        logging.debug("Received Elevation Request, Result: " + str(result))
+                    elif    "PO" == rotator_command: 
+                        result = str(self.get_polarity_degrees())
+                        logging.debug("Received Polarity Request, Result: " + str(result))
+                    elif    "SA" == rotator_command: 
+                        result = self.stop_azimuth()
+                        logging.debug("Received Stop Azimuth Command")
+                    elif    "SE" == rotator_command: 
+                        result = self.stop_elevation()
+                        logging.debug("Received Stop Elevation Command")
+                    elif    "SP" == rotator_command: 
+                        result = self.stop_polarity()
+                        logging.debug("Received Stop Polarity Command")
                     elif    "VE" == rotator_command: result = self.get_version_text()
                     elif    "HE" == rotator_command: result = self.get_help_text()
                     
@@ -688,19 +712,19 @@ class Rotator(object):
 
                     if not self._is_busy:
                         if "AZ" == command_operation:
-                            logging.info("Recieved Azimuth Command: " + str(command_parameters))
+                            logging.info("Received Azimuth Command: " + str(command_parameters))
                             self.set_azimuth(command_parameters)
                         elif "EL" == command_operation:
-                            logging.info("Recieved Elevation Command: " + str(command_parameters))      
+                            logging.info("Received Elevation Command: " + str(command_parameters))      
                             self.set_elevation(command_parameters)       
                         elif "PP" == command_operation:
-                            logging.info("Recieved Polarity Position Command: " + str(command_parameters))
+                            logging.info("Received Polarity Position Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                         elif "PT" == command_operation:
-                            logging.info("Recieved Polarity Tracking Command: " + str(command_parameters))
+                            logging.info("Received Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                     else:
-                        logging.info("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
+                        logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
             return result       
         
         except Exception as e:

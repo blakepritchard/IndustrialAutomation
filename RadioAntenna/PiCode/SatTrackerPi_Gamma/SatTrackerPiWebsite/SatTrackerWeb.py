@@ -29,15 +29,9 @@ def default_page():
 
 @sat_tracker_app.route("/sat_tracker/", methods=["GET"])
 def sat_tracker_web():
-    send_serial_command("AZ")
-    azimuth_current = get_serial_response()
-
-    send_serial_command("EL")
-    elevation_current = get_serial_response()
-
-    send_serial_command("PO")
-    polarity_current = get_serial_response()
-
+    azimuth_current = execute_serial_command("AZ", None)
+    elevation_current = execute_serial_command("EL", None)
+    polarity_current = execute_serial_command("PO", None)
     return render_template("sat_tracker_web.html", **locals())
 
 @sat_tracker_app.route("/polarity/", methods=["GET"])
@@ -50,8 +44,8 @@ def set_azimuth():
     try:
         sat_tracker_app.logger.debug("a POST to set_azimuth Has Been Recieved")
         if request.method == 'POST':
-            polarity_command= "AZ" + request.form['azimuth_new'] + "\n"
-            return send_serial_command(polarity_command)
+            polarity_command= "AZ" + request.form['azimuth_new'] 
+            return execute_serial_command(polarity_command)
         else:
             return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
     except Exception as exception:
@@ -66,8 +60,8 @@ def set_elevation():
     try:
         sat_tracker_app.logger.debug("a POST to set_elevation Has Been Recieved")
         if request.method == 'POST':
-            polarity_command= "EL" + request.form['elevation_new'] + "\n"
-            return send_serial_command(polarity_command)
+            polarity_command= "EL" + request.form['elevation_new'] 
+            return execute_serial_command(polarity_command)
         else:
             return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
     except Exception as exception:
@@ -82,8 +76,8 @@ def set_polarity():
     try:
         sat_tracker_app.logger.debug("a POST to set_polarity Has Been Recieved")
         if request.method == 'POST':
-            polarity_command= "PP" + request.form['polarity_new'] + "\n"
-            return send_serial_command(polarity_command)
+            polarity_command= "PP" + request.form['polarity_new'] 
+            return execute_serial_command(polarity_command)
         else:
             return render_template("polarity.html")
     except Exception as exception:
@@ -92,54 +86,49 @@ def set_polarity():
         return(exception.message)
 
 
-
-def send_serial_command(serial_command):
+# Send Serial Command, Get Serial Response
+def execute_serial_command(serial_command, serial_timeout=0):
     try:
+        serial_command += "\n"
+        serial_response = ""
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
-        print("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command to: "+ str(serial_port_name) )
-        serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=0) 
+        serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
+
+        # Send Command
+        sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command"+str(serial_command)+" to: "+ str(serial_port_name) )
         serial_port.write(serial_command.encode())
+
+        # If TimeOut Is 0 Then Return Immediately, Otherwise Wait For a Response to Arrive On the Serial Port
+        if(0 == serial_timeout):
+            serial_response = 0
+        else:
+            bytes_carraigereturn = bytes("\r")
+            bytes_linefeed = bytes("\n")  
+            characters_recieved = ""
+            continue_reading=True
+            while continue_reading:
+                byte_next = serial_port.read()
+                char_next = byte_next.decode("utf-8")
+
+                # Continue Reading Bytes From the Serial Port UNtil We Find a NewLine Charater ("\n") LineFeed (LF) 0x0A
+                if byte_next:
+                    if ((byte_next == bytes_linefeed) or (byte_next == bytes_carraigereturn)):
+                        continue_reading=False
+                    else:
+                        characters_recieved += char_next         
+                    char_next = ''
+                    byte_next = 0
+            serial_response = characters_recieved
+
+        #Close Port, Return Result
         serial_port.close()
-        return redirect("http://"+socket.gethostname()+"/polarity", code=302)
+        return serial_response
 
-    except Exception as exception:
-        sat_tracker_app.logger.error("An Exception Has Occurred!")
-        sat_tracker_app.log_exception(exception)
-        return(exception.message)
-
-# Read website port
-def get_serial_response():
-    try:
-        serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
-        serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=5) 
-
-        bytes_carraigereturn = bytes("\r")
-        bytes_linefeed = bytes("\n")    
-
-        characters_recieved = ""
-        continue_reading=True
-        while continue_reading:
-            byte_next = serial_port.read()
-            char_next = byte_next.decode("utf-8")
-
-            if byte_next:
-                    
-                if ((byte_next == bytes_carraigereturn) or (byte_next == bytes_linefeed)):
-                    continue_reading=False
-                else:
-                    characters_recieved += char_next         
-                char_next = ''
-                byte_next = 0
-
-        serial_port.close()
-        return characters_recieved
-
-    
     except serial.SerialException as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        logging.critical(exc_type, fname, exc_tb.tb_lineno)
-        logging.critical(e)
+        sat_tracker_app.logger.error(exc_type, fname, exc_tb.tb_lineno)
+        sat_tracker_app.log_exception(e)
         print(exc_type, fname, exc_tb.tb_lineno)
         print(e)
         return redirect("http://"+socket.gethostname()+"/polarity", code=302)
@@ -147,8 +136,8 @@ def get_serial_response():
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        logging.critical(exc_type, fname, exc_tb.tb_lineno)
-        logging.critical(e)
+        sat_tracker_app.logger.error(exc_type, fname, exc_tb.tb_lineno)
+        sat_tracker_app.log_exception(e)
         print(exc_type, fname, exc_tb.tb_lineno)
         print(e)
         return redirect("http://"+socket.gethostname()+"/polarity", code=302)
