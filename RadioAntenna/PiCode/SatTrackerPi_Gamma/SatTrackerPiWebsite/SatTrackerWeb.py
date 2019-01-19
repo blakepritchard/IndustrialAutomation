@@ -45,9 +45,9 @@ def set_azimuth():
         sat_tracker_app.logger.debug("a POST to set_azimuth Has Been Recieved")
         if request.method == 'POST':
             polarity_command= "AZ" + request.form['azimuth_new'] 
-            return execute_serial_command(polarity_command)
-        else:
-            return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
+            execute_serial_command(polarity_command)
+        return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
+
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
@@ -61,9 +61,9 @@ def set_elevation():
         sat_tracker_app.logger.debug("a POST to set_elevation Has Been Recieved")
         if request.method == 'POST':
             polarity_command= "EL" + request.form['elevation_new'] 
-            return execute_serial_command(polarity_command)
-        else:
-            return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
+            execute_serial_command(polarity_command)
+        return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
+
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
@@ -77,9 +77,10 @@ def set_polarity():
         sat_tracker_app.logger.debug("a POST to set_polarity Has Been Recieved")
         if request.method == 'POST':
             polarity_command= "PP" + request.form['polarity_new'] 
-            return execute_serial_command(polarity_command)
-        else:
-            return render_template("polarity.html")
+            execute_serial_command(polarity_command)
+        
+        return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
+
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
@@ -110,7 +111,7 @@ def execute_serial_command(serial_command, serial_timeout=0):
                 byte_next = serial_port.read()
                 char_next = byte_next.decode("utf-8")
 
-                # Continue Reading Bytes From the Serial Port UNtil We Find a NewLine Charater ("\n") LineFeed (LF) 0x0A
+                # Continue Reading Bytes From the Serial Port Until We Find a NewLine Charater ("\n") LineFeed (LF) 0x0A
                 if byte_next:
                     if ((byte_next == bytes_linefeed) or (byte_next == bytes_carraigereturn)):
                         continue_reading=False
