@@ -97,8 +97,9 @@ def send_serial_command(serial_command):
     try:
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
         print("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command to: "+ str(serial_port_name) )
-        serial_port_website = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=0) 
-        serial_port_website.write(serial_command.encode())
+        serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=0) 
+        serial_port.write(serial_command.encode())
+        serial_port.close()
         return redirect("http://"+socket.gethostname()+"/polarity", code=302)
 
     except Exception as exception:
@@ -110,7 +111,7 @@ def send_serial_command(serial_command):
 def get_serial_response():
     try:
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
-        serial_port_website = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=5) 
+        serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=5) 
 
         bytes_carraigereturn = bytes("\r")
         bytes_linefeed = bytes("\n")    
@@ -118,7 +119,7 @@ def get_serial_response():
         characters_recieved = ""
         continue_reading=True
         while continue_reading:
-            byte_next = serial_port_website.read()
+            byte_next = serial_port.read()
             char_next = byte_next.decode("utf-8")
 
             if byte_next:
@@ -129,6 +130,8 @@ def get_serial_response():
                     characters_recieved += char_next         
                 char_next = ''
                 byte_next = 0
+
+        serial_port.close()
         return characters_recieved
 
     
