@@ -686,11 +686,17 @@ class Rotator(object):
                     command_operation = rotator_command[:2]
                     command_parameters = rotator_command[2:]
 
-                    if not self._is_busy:    
-                        if "PP" == command_operation:
+                    if not self._is_busy:
+                        if "AZ" == command_operation:
+                            logging.info("Recieved Azimuth Command: " + str(command_parameters))
+                            self.set_azimuth(command_parameters)
+                        elif "EL" == command_operation:
+                            logging.info("Recieved Elevation Command: " + str(command_parameters))      
+                            self.set_elevation(command_parameters)       
+                        elif "PP" == command_operation:
                             logging.info("Recieved Polarity Position Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
-                        if "PT" == command_operation:
+                        elif "PT" == command_operation:
                             logging.info("Recieved Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                     else:

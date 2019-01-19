@@ -1,28 +1,23 @@
 #!/usr/local/bin/python2.7
 # encoding: utf-8
 '''
-SatTrackerPiDaemon.SatTrackerPiDaemon -- shortdesc
+SatTrackerPiDaemon.SatTrackerPiDaemon -- Raspbian Serial Client for GPredict and RotCtlD Antenna Rotator Control 
 
-SatTrackerPiDaemon.SatTrackerPiDaemon is a description
-
-It defines classes_and_methods
+SatTrackerPiDaemon.SatTrackerPiDaemon is a RaspberryPi based antenna rotator hardware solution 
+It provides 3 axis control of Heading-Azimuth Elevation and Polarity.
+It is hardware dependent on Adafruit Motor-Hat (i2c stepper motor controller) and an MCP3008 Analog-Digital converter
 
 @author:     Blake Pritchard
 
 @copyright:  2017 Blake Pritchard. All rights reserved.
 
-@license:    license
-
-@contact:    user_email
-@deffield    updated: Updated
+@license:    All Rights Reserved
 '''
-
 
 import sys
 import os
 import serial
 import logging
-
 
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
@@ -184,7 +179,7 @@ USAGE
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
                     website_response = device_rotator.execute_website_command(command_website)
-                    serial_port_website.write(website_response)
+                    serial_port_website.write(website_response + "\n")
                     command_website = ""  
                 elif '!'==char_next_website:
                     logging.info('!'),
