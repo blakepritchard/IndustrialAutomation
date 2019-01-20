@@ -19,7 +19,7 @@
     <div class="main_display">
         <div class="dashboard">
             <div class="azimuth">
-                <h1>Azimuth - Heading: <br>
+                <h1>Azimuth: <br>
                   {% if azimuth_current %}
                     {{azimuth_current}} 
                   {% endif %}
@@ -54,7 +54,7 @@
         </div>
         <div class="logview">
           {% for log_text_line in log_text_lines_array %}
-            <p>{{log_text_line}}</p>
+            {{log_text_line}}<br>
           {% endfor %}
         </div>
     </div>
