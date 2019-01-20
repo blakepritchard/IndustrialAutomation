@@ -19,30 +19,33 @@
     <div class="main_display">
         <div class="dashboard">
             <div class="azimuth">
-                Azimuth - Heading
-                {% if azimuth_current %}
-                <h1>Azimuth: {{azimuth_current}} </h1>
-                {% endif %}
+                <h1>Azimuth - Heading: <br>
+                  {% if azimuth_current %}
+                    {{azimuth_current}} 
+                  {% endif %}
+                </h1>
                 <form action="set_azimuth" method="POST">
                 Set Azimuth: <input type="text" name="azimuth_new"><br>
                 <input type="submit" value="Submit">
                 </form>
             </div>
             <div class="elevation">
-                Elevation
-                {% if elevation_current %}
-                <h1>Elevation: {{elevation_current}} </h1>
-                {% endif %}
+                <h1>Elevation: <br>
+                  {% if elevation_current %}
+                    {{elevation_current}}
+                  {% endif %}
+                </h1>
                 <form action="set_elevation" method="POST">
                 Set Elevation: <input type="text" name="elevation_new"><br>
                 <input type="submit" value="Submit">
                 </form>
             </div>
             <div class="polarity">
-                Polarity
-                {% if polarity_current %}
-                <h1>Polarity: {{polarity_current}} </h1>
-                {% endif %}
+                <h1>Polarity: <br>
+                  {% if polarity_current %}
+                    {{polarity_current}} 
+                  {% endif %}
+                </h1>
                 <form action="set_polarity" method="POST">
                 Set Polarity: <input type="text" name="polarity_new"><br>
                 <input type="submit" value="Submit">
