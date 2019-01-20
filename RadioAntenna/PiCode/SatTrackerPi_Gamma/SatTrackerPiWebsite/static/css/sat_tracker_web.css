@@ -6,6 +6,9 @@ html body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #444;
   }
+  .html {
+    min-height: 100%;
+ }
   /*
    * Formatting the header area
    */
