@@ -79,7 +79,7 @@ def set_polarity():
             polarity_command= "PP" + request.form['polarity_new'] 
             execute_serial_command(polarity_command)
         
-        return redirect(url_for("/sat_tracker/"), code=302)
+        return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
 
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
