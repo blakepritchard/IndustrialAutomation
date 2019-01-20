@@ -581,11 +581,11 @@ class Rotator(object):
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
                     encoderposition_polarity_current = self._adc.read_adc(2)
                     if self._verbose > 3 :
-                        logging.info("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
+                        logging.debug("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
                     # Check Limits
                     if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
-                        logging.info("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
+                        logging.warning("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
                         break
 
             self._is_busy = False
