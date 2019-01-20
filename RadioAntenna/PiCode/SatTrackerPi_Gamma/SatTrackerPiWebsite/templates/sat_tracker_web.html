@@ -50,7 +50,9 @@
             </div>
         </div>
         <div class="logview">
-            {{log_text_current}}
+          {% for log_text_line in log_text_lines_array %}
+            <p>{{log_text_line}}</p>
+          {% endfor %}
         </div>
     </div>
     </div>
