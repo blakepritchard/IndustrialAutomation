@@ -30,7 +30,7 @@ def default_page():
 @sat_tracker_app.route("/sat_tracker/", methods=["GET"])
 def sat_tracker_web():
     log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
-    log_text_lines_array = log_text_lines_array[:16:-1]
+    log_text_lines_array = log_text_lines_array[::-1]
     azimuth_current = execute_serial_command("AZ", None)
     elevation_current = execute_serial_command("EL", None)
     polarity_current = execute_serial_command("PO", None)
