@@ -15,6 +15,7 @@ import datetime
 import math
 import atexit
 import logging
+import json
 
 # Import Local Libraries
 path_runtime = os.path.dirname(__file__)
@@ -632,12 +633,21 @@ class Rotator(object):
         msg_text = "Unsupported Command..."
         logging.info(msg_text)
         return msg_text    
-                  
+
+    def get_rotator_status(self):
+        status_dict = {}
+        status_dict["azimuth_degrees"] = self.get_azimuth_degrees()
+        status_dict["azimuth_stepper_count"] = self.get_azimuth_stepper_count()
+        status_dict["elevation_stepper_count"] = self.get_elevation_degrees()
+        status_dict["elevation_adc_val"] = self.get_elevation_stepper_count()
+        status_dict["polarity_degrees"] = self.get_polarity_degrees()
+        status_dict["polarity_stepper_count"] = self.get_polarity_stepper_count()
+        return json.dumps(status_dict)
+
     def execute_easycomm2_command(self, rotator_commands):  
 
         try:
             array_commands = rotator_commands.split(" ")
-            hash_results = {}
                 
             for rotator_command in array_commands: 
                 #logging.debug("Command: " + rotator_command)
@@ -675,16 +685,17 @@ class Rotator(object):
     def execute_website_command(self, rotator_commands):  
 
         try:
-            array_commands = rotator_commands.split(" ")
-            hash_results = {}
-                
+            array_commands = rotator_commands.split(" ")               
             for rotator_command in array_commands: 
                 logging.debug("Command: " + rotator_command)
                 result = ""
                     
                 # Website uses short commands to Get values from the Rotator
                 if len(rotator_command) == 2:
-                    if      "AZ" == rotator_command: 
+                    if  "RS" == rotator_command:
+                       result = str(self.get_rotator_status()) 
+                       logging.debug("Received Rotator Status Request, Result: " + str(result)) 
+                    elif    "AZ" == rotator_command: 
                         result = str(self.get_azimuth_degrees())
                         logging.debug("Received Azimuth Request, Result: " + str(result))
                     elif    "EL" == rotator_command: 

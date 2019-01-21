@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, jsonify
 from flask import render_template
 from flask import request
 import serial
@@ -87,6 +87,10 @@ def set_polarity():
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
         return(exception.message)
+
+@sat_tracker_app.route("/sat_tracker/api/rotator", methods=["GET"])
+def get_rotator_status():
+    try:
 
 
 # Send Serial Command, Get Serial Response
