@@ -683,7 +683,6 @@ class Rotator(object):
 
 
     def execute_website_command(self, rotator_commands):  
-
         try:
             array_commands = rotator_commands.split(" ")               
             for rotator_command in array_commands: 

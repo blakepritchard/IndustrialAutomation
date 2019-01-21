@@ -3,7 +3,7 @@
   <head>
     <title>Sat Tracker Web</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sat_tracker_web.css') }}">
-    <meta http-equiv="refresh" content="4">
+    <script type=text/javascript src="{{ url_for('static', filename='javascript/sat_tracker_web.js') }}"></script>
   </head>
   <body>
     <header>
@@ -20,9 +20,7 @@
         <div class="dashboard">
             <div class="azimuth">
                 <h1>Azimuth: <br>
-                  {% if azimuth_current %}
-                    {{azimuth_current}} 
-                  {% endif %}
+                  <span id="azimuth_current"></span>
                 </h1>
                 <form action="set_azimuth" method="POST">
                 Set Azimuth: <input type="text" name="azimuth_new"><br>
@@ -31,9 +29,7 @@
             </div>
             <div class="elevation">
                 <h1>Elevation: <br>
-                  {% if elevation_current %}
-                    {{elevation_current}}
-                  {% endif %}
+                  elevation_current"></span>
                 </h1>
                 <form action="set_elevation" method="POST">
                 Set Elevation: <input type="text" name="elevation_new"><br>
@@ -42,9 +38,7 @@
             </div>
             <div class="polarity">
                 <h1>Polarity: <br>
-                  {% if polarity_current %}
-                    {{polarity_current}} 
-                  {% endif %}
+                  <span id="polarity_current"></span>
                 </h1>
                 <form action="set_polarity" method="POST">
                 Set Polarity: <input type="text" name="polarity_new"><br>

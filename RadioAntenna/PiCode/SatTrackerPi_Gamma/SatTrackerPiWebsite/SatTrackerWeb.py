@@ -8,6 +8,7 @@ import sys
 import logging
 import socket
 
+
 sat_tracker_app = Flask(__name__)
 
 sat_tracker_app.testing = True
@@ -88,10 +89,16 @@ def set_polarity():
         sat_tracker_app.log_exception(exception)
         return(exception.message)
 
-@sat_tracker_app.route("/sat_tracker/api/rotator", methods=["GET"])
+# API Calls Return JSON
+@sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
 def get_rotator_status():
     try:
-
+        return execute_serial_command("RS", None)
+    
+    except Exception as exception:
+        sat_tracker_app.logger.error("An Exception Has Occurred!")        
+        sat_tracker_app.log_exception(exception)
+        return(exception.message)
 
 # Send Serial Command, Get Serial Response
 def execute_serial_command(serial_command, serial_timeout=0):
