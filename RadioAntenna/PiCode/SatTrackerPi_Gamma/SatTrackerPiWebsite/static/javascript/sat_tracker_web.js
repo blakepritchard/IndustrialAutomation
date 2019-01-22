@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     setInterval(function() {
         update_rotor_status()
-      }, 3000);
+      }, 5000);
 });
 
 function update_rotor_status(){
