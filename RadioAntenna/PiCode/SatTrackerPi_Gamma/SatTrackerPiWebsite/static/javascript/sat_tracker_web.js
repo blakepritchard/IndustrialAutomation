@@ -17,10 +17,6 @@ function update_dashboard(data){
 }
 function update_logview(data){
     log_records = JSON.parse(data);
-    log_html = "";
-    for (var i = 0; i < log_records.length; i++)
-    {
-        log_html += log_records[i] +"<br> \n";
-    }
-    $( "logview" ).html(log_html);
+
+    $( "logview" ).html(log_records);
 }
