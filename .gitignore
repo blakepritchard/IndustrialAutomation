@@ -29,3 +29,5 @@ config/secrets.yml
 /vendor/assets/bower_components
 *.bowerrc
 bower.json
+RadioAntenna/PiCode/Adafruit_Python_PCA9685
+RadioAntenna/PiCode/bno055-python-i2c
