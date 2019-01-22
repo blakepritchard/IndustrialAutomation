@@ -5,9 +5,8 @@ $( document ).ready(function() {
 });
 
 function update_rotor_status(){
-    req = $.get("/sat_tracker/api/rotator/status", function(data){
-        update_dashboard(data)
-    });
+    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
+    req_status = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});
 }
 
 function update_dashboard(data){
@@ -15,4 +14,13 @@ function update_dashboard(data){
     $("#azimuth_current").text(rotator_status.azimuth_degrees);
     $("#elevation_current").text(rotator_status.elevation_degrees);
     $("#polarity_current").text(rotator_status.polarity_degrees);
+}
+function update_logview(data){
+    log_records = JSON.parse(data);
+    log_html = "";
+    for (var i = 0; i < log_records.length; i++)
+    {
+        log_html += log_html +"<br> \n";
+    }
+    $( "logview" ).html(log_html);
 }

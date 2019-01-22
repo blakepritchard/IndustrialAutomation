@@ -644,7 +644,7 @@ class Rotator(object):
         status_dict["polarity_stepper_count"] = self.get_polarity_stepper_count()
         
         json_result = json.dumps(status_dict)
-        logging.info("Rotator Status: " + json_result)
+        logging.debug("Rotator Status: " + json_result)
         return json_result
 
     def execute_easycomm2_command(self, rotator_commands):  

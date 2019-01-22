@@ -7,6 +7,7 @@ import pwd
 import sys
 import logging
 import socket
+import json
 
 
 sat_tracker_app = Flask(__name__)
@@ -52,9 +53,7 @@ def set_azimuth():
         return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
 
     except Exception as exception:
-        sat_tracker_app.logger.error("An Exception Has Occurred!")        
-        sat_tracker_app.log_exception(exception)
-        return(exception.message)
+        return handle_web_exception(exception)
 
 
 @sat_tracker_app.route("/sat_tracker/set_elevation", methods=["GET","POST"])
@@ -68,9 +67,7 @@ def set_elevation():
         return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
 
     except Exception as exception:
-        sat_tracker_app.logger.error("An Exception Has Occurred!")        
-        sat_tracker_app.log_exception(exception)
-        return(exception.message)
+        return handle_web_exception(exception)
 
 
 @sat_tracker_app.route("/sat_tracker/set_polarity", methods=["GET","POST"])
@@ -85,9 +82,7 @@ def set_polarity():
         return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
 
     except Exception as exception:
-        sat_tracker_app.logger.error("An Exception Has Occurred!")        
-        sat_tracker_app.log_exception(exception)
-        return(exception.message)
+        return handle_web_exception(exception)
 
 # API Calls Return JSON
 @sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
@@ -98,9 +93,25 @@ def get_rotator_status():
         return json_result
     
     except Exception as exception:
+        return handle_web_exception(exception)
+
+@sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
+def get_rotator_log():
+    try:
+        log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
+        log_text_lines_array = log_text_lines_array[::-1]
+        json_result = json.dumps(log_text_lines_array)
+        logging.info("Rotator Status: " + json_result)
+        return json_result
+    
+    except Exception as exception:
+        return handle_web_exception(exception)
+
+
+def handle_web_exception(exception):
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
-        return(exception.message)
+        return(exception.message)   
 
 # Send Serial Command, Get Serial Response
 def execute_serial_command(serial_command, serial_timeout=0):
