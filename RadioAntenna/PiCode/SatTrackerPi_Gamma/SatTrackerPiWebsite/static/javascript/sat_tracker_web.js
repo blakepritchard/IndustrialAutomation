@@ -11,7 +11,8 @@ function update_rotor_status(){
 }
 
 function update_dashboard(data){
-    $("#azimuth_current").text(data.azimuth_degrees);
-    $("#elevation_current").text(data.elevation_degrees);
-    $("#polarity_current").text(data.polarity_degrees);
+    rotator_status = JSON.parse(data)
+    $("#azimuth_current").text(rotator_status.azimuth_degrees);
+    $("#elevation_current").text(rotator_status.elevation_degrees);
+    $("#polarity_current").text(rotator_status.polarity_degrees);
 }
