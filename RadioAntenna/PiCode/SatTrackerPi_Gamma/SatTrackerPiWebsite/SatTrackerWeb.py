@@ -95,7 +95,7 @@ def get_rotator_status():
     except Exception as exception:
         return handle_web_exception(exception)
 
-@sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
+@sat_tracker_app.route("/sat_tracker/api/rotator/log", methods=["GET"])
 def get_rotator_log():
     try:
         log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
