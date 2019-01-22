@@ -642,7 +642,10 @@ class Rotator(object):
         status_dict["elevation_adc_val"] = self.get_elevation_stepper_count()
         status_dict["polarity_degrees"] = self.get_polarity_degrees()
         status_dict["polarity_stepper_count"] = self.get_polarity_stepper_count()
-        return json.dumps(status_dict)
+        
+        json_result = json.dumps(status_dict)
+        logging.info("Rotator Status: " + json_result)
+        return json_result
 
     def execute_easycomm2_command(self, rotator_commands):  
 

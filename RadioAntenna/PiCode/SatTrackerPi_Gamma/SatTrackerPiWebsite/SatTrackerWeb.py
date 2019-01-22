@@ -93,7 +93,9 @@ def set_polarity():
 @sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
 def get_rotator_status():
     try:
-        return execute_serial_command("RS", None)
+        json_result = execute_serial_command("RS", None)
+        logging.info("Rotator Status: " + json_result)
+        return json_result
     
     except Exception as exception:
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
