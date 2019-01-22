@@ -18,5 +18,5 @@ function update_dashboard(data){
 function update_logview(data){
     log_records = JSON.parse(data);
 
-    $( "logview" ).html(log_records);
+    $( "logview" ).html(data);
 }
