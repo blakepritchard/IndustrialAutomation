@@ -89,7 +89,7 @@ def set_polarity():
 def get_rotator_status():
     try:
         json_result = execute_serial_command("RS", None)
-        logging.info("Rotator Status: " + json_result)
+        logging.debug("Rotator Status: " + json_result)
         return json_result
     
     except Exception as exception:
@@ -101,7 +101,6 @@ def get_rotator_log():
         log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
         log_text_lines_array = log_text_lines_array[::-1]
         json_result = json.dumps(log_text_lines_array)
-        logging.info("Rotator Status: " + json_result)
         return json_result
     
     except Exception as exception:
