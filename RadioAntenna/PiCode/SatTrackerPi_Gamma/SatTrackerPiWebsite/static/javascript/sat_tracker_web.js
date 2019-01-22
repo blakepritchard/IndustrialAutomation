@@ -20,7 +20,7 @@ function update_logview(data){
     log_html = "";
     for (var i = 0; i < log_records.length; i++)
     {
-        log_html += log_html +"<br> \n";
+        log_html += log_records[i] +"<br> \n";
     }
     $( "logview" ).html(log_html);
 }
