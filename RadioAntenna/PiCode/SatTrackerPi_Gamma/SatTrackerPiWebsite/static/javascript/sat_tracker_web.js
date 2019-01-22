@@ -5,7 +5,7 @@ $( document ).ready(function() {
 });
 
 function update_rotor_status(){
-    req = $.get("/api/rotator/status", function(data){
+    req = $.get("/sat_tracker/api/rotator/status", function(data){
         update_dashboard(data)
     });
 }
