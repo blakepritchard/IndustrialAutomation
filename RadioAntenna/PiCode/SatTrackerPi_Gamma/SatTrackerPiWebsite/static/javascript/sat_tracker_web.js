@@ -16,5 +16,5 @@ function update_dashboard(data){
     $("#polarity_current").text(rotator_status.polarity_degrees);
 }
 function update_logview(data){
-    $("logview").text(data);
+    $("#logview").text(data);
 }

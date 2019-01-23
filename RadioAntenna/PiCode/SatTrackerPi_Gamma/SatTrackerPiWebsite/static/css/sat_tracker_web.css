@@ -73,7 +73,7 @@ html body {
     width: 30%;
     text-align: center;
 }
-.logview {
+#logview {
     overflow: scroll;
     color: green;
     background-color: black;
