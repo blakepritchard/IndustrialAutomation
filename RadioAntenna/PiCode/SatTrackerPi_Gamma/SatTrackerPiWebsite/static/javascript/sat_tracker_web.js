@@ -16,5 +16,11 @@ function update_dashboard(data){
     $("#polarity_current").text(rotator_status.polarity_degrees);
 }
 function update_logview(data){
-    $("#logview").text(data);
+    log_records = JSON.parse(data);
+    log_html = "";
+    for (var i = 0; i < log_records.length; i++)
+    {
+        log_html += log_records[i] +"<br> \n";
+    }
+    $("#logview").html(log_html);
 }
