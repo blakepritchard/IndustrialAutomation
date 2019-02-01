@@ -1,7 +1,13 @@
+
+intervalDisplay = false;
+intervalTrackPolarity = false;
+buttonTrackPolarity = false;
+
+
 $( document ).ready(function() {
-    setInterval(function() {
-        update_rotor_status()
-      }, 5000);
+    intervalDisplay = setInterval(function() { update_rotor_status()}, 5000);
+    buttonTrackPolarity = document.getElementById('btnTrackPolarity');   
+
 });
 
 function update_rotor_status(){
@@ -23,4 +29,16 @@ function update_logview(data){
         log_html += log_records[i] +"<br> \n";
     }
     $("#logview").html(log_html);
+}
+
+function toggleTrackingPolarity(){
+    if(!intervalTrackPolarity){
+        intervalTrackPolarity = setInterval(count,1000);
+        buttonTrackPolarity.value = "Stop count!";
+    }
+    else{ 
+        clearInterval(intervalTrackPolarity);
+        intervalTrackPolarity = false;
+        buttonTrackPolarity.value = "Start count!";
+    }
 }
