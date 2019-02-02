@@ -726,17 +726,18 @@ class Rotator(object):
                     if not self._is_busy:
                         if "AZ" == command_operation:
                             logging.info("Received Azimuth Command: " + str(command_parameters))
-                            self.set_azimuth(command_parameters)
+                            result = self.set_azimuth(command_parameters)
                         elif "EL" == command_operation:
                             logging.info("Received Elevation Command: " + str(command_parameters))      
-                            self.set_elevation(command_parameters)       
+                            result = self.set_elevation(command_parameters)       
                         elif "PP" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
-                            self.set_polarity(command_parameters)     
+                            result = self.set_polarity(command_parameters)     
                         elif "PT" == command_operation:
                             logging.info("Received Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
                     else:
+                        result = "Busy"
                         logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
             return result       
         

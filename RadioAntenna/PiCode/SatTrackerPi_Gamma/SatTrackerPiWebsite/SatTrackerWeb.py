@@ -84,6 +84,22 @@ def set_polarity():
     except Exception as exception:
         return handle_web_exception(exception)
 
+@sat_tracker_app.route("/sat_tracker/api/rotator/polarity", methods=["POST"])
+def set_polarity_json():
+    try:
+        json_result = ""
+        sat_tracker_app.logger.debug("a POST to set_polarity_json Has Been Recieved")
+        if request.method == 'POST':
+            polarity_command= "PP" +  request.get_json()['polarity_new'] 
+            polarity_current = execute_serial_command(polarity_command)
+            json_result = {"polarity_current": polarity_current}
+        return json.dumps(json_result)
+
+    except Exception as exception:
+        return handle_web_exception(exception)
+
+
+
 # API Calls Return JSON
 @sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
 def get_rotator_status():

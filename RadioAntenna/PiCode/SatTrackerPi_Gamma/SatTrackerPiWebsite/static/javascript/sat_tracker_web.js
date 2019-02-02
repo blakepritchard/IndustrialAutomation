@@ -2,6 +2,7 @@
 intervalDisplay = false;
 intervalTrackPolarity = false;
 buttonTrackPolarity = false;
+intPolarityCurrent = 0;
 
 
 $( document ).ready(function() {
@@ -31,14 +32,28 @@ function update_logview(data){
     $("#logview").html(log_html);
 }
 
-function toggleTrackingPolarity(){
+function polarity_tracking_toggle(){
     if(!intervalTrackPolarity){
-        intervalTrackPolarity = setInterval(count,1000);
-        buttonTrackPolarity.value = "Stop count!";
+        req_status = $.get("/sat_tracker/api/rotator/status", function(data){polarity_tracking_start(data)});
     }
     else{ 
         clearInterval(intervalTrackPolarity);
         intervalTrackPolarity = false;
         buttonTrackPolarity.value = "Start count!";
     }
+}
+
+function polarity_tracking_start(data)
+{
+    rotator_status = JSON.parse(data)
+    intPolarityCurrent = rotator_status.polarity_degrees;
+    intervalTrackPolarity = setInterval(count,1000);
+    buttonTrackPolarity.value = "Stop count!";
+
+}
+
+function polarity_tracking_update()
+{
+    intPolarityNext = intPolarityCurrent + .5
+    response_polarity = $.post("/sat_tracker/api/rotator/polarity", {polarity_new: intPolarityNext} )
 }
