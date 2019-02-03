@@ -92,7 +92,7 @@ def set_polarity_json():
         if request.method == 'POST':
             polarity_command= "PP" +  request.get_json()['polarity_new'] 
             polarity_current = execute_serial_command(polarity_command)
-            json_result = {"polarity_current": polarity_current}
+            json_result = {"polarity_degrees": polarity_current}
         return json.dumps(json_result)
 
     except Exception as exception:

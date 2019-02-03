@@ -12,7 +12,7 @@ $( document ).ready(function() {
 });
 
 function update_rotor_status(){
-    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
+    // req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});
 }
 
@@ -56,4 +56,17 @@ function polarity_tracking_update()
 {
     intPolarityNext = intPolarityCurrent + .5
     response_polarity = $.post("/sat_tracker/api/rotator/polarity", {polarity_new: intPolarityNext} )
+
+    jQuery.ajax ({
+        url: "/sat_tracker/api/rotator/polarity",
+        type: "POST",
+        data: JSON.stringify({polarity_new: intPolarityNext}),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+        rotator_status = JSON.parse(data) 
+            $("#polarity_current").text(rotator_status.polarity_degrees);
+        }
+    });
+
 }
