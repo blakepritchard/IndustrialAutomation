@@ -47,7 +47,7 @@ function polarity_tracking_start(data)
 {
     rotator_status = JSON.parse(data)
     intPolarityCurrent = rotator_status.polarity_degrees;
-    intervalTrackPolarity = setInterval(count,1000);
+    intervalTrackPolarity = setInterval(polarity_tracking_update,1000);
     buttonTrackPolarity.value = "Stop count!";
 
 }
