@@ -88,9 +88,9 @@ def set_polarity():
 def set_polarity_json():
     try:
         json_result = ""
-        sat_tracker_app.logger.debug("a POST to set_polarity_json Has Been Recieved")
+        sat_tracker_app.logger.debug("a POST to set_polarity_json Has Been Recieved with data: " + request.get_data())
         if request.method == 'POST':
-            polarity_command= "PP" +  request.get_json()['polarity_new'] 
+            polarity_command= "PP" +  request.get_json(force=True)['polarity_new'] 
             polarity_current = execute_serial_command(polarity_command)
             json_result = {"polarity_degrees": polarity_current}
         return json.dumps(json_result)
