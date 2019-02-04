@@ -54,17 +54,16 @@ function polarity_tracking_start(data)
 
 function polarity_tracking_update()
 {
-    intPolarityNext = intPolarityCurrent + .5
-    response_polarity = $.post("/sat_tracker/api/rotator/polarity", {polarity_new: intPolarityNext} )
-
-    jQuery.ajax ({
+    int_polarity_next = intPolarityCurrent + .5
+    obj_polarity_next = {polarity_new: int_polarity_next}
+    rsp_polarity_next = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/polarity",
         type: "POST",
-        data: JSON.stringify({polarity_new: intPolarityNext}),
+        data: $.toJSON(obj_polarity_next),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-        rotator_status = JSON.parse(data) 
+            rotator_status = JSON.parse(data) 
             $("#polarity_current").text(rotator_status.polarity_degrees);
         }
     });
