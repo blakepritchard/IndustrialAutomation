@@ -45,7 +45,7 @@ function polarity_tracking_toggle(){
 
 function polarity_tracking_start(data)
 {
-    rotator_status = JSON.parse(data)
+    rotator_status = JSON.parse(data);
     intPolarityCurrent = rotator_status.polarity_degrees;
     intervalTrackPolarity = setInterval(polarity_tracking_update,1000);
     buttonTrackPolarity.value = "Stop Tracking";
@@ -54,12 +54,13 @@ function polarity_tracking_start(data)
 
 function polarity_tracking_update()
 {
-    int_polarity_next = intPolarityCurrent + .5
-    obj_polarity_next = {polarity_new: int_polarity_next}
-    rsp_polarity_next = jQuery.ajax ({
+    int_polarity_next = intPolarityCurrent + .5;
+    obj_polarity_next = {polarity_new: int_polarity_next};
+    json_polarity_next = JSON.stringify(obj_polarity_next);
+    resp_polarity_next = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/polarity",
         type: "POST",
-        data: $.toJSON(obj_polarity_next),
+        data: json_polarity_next,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(data){
