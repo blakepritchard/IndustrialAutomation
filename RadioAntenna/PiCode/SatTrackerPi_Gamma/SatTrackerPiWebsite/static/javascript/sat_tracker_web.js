@@ -39,7 +39,7 @@ function polarity_tracking_toggle(){
     else{ 
         clearInterval(intervalTrackPolarity);
         intervalTrackPolarity = false;
-        buttonTrackPolarity.value = "Start count!";
+        buttonTrackPolarity.value = "Start Tracking";
     }
 }
 
@@ -48,7 +48,7 @@ function polarity_tracking_start(data)
     rotator_status = JSON.parse(data)
     intPolarityCurrent = rotator_status.polarity_degrees;
     intervalTrackPolarity = setInterval(polarity_tracking_update,1000);
-    buttonTrackPolarity.value = "Stop count!";
+    buttonTrackPolarity.value = "Stop Tracking";
 
 }
 
@@ -65,6 +65,7 @@ function polarity_tracking_update()
         success: function(data){
             rotator_status = JSON.parse(data) 
             $("#polarity_current").text(rotator_status.polarity_degrees);
+            intPolarityCurrent = rotator_status.polarity_degrees;
         }
     });
 
