@@ -25,13 +25,11 @@ path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pard
 path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
 path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
 path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
-path_lib_orientation = os.path.join(path_parent_platform, "Adafruit_Python_BNO055/dafruit_BNO055/BNO055.py")
 
-
+# Add Library Paths to Runtime Environment
 sys.path.insert(0, os.path.abspath(path_lib_stepper))
 sys.path.insert(0, os.path.abspath(path_lib_gpio))
 sys.path.insert(0, os.path.abspath(path_lib_adc))
-sys.path.insert(0, os.path.abspath(path_lib_orientation))
 
 # Import Stepper
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
@@ -215,7 +213,7 @@ class Rotator(object):
 
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
     def set_elevation(self, elevation):
         try:
@@ -258,7 +256,7 @@ class Rotator(object):
             
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
 
     def calculate_elevation_steps(self, elevation_target):
@@ -275,6 +273,7 @@ class Rotator(object):
             self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
             self._elevation_requires_calibration = True
+            return true
         except Exception as e:
             self.handle_exception(e)
             
@@ -328,7 +327,7 @@ class Rotator(object):
 
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
 
 
@@ -462,7 +461,7 @@ class Rotator(object):
 
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
     def stop_azimuth(self):
         try: 
@@ -470,10 +469,11 @@ class Rotator(object):
             self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
             self._azimuth_requires_calibration = True
+            return true
     
         except Exception as e:
             self.handle_exception(e) 
-            return e.message 
+            return e 
 
 
 ##########################################################################################
@@ -525,7 +525,7 @@ class Rotator(object):
 
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
 
     # Set Polarity Position Based On Stepper Count
@@ -595,7 +595,7 @@ class Rotator(object):
             
         except Exception as e:
             self.handle_exception(e)
-            return e.message
+            return e
 
     def calculate_polarity_steps(self, polarity_target):
         try:
@@ -710,10 +710,10 @@ class Rotator(object):
                         result = self.stop_azimuth()
                         logging.debug("Received Stop Azimuth Command")
                     elif    "SE" == rotator_command: 
-                        result = self.stop_elevation()
+                        self.stop_elevation()
                         logging.debug("Received Stop Elevation Command")
                     elif    "SP" == rotator_command: 
-                        result = self.stop_polarity()
+                        self.stop_polarity()
                         logging.debug("Received Stop Polarity Command")
                     elif    "VE" == rotator_command: result = self.get_version_text()
                     elif    "HE" == rotator_command: result = self.get_help_text()
@@ -738,7 +738,7 @@ class Rotator(object):
                             self.set_polarity(command_parameters)     
                     else:
                         result = "Busy"
-                        logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
+                        logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(rotator_command))
             return result       
         
         except Exception as e:
