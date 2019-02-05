@@ -8,7 +8,7 @@ intPolarityCurrent = 0;
 $( document ).ready(function() {
     intervalDisplay = setInterval(function() { update_rotor_status()}, 5000);
     buttonTrackPolarity = document.getElementById('btnTrackPolarity');   
-
+    intPolarityCurrent = 0;
 });
 
 function update_rotor_status(){
