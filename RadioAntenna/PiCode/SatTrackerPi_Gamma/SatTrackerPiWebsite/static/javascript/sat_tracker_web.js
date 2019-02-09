@@ -28,10 +28,13 @@ function update_logview(data){
     for (var i = 0; i < log_records.length; i++)
     {
         log_message = log_records[i]
-        if (-1 !=log_message.search("CRITICAL")){
-            log_html += "<font color='yellow'>"}
-        else if (-1 != log_message.search("FATAL")){
-            log_html += "<font color='red'>"}            
+
+        if (-1 != log_message.search("FATAL")){
+            log_html += "<font color='red'>"} 
+        else if (-1 !=log_message.search("CRITICAL")){
+            log_html += "<font color='orange'>"}
+        else if (-1 !=log_message.search("WARNING")){
+                log_html += "<font color='yellow'>"}   
         else{
             log_html += "<font color='green'>"
         }
@@ -64,7 +67,7 @@ function polarity_tracking_start(data)
 
 function polarity_tracking_update()
 {
-    int_polarity_current = $("#polarity_current").text()
+    int_polarity_current = Number($("#polarity_current").text())
     int_polarity_next = int_polarity_current + .5;
     polarity_move(int_polarity_next)
 
