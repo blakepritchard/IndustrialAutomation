@@ -149,7 +149,7 @@ def execute_serial_command(serial_command, serial_timeout=0):
                     char_next = ''
                     byte_next = 0
             serial_response = characters_recieved
-            sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(serial_port_name) )
+            sat_tracker_app.logger.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(serial_port_name) )
 
         #Close Port, Return Result
         serial_port.close()
