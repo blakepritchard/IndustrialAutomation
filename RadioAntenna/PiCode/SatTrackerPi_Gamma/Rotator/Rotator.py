@@ -273,7 +273,7 @@ class Rotator(object):
             self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
             self._elevation_requires_calibration = True
-            return true
+            return True
         except Exception as e:
             self.handle_exception(e)
             
@@ -469,7 +469,7 @@ class Rotator(object):
             self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
             self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
             self._azimuth_requires_calibration = True
-            return true
+            return True
     
         except Exception as e:
             self.handle_exception(e) 
@@ -548,6 +548,8 @@ class Rotator(object):
             polarity_current_degrees = self.get_polarity_degrees()
             steps_required = self.calculate_polarity_steps(polarity_target)
 
+            logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) + "; polarity_remainder: " = str(polarity_remainder))
+
             
             if polarity_target == polarity_current_degrees:
                 logging.info("Holding polarity Steady at: "+ str(polarity))
@@ -600,7 +602,8 @@ class Rotator(object):
     def calculate_polarity_steps(self, polarity_target):
         try:
             degrees = float(polarity_target) - float(self.get_polarity_degrees())
-            steps = self._polarity_steps_per_degree * int(degrees)
+            steps = self._polarity_steps_per_degree * degrees
+            logging.info("Steps Per Degree: "+ str(self._polarity_steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps) )
             return steps
         except Exception as e:
             self.handle_exception(e)
