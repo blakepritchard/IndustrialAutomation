@@ -71,7 +71,7 @@ function polarity_tracking_update()
 }
 
 function polarity_set(int_polarity_next){
-    int_polarity_next = $("#polarity_new").val()
+    int_polarity_next = $("#polarity_next").val()
     polarity_move(int_polarity_next)
 }
 
