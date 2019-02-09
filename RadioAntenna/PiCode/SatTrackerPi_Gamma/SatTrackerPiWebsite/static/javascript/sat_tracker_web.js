@@ -12,7 +12,7 @@ $( document ).ready(function() {
 });
 
 function update_rotor_status(){
-    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
+    //req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});
 }
 
