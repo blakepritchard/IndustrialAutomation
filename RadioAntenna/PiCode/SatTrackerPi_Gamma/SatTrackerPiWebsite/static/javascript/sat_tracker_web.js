@@ -62,7 +62,8 @@ function polarity_tracking_start(data)
 
 function polarity_tracking_update()
 {
-    int_polarity_next = intPolarityCurrent + .5;
+    int_polarity_current = $("#polarity_current").val()
+    int_polarity_next = int_polarity_current + .5;
     obj_polarity_next = {polarity_new: int_polarity_next};
     json_polarity_next = JSON.stringify(obj_polarity_next);
     resp_polarity_next = jQuery.ajax ({
@@ -72,9 +73,7 @@ function polarity_tracking_update()
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            rotator_status = JSON.parse(data) 
-            $("#polarity_current").text(rotator_status.polarity_degrees);
-            intPolarityCurrent = rotator_status.polarity_degrees;
+            $("#polarity_current").text(data);
         }
     });
 
