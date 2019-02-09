@@ -27,7 +27,15 @@ function update_logview(data){
     log_html = "";
     for (var i = 0; i < log_records.length; i++)
     {
-        log_html += log_records[i] +"<br> \n";
+        log_message = log_records[i]
+        if (log_message.search("CRITICAL")){
+            log_html += "<font color='yellow'>"}
+        else if (log_message.search("FATAL")){
+            log_html += "<font color='red'>"}            
+        else{
+            log_html += "<font color='green'>"
+        }
+        log_html += log_message +"</font><br> \n";
     }
     $("#logview").html(log_html);
 }
