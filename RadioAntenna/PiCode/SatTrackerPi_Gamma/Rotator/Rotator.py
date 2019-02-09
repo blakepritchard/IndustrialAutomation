@@ -529,30 +529,18 @@ class Rotator(object):
 
 
     # Set Polarity Position Based On Stepper Count
-    def set_polarity(self, polarity):
+    def set_polarity(self, polarity_target):
         try:       
             if(self._polarity_requires_calibration == True):
                 self.recenter_polarity()
-
-            self._polarity_target = float(polarity)
-            polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
-            polarity_remainder = float(polarity_tuple[1])
-            
-            #round down to nearest half degree
-            polarity_target = float(self._polarity_target - polarity_remainder)
-            
-            #round back up if remainder was closer to upper bound
-            if polarity_remainder > (self._polarity_degrees_per_step / 2):
-                polarity_target += self._polarity_degrees_per_step
-
-            polarity_current_degrees = self.get_polarity_degrees()
+    
             steps_required = self.calculate_polarity_steps(polarity_target)
 
             logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) + "; polarity_remainder: " + str(polarity_remainder))
 
-            
+            polarity_current_degrees = self.get_polarity_degrees()
             if polarity_target == polarity_current_degrees:
-                logging.info("Holding polarity Steady at: "+ str(polarity))
+                logging.info("Holding polarity Steady at: "+ str(polarity_target))
             else:
                 
                 encoderposition_polarity_current = self._adc.read_adc(2)
@@ -601,8 +589,20 @@ class Rotator(object):
 
     def calculate_polarity_steps(self, polarity_target):
         try:
+            self._polarity_target = float(polarity_target)
+            polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
+            polarity_remainder = float(polarity_tuple[1])
+            
+            #round down to nearest half degree
+            polarity_target = float(self._polarity_target - polarity_remainder)
+            
+            #round back up if remainder was closer to upper bound
+            if polarity_remainder > (self._polarity_degrees_per_step / 2):
+                polarity_target += self._polarity_degrees_per_step
+
+
             degrees = float(polarity_target) - float(self.get_polarity_degrees())
-            steps = self._polarity_steps_per_degree * degrees
+            steps = int(self._polarity_steps_per_degree * degrees)
             logging.info("Steps Per Degree: "+ str(self._polarity_steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps) )
             return steps
         except Exception as e:
