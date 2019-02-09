@@ -219,30 +219,20 @@ class Rotator(object):
         try:
             if(self._elevation_requires_calibration == True):
                 self.recenter_elevation()       
-            self._elevation_target = float(elevation)
-            elevation_tuple = divmod(self._elevation_target, self._elevation_degrees_per_step)
-            elevation_remainder = float(elevation_tuple[1])
-            
-            #round down to nearest half degree
-            elevation_target = float(self._elevation_target - elevation_remainder)
-            
-            #round back up if remainder was closer to upper bound
-            if elevation_remainder > (self._elevation_degrees_per_step / 2):
-                elevation_target += self._elevation_degrees_per_step
 
             elevation_current_degrees = self.get_elevation_degrees()
-            steps_required = self.calculate_elevation_steps(elevation_target)
+            steps_required, self._elevation_target = self.calculate_elevation_steps(float(elevation))
 
             self._is_busy = True
             
             #Move Up
-            if elevation_target > elevation_current_degrees:
-                logging.info("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
+            if self._elevation_target > elevation_current_degrees:
+                logging.info("Elevation Target: "+str(self._elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Upward by Estimated: " + str(steps_required) + " steps.")
                 self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
 
             #Move Down    
-            elif elevation_target < elevation_current_degrees:
-                logging.info("Elevation Target: "+str(elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Downward by Estimated: " + str(steps_required) + " steps.")
+            elif self._elevation_target < elevation_current_degrees:
+                logging.info("Elevation Target: "+str(self._elevation_target)+", Elevation Current:"+str(elevation_current_degrees)+"; Moving Elevation Downward by Estimated: " + str(steps_required) + " steps.")
                 self._stepperElevation.step(abs(steps_required), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
 
             else:
@@ -259,11 +249,24 @@ class Rotator(object):
             return e
 
 
-    def calculate_elevation_steps(self, elevation_target):
+    def calculate_elevation_steps(self, elevation):
         try:
+
+            elevation_tuple = divmod(elevation, self._elevation_degrees_per_step)
+            elevation_remainder = float(elevation_tuple[1])
+            
+            #round down to nearest half degree
+            elevation_target = float(elevation - elevation_remainder)
+            
+            #round back up if remainder was closer to upper bound
+            if elevation_remainder > (self._elevation_degrees_per_step / 2):
+                elevation_target += self._elevation_degrees_per_step
+
             degrees = float(elevation_target) - float(self.get_elevation_degrees())
-            steps = self._elevation_steps_per_degree * int(degrees)
-            return steps
+            steps = int(self._elevation_steps_per_degree * degrees)
+            
+            return steps, elevation_target
+        
         except Exception as e:
             self.handle_exception(e)
 
@@ -534,7 +537,7 @@ class Rotator(object):
             if(self._polarity_requires_calibration == True):
                 self.recenter_polarity()
     
-            steps_required = self.calculate_polarity_steps(polarity_target)
+            steps_required, self._polarity_target = self.calculate_polarity_steps(polarity_target)
 
             logging.debug("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) ) 
 
@@ -607,7 +610,9 @@ class Rotator(object):
             degrees = float(polarity_target) - float(self.get_polarity_degrees())
             steps = int(self._polarity_steps_per_degree * degrees)
             logging.debug("Steps Per Degree: "+ str(self._polarity_steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps)+ "; Remainder: "+ str(polarity_remainder)) 
-            return steps
+            
+            return steps, polarity_target
+
         except Exception as e:
             self.handle_exception(e)
 
