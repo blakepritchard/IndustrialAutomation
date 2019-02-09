@@ -590,7 +590,7 @@ class Rotator(object):
     def calculate_polarity_steps(self, polarity_target):
         try:
             steps = int(0)
-            polarity_remainder = float(0.0)
+            polarity_remainder = 0.0
 
             self._polarity_target = float(polarity_target)
             polarity_tuple = divmod(self._polarity_target, self._polarity_degrees_per_step)
