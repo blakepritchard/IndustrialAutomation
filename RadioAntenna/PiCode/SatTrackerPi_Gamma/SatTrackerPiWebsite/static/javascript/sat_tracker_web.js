@@ -28,9 +28,9 @@ function update_logview(data){
     for (var i = 0; i < log_records.length; i++)
     {
         log_message = log_records[i]
-        if (log_message.search("CRITICAL")){
+        if (-1 !=log_message.search("CRITICAL")){
             log_html += "<font color='yellow'>"}
-        else if (log_message.search("FATAL")){
+        else if (-1 != log_message.search("FATAL")){
             log_html += "<font color='red'>"}            
         else{
             log_html += "<font color='green'>"
