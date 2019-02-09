@@ -548,7 +548,7 @@ class Rotator(object):
             polarity_current_degrees = self.get_polarity_degrees()
             steps_required = self.calculate_polarity_steps(polarity_target)
 
-            logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) + "; polarity_remainder: " = str(polarity_remainder))
+            logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) + "; polarity_remainder: " + str(polarity_remainder))
 
             
             if polarity_target == polarity_current_degrees:
