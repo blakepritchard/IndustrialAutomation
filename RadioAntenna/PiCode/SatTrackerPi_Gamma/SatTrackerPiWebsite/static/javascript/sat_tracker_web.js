@@ -6,13 +6,13 @@ intPolarityCurrent = 0;
 
 
 $( document ).ready(function() {
-    //intervalDisplay = setInterval(function() { update_rotor_status()}, 5000);
+    intervalDisplay = setInterval(function() { update_rotor_status()}, 5000);
     buttonTrackPolarity = document.getElementById('btnTrackPolarity');   
     intPolarityCurrent = 0;
 });
 
 function update_rotor_status(){
-    //req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
+    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});
 }
 
@@ -57,7 +57,7 @@ function polarity_tracking_start(data)
 {
     rotator_status = JSON.parse(data);
     intPolarityCurrent = rotator_status.polarity_degrees;
-    intervalTrackPolarity = setInterval(polarity_tracking_update,1000);
+    intervalTrackPolarity = setInterval(polarity_tracking_update,2000);
     buttonTrackPolarity.innerHTML = "Stop Tracking";
 
 }
