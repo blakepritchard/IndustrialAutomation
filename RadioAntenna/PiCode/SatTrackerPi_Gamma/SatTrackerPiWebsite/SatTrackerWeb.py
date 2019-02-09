@@ -122,7 +122,7 @@ def execute_serial_command(serial_command, serial_timeout=0):
         serial_response = ""
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
         serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
-        sat_tracker_app.logger.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(serial_port_name) )
+        sat_tracker_app.logger.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(serial_port_name) )
 
         # Send Command
         serial_command += "\n"
