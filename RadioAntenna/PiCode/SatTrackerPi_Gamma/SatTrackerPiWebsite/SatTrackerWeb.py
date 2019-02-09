@@ -70,20 +70,6 @@ def set_elevation():
         return handle_web_exception(exception)
 
 
-@sat_tracker_app.route("/sat_tracker/set_polarity", methods=["GET","POST"])
-@sat_tracker_app.route("/polarity/set_polarity", methods=["POST"])
-def set_polarity():
-    try:
-        sat_tracker_app.logger.debug("a POST to set_polarity Has Been Recieved")
-        if request.method == 'POST':
-            polarity_command= "PP" + request.form['polarity_new'] 
-            execute_serial_command(polarity_command)
-        
-        return redirect("http://"+socket.gethostname()+"/sat_tracker/", code=302)
-
-    except Exception as exception:
-        return handle_web_exception(exception)
-
 @sat_tracker_app.route("/sat_tracker/api/rotator/polarity", methods=["POST"])
 def set_polarity_json():
     try:

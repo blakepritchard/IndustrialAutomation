@@ -87,6 +87,7 @@ function polarity_move(int_polarity_next){
         contentType: "application/json; charset=utf-8",
         success: function(data){
             $("#polarity_current").text(data.polarity_degrees);
+            
         }
     });
 } 
