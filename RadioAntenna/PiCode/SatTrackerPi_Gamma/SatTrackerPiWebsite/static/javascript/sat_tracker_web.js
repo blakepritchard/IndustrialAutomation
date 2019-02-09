@@ -64,7 +64,7 @@ function polarity_tracking_start(data)
 
 function polarity_tracking_update()
 {
-    int_polarity_current = $("#polarity_current").val()
+    int_polarity_current = $("#polarity_current").text()
     int_polarity_next = int_polarity_current + .5;
     polarity_move(int_polarity_next)
 

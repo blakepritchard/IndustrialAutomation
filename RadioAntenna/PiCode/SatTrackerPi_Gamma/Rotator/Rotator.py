@@ -739,7 +739,7 @@ class Rotator(object):
                         elif "PP" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
                             result = self.set_polarity(command_parameters)
-                            logging.info("Returning Polarity Position: " + str(result))     
+                            logging.debug("Returning Polarity Position: " + str(result))     
                         elif "PT" == command_operation:
                             logging.info("Received Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     
