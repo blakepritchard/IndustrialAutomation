@@ -536,7 +536,7 @@ class Rotator(object):
     
             steps_required = self.calculate_polarity_steps(polarity_target)
 
-            logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) + "; polarity_remainder: " + str(polarity_remainder))
+            logging.info("Polarity Target: "+ str(self._polarity_target) +"; degrees per setp: " + str(self._polarity_degrees_per_step) ) 
 
             polarity_current_degrees = self.get_polarity_degrees()
             if polarity_target == polarity_current_degrees:
@@ -606,7 +606,7 @@ class Rotator(object):
 
             degrees = float(polarity_target) - float(self.get_polarity_degrees())
             steps = int(self._polarity_steps_per_degree * degrees)
-            logging.info("Steps Per Degree: "+ str(self._polarity_steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps) )
+            logging.info("Steps Per Degree: "+ str(self._polarity_steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps)+ "; Remainder: "+ str(polarity_remainder)) 
             return steps
         except Exception as e:
             self.handle_exception(e)
