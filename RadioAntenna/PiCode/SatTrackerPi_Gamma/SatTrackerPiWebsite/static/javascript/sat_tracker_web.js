@@ -12,7 +12,7 @@ $( document ).ready(function() {
 });
 
 function update_rotor_status(){
-    // req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
+    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});
 }
 
@@ -40,6 +40,8 @@ function update_logview(data){
     $("#logview").html(log_html);
 }
 
+
+
 function polarity_tracking_toggle(){
     if(!intervalTrackPolarity){
         req_status = $.get("/sat_tracker/api/rotator/status", function(data){polarity_tracking_start(data)});
@@ -64,6 +66,17 @@ function polarity_tracking_update()
 {
     int_polarity_current = $("#polarity_current").val()
     int_polarity_next = int_polarity_current + .5;
+    polarity_move(int_polarity_next)
+
+}
+
+function polarity_set(int_polarity_next){
+    int_polarity_next = $("#polarity_new").val()
+    polarity_move(int_polarity_next)
+}
+
+
+function polarity_move(int_polarity_next){
     obj_polarity_next = {polarity_new: int_polarity_next};
     json_polarity_next = JSON.stringify(obj_polarity_next);
     resp_polarity_next = jQuery.ajax ({
@@ -73,8 +86,7 @@ function polarity_tracking_update()
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            $("#polarity_current").text(data);
+            $("#polarity_current").text(data.polarity_degrees);
         }
     });
-
-}
+} 
