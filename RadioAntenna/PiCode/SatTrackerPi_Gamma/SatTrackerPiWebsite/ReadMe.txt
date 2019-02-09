@@ -12,14 +12,19 @@ create a symlink to enable nginx:
 add website user to tty group:
     sudo adduser www-data tty
 
-to configure the Pi to run the website automatically add the following text to: /etc/rc.local
-
-    cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
-    bash start_tracker.bash > start_tracker.log &
-
-    /usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
-
 
 (https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html)
 to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
    @chromium-browser --kiosk http://sat-tracker-pi
+
+
+
+to configure the Pi to run the website automatically add the following text to: /etc/rc.local
+
+    cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
+    rm ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
+    bash start_tracker.bash > start_tracker.log &
+    /usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
+
+
+
