@@ -79,7 +79,7 @@ def set_polarity_json():
         float_polarity_next = obj_polarity_next['polarity_new']
         if request.method == 'POST':
             polarity_command= "PP" +  str(float_polarity_next)
-            polarity_current = execute_serial_command(polarity_command)
+            polarity_current = execute_serial_command(polarity_command, None)
             json_result = {"polarity_degrees": polarity_current}
         return json.dumps(json_result)
 
