@@ -179,7 +179,7 @@ USAGE
                 
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
                     website_response = device_rotator.execute_website_command(command_website)
-                    logging.debug("Writing Serial Response to Website: "+ str(website_response))
+                    logging.info("Writing Serial Response to Website: "+ str(website_response))
                     serial_port_website.write(str(website_response) + "\n")
                     command_website = ""  
                 elif '!'==char_next_website:

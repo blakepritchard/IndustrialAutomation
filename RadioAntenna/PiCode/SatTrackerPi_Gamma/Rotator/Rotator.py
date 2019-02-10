@@ -708,7 +708,7 @@ class Rotator(object):
                 if len(rotator_command) == 2:
                     if  "RS" == rotator_command:
                        result = str(self.get_rotator_status()) 
-                       logging.debug("Received Rotator Status Request, Result: " + str(result)) 
+                       logging.info("Received Rotator Status Request, Result: " + str(result)) 
                     elif    "AZ" == rotator_command: 
                         result = str(self.get_azimuth_degrees())
                         logging.debug("Received Azimuth Request, Result: " + str(result))
@@ -745,7 +745,7 @@ class Rotator(object):
                         elif "PP" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
                             result = self.set_polarity(command_parameters)
-                            logging.debug("Returning Polarity Position: " + str(result))     
+                            logging.info("Returning Polarity Position: " + str(result))     
                         elif "PT" == command_operation:
                             logging.info("Received Polarity Tracking Command: " + str(command_parameters))
                             self.set_polarity(command_parameters)     

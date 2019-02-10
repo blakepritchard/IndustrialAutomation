@@ -8,7 +8,9 @@ import sys
 import logging
 import socket
 import json
+import threading
 
+serial_lock = threading.lock
 
 sat_tracker_app = Flask(__name__)
 
@@ -21,6 +23,7 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 sat_tracker_app.config.from_pyfile("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/serial_output.config")
 
 if __name__ == "__main__":
+
     sat_tracker_app.run(host='0.0.0.0')
 
 
@@ -118,7 +121,9 @@ def handle_web_exception(exception):
 
 # Send Serial Command, Get Serial Response
 def execute_serial_command(serial_command, serial_timeout=0):
+    
     try:
+        serial_lock.acquire()
         serial_response = ""
         serial_port_name = sat_tracker_app.config['SERIAL_PORT_NAME']
         serial_port = serial.Serial(str(serial_port_name), 9600, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
@@ -172,4 +177,6 @@ def execute_serial_command(serial_command, serial_timeout=0):
         print(exc_type, fname, exc_tb.tb_lineno)
         print(e)
         return redirect("http://"+socket.gethostname()+"/polarity", code=302)
-
+    
+    finally:
+        serial_lock.release()
