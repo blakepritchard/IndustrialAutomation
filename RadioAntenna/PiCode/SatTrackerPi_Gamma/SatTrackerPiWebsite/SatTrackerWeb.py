@@ -74,7 +74,7 @@ def set_elevation():
 def set_polarity_json():
     try:
         json_result = ""
-        sat_tracker_app.logger.debug("a POST to set_polarity_json Has Been Recieved with data: " + request.get_data())
+        sat_tracker_app.logger.info("a POST to set_polarity_json Has Been Recieved with data: " + request.get_data())
         obj_polarity_next = request.get_json(force=True)
         float_polarity_next = obj_polarity_next['polarity_new']
         if request.method == 'POST':
