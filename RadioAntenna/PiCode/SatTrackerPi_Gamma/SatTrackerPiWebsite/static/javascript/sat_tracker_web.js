@@ -11,7 +11,7 @@ $( document ).ready(function() {
 
 function screen_update_toggle(){
     if(!intervalDisplay){
-        intervalDisplay = setInterval(function() { update_rotor_status()}, 1000);
+        intervalDisplay = setInterval(function() { update_rotor_status()}, 2000);
         $("#btnUpdateScreen").innerHTML = "Stop Screen Updates ";
     }
     else{ 
