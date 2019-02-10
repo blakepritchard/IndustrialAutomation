@@ -49,15 +49,18 @@
                   <button id="btnSetPolarity" onclick="polarity_set()">Set Polarity</button>
                 </div>                
                 <div id="polarityTracking">
-                  <button id="btnTrackPolarity" onclick="polarity_tracking_toggle()">Track</button>
+                  <input type="checkbox"  id="chkTrackPolarity" onclick="polarity_tracking_toggle()">Track</button>
                 </div>
-                <div id="polarityInterval">
-                    <input type="text" id="polarity_interval"><br>
+                <div id="polaritySpeed">
+                    <input type="text" id="polarity_speed"><br>
                   </div>
             </div>
         </div>
         <div id="logview">
 
+        </div>
+        <div id="menu_bar">
+            <input type="button" id="btnUpdateScreen" value="Stop Screen Updates" onclick="screen_update_toggle()">
         </div>
     </div>
     </div>
