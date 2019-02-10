@@ -579,7 +579,8 @@ class Rotator(object):
 
                     # Check Limits
                     if ((encoderposition_polarity_current > self._encoderposition_polarity_max) or (encoderposition_polarity_current < self._encoderposition_polarity_min)):
-                        logging.warning("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current))
+                        logging.warning("Polarity Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_polarity_current)+ "; Re-Centering Polarity.")
+                        self.recenter_polarity()
                         break
 
             self._is_busy = False

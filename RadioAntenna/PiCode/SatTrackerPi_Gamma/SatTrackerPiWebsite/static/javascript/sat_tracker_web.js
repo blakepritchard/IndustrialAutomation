@@ -2,13 +2,12 @@
 intervalDisplay = false;
 intervalTrackPolarity = false;
 buttonTrackPolarity = false;
-intPolarityCurrent = 0;
 
 
 $( document ).ready(function() {
     intervalDisplay = setInterval(function() { update_rotor_status()}, 5000);
     buttonTrackPolarity = document.getElementById('btnTrackPolarity');   
-    intPolarityCurrent = 0;
+    $("#polarity_interval").val("2000")
 });
 
 function update_rotor_status(){
@@ -53,15 +52,21 @@ function polarity_tracking_toggle(){
         clearInterval(intervalTrackPolarity);
         intervalTrackPolarity = false;
         buttonTrackPolarity.innerHTML = "Start Tracking";
+        $("#btnSetPolarity").prop("disabled",false);
+        $("#polarity_next").prop("disabled",false);
     }
 }
 
 function polarity_tracking_start(data)
 {
+    int_polarity_interval = Number($("#polarity_interval").val())
     rotator_status = JSON.parse(data);
     intPolarityCurrent = rotator_status.polarity_degrees;
-    intervalTrackPolarity = setInterval(polarity_tracking_update,2000);
+    intervalTrackPolarity = setInterval(polarity_tracking_update,int_polarity_next = $("#polarity_next").val());
     buttonTrackPolarity.innerHTML = "Stop Tracking";
+
+    $("#btnSetPolarity").prop("disabled",true);
+    $("#polarity_next").prop("disabled",true);
 
 }
 
