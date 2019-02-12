@@ -30,17 +30,19 @@ sleep 2
 declare -a arraySocatWebsiteOutput
 mapfile -t arraySocatWebsiteOutput < "$logfileWebsite"
 
-path_nginx_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
-path_website_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
+path_webclient_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
+path_tracker_client_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
-echo $(date -u) " The WebSite will write to: ${path_nginx_out} and the Tracker will listen to: ${path_website_in} "
-(`echo SERIAL_PORT_NAME=\"${path_nginx_out}\" > ./SatTrackerPiDaemon/webclient_serial.config`)&
-
+echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tracker will listen to: ${path_tracker_client_in} "
+('python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_tracker_client_in} -l ${verbosityLevel}')&
+sleep 2
+('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py -r ${path_webclient_out} -l ${verbosityLevel}')&
 sleep 2
 
-(`chown www-data ${path_nginx_out}`)&
 
-sleep 2
-
-python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_website_in} -l ${verbosityLevel}
+#(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiDaemon/webclient_serial.config`)&
+#sleep 2
+#(`chown www-data ${path_webclient_out}`)&
+#sleep 2
+# python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_tracker_client_in} -l ${verbosityLevel}
 wait
