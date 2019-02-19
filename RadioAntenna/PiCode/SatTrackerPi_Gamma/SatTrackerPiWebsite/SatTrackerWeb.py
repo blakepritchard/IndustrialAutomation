@@ -40,10 +40,10 @@ class Rotator(db.Model):
     polarity_steps = db.Column(db.Integer, index=False, unique=False)
     polarity_degrees = db.Column(db.Float, index=False, unique=False)
     polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False)
-    polarity_tracking_speed = db.Column(db.Boolean, index=False, unique=False)
+    polarity_tracking_speed = db.Column(db.Numeric, index=False, unique=False)
    
     def __repr__(self):
-        return '<Rotator {}>'.format(self.id + ", " + self.ratator_name)    
+        return '<Rotator {}>'.format(str(self.id) + ", " + str(self.rotator_name))    
 
 
 
@@ -57,7 +57,7 @@ class RotatorCommand(db.Model):
     command_value = db.Column(db.Float, index=False, unique=False)
 
     def __repr__(self):
-        return '<RotatorCommand {}>'.format(self.execution_time + ", " + self.command_code + ", " + self.command_value )    
+        return '<RotatorCommand {}>'.format(str(self.execution_time) + ", " + str(self.command_code) + ", " + str(self.command_value) )    
 
 
 
