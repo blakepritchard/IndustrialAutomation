@@ -30,7 +30,7 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 class Rotator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ratator_name = db.Column(db.String(64), index=True, unique=True)
+    rotator_name = db.Column(db.String(64), index=True, unique=True)
     rotator_commands = db.relationship("RotatorCommand", backref="Rotator", lazy=True)
 
     azimuth_steps = db.Column(db.Integer, index=False, unique=False)
@@ -58,7 +58,7 @@ class RotatorCommand(db.Model):
 
     def __repr__(self):
         return '<RotatorCommand {}>'.format(self.execution_time + ", " + self.command_code + ", " + self.command_value )    
-        
+
 
 
 if __name__ == "__main__":
