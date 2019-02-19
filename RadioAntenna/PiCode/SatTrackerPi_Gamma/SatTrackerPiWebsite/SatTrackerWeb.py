@@ -19,8 +19,6 @@ sat_tracker_app.config.from_object(Config)
 db = SQLAlchemy(sat_tracker_app)
 migrate = Migrate(sat_tracker_app, db)
 
-from SatTrackerPiWebsite import routes, SatTrackerWebModels
-
 sat_tracker_app.testing = True
 sat_tracker_app.debug = True
 
@@ -28,6 +26,40 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 #sat_tracker_app.config.from_envvar("SAT_TRACKER_WEB_SERIAL_CONFIG")
 #sat_tracker_app.config.from_pyfile("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/serial_output.config")
+
+
+class Rotator(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ratator_name = db.Column(db.String(64), index=True, unique=True)
+    rotator_commands = db.relationship("RotatorCommand", backref="Rotator", lazy=True)
+
+    azimuth_steps = db.Column(db.Integer, index=False, unique=False)
+    azimuth_degrees = db.Column(db.Float, index=False, unique=False)
+    elevation_steps = db.Column(db.Integer, index=False, unique=False)
+    elevation_degrees = db.Column(db.Float, index=False, unique=False)
+    polarity_steps = db.Column(db.Integer, index=False, unique=False)
+    polarity_degrees = db.Column(db.Float, index=False, unique=False)
+    polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False)
+    polarity_tracking_speed = db.Column(db.Boolean, index=False, unique=False)
+   
+    def __repr__(self):
+        return '<Rotator {}>'.format(self.id + ", " + self.ratator_name)    
+
+
+
+class RotatorCommand(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rotator_id = db.Column(db.Integer, db.ForeignKey("rotator.id"))
+
+    issue_time = db.Column(db.DateTime, index=False, unique=False)
+    execution_time = db.Column(db.DateTime, index=False, unique=False)
+    command_code = db.Column(db.Integer, index=False, unique=False)
+    command_value = db.Column(db.Float, index=False, unique=False)
+
+    def __repr__(self):
+        return '<RotatorCommand {}>'.format(self.execution_time + ", " + self.command_code + ", " + self.command_value )    
+        
+
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')

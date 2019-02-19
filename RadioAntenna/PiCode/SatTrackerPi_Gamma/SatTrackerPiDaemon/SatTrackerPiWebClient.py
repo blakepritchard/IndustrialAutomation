@@ -1,12 +1,30 @@
 import sys
 import serial
 import logging
+import argparse
+
+from argparse import ArgumentParser
+from argparse import RawDescriptionHelpFormatter
 
 def main(argv=None):
+    parser = optparse.OptionParser()
+
+    if argv is None:
+        argv = sys.argv
+    else:
+        sys.argv.extend(argv)
+
+    parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
+    parser.add_argument("-r", "--rotctl", dest="rotctl", help="set rotctl-gpredict serial port [default: %(default)s]")
     serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/webclient_serial.config")
+
+
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
 
 
 def get_rotator_status():

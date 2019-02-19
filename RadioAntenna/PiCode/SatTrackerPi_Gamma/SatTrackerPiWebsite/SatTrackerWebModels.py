@@ -1,4 +1,5 @@
-from SatTackerPiWeb import db
+from flask_sqlalchemy import SQLAlchemy
+from SQLAlchemy import db
 
 class Rotator(db.Model):
     id = db.Column(db.Integer, primary_key=True)

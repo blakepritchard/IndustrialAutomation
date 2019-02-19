@@ -37,7 +37,7 @@ echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tra
 ('python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_tracker_client_in} -l ${verbosityLevel}')&
 sleep 2
 ('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py -r ${path_webclient_out} -l ${verbosityLevel}')&
-sleep 2
+wait
 
 
 #(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiDaemon/webclient_serial.config`)&
@@ -45,4 +45,4 @@ sleep 2
 #(`chown www-data ${path_webclient_out}`)&
 #sleep 2
 # python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_in} -w ${path_tracker_client_in} -l ${verbosityLevel}
-wait
+#wait
