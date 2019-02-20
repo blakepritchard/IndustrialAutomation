@@ -45,6 +45,9 @@ class Rotator(db.Model):
     def __repr__(self):
         return '<Rotator {}>'.format(str(self.id) + ", " + str(self.rotator_name))    
 
+    def as_dict(self):
+       return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+
 
 
 class RotatorCommand(db.Model):
@@ -93,6 +96,18 @@ def get_rotator_log():
     
     except Exception as exception:
         return handle_web_exception(exception)
+
+
+@sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
+def get_rotator_status():
+    try:
+        rotator = Rotator.query.filter_by(id=1).first()
+        json_result = jsonify(rotator.as_dict())
+        return json_result
+    
+    except Exception as exception:
+        return handle_web_exception(exception)
+
 
 
 def handle_web_exception(exception):
