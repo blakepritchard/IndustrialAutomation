@@ -664,3 +664,1690 @@ IOError: [Errno 2] No such file or directory: '../sat_tracker_daemon.log'
 [pid: 11668|app: 0|req: 584/584] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:15:38 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
 [pid: 11668|app: 0|req: 586/585] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:15:40 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
 [pid: 11668|app: 0|req: 586/586] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:15:40 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 3 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 587/587] 127.0.0.1 () {40 vars in 654 bytes} [Mon Feb 18 19:58:55 2019] GET / => generated 259 bytes in 1 msecs (HTTP/1.1 302) 3 headers in 121 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 588/588] 127.0.0.1 () {40 vars in 678 bytes} [Mon Feb 18 19:58:55 2019] GET /sat_tracker/ => generated 2385 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 81 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 590/589] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:58:58 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 1 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 590/590] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:58:58 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 592/591] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:00 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 592/592] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:00 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 594/593] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:02 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 594/594] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:02 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 596/595] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:04 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 3 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 596/596] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:04 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 597/597] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:06 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 1 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 598/598] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:06 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 0 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 600/599] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:08 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 3 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 600/600] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:08 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 601/601] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:10 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 602/602] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:10 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 0 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 603/603] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:12 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 1 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 604/604] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:12 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 0 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 606/605] 127.0.0.1 () {42 vars in 678 bytes} [Mon Feb 18 19:59:14 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 606/606] 127.0.0.1 () {42 vars in 672 bytes} [Mon Feb 18 19:59:14 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 607/607] 127.0.0.1 () {40 vars in 654 bytes} [Tue Feb 19 20:26:29 2019] GET / => generated 259 bytes in 0 msecs (HTTP/1.1 302) 3 headers in 121 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 608/608] 127.0.0.1 () {40 vars in 678 bytes} [Tue Feb 19 20:26:29 2019] GET /sat_tracker/ => generated 2385 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 81 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 609/609] 127.0.0.1 () {44 vars in 762 bytes} [Tue Feb 19 20:26:29 2019] GET /static/css/sat_tracker_web.css => generated 0 bytes in 1 msecs (HTTP/1.1 304) 5 headers in 205 bytes (0 switches on core 0)
+[pid: 11668|app: 0|req: 611/610] 127.0.0.1 () {44 vars in 759 bytes} [Tue Feb 19 20:26:29 2019] GET /static/javascript/sat_tracker_web.js => generated 0 bytes in 1 msecs (HTTP/1.1 304) 5 headers in 205 bytes (0 switches on core 1)
+[pid: 11668|app: 0|req: 611/611] 127.0.0.1 () {44 vars in 754 bytes} [Tue Feb 19 20:26:29 2019] GET /static/javascript/jquery-3.3.1.js => generated 0 bytes in 2 msecs (HTTP/1.1 304) 5 headers in 206 bytes (0 switches on core 0)
+[pid: 11668|app: 0|req: 613/612] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:31 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 613/613] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:31 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 615/614] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:33 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 615/615] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:33 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 617/616] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:35 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 617/617] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:35 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 619/618] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:37 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 619/619] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:37 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 620/620] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:39 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 1 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 621/621] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:39 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 623/622] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:26:41 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 623/623] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:26:41 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 624/624] 127.0.0.1 () {40 vars in 654 bytes} [Tue Feb 19 20:34:47 2019] GET / => generated 259 bytes in 1 msecs (HTTP/1.1 302) 3 headers in 121 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 625/625] 127.0.0.1 () {40 vars in 678 bytes} [Tue Feb 19 20:34:47 2019] GET /sat_tracker/ => generated 2385 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 81 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 626/626] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:49 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 1 msecs (HTTP/1.1 404) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 11668|app: 0|req: 627/627] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:49 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 629/628] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:51 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 629/629] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:51 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 631/630] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:53 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 631/631] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:53 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 633/632] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:55 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 3 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 633/633] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:55 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 634/634] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:57 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 635/635] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:57 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 0 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 637/636] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:34:59 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 637/637] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:34:59 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 639/638] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:35:01 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 639/639] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:35:01 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 641/640] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:35:03 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 2 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+[pid: 11668|app: 0|req: 641/641] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:35:03 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 11668|app: 0|req: 642/642] 127.0.0.1 () {40 vars in 714 bytes} [Tue Feb 19 20:35:05 2019] GET /sat_tracker/api/rotator/status => generated 233 bytes in 0 msecs (HTTP/1.1 404) 2 headers in 72 bytes (1 switches on core 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 20:38:47 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+error removing unix socket, unlink(): Operation not permitted [core/socket.c line 198]
+bind(): Address already in use [core/socket.c line 230]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 20:43:35 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55c60b20c190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55c60b20c190 pid: 21631 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 21631)
+spawned uWSGI worker 1 (pid: 21634, cores: 2)
+[pid: 21634|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 685 bytes} [Tue Feb 19 20:44:45 2019] GET / => generated 259 bytes in 7 msecs (HTTP/1.1 302) 3 headers in 121 bytes (1 switches on core 0)
+[pid: 21634|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 709 bytes} [Tue Feb 19 20:44:45 2019] GET /sat_tracker/ => generated 2385 bytes in 32 msecs (HTTP/1.1 200) 2 headers in 81 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 4/3] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:47 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 13 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 4/4] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:47 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 47 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 6/5] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:49 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 6/6] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:49 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 8/7] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:51 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 8/8] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:51 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 10/9] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:53 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+[pid: 21634|app: 0|req: 10/10] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:53 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 12/11] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:55 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 12/12] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:55 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 4 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 14/13] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:57 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 14/14] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:57 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 16/15] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:44:59 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 16/16] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:44:59 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 4 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 18/17] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:01 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 18/18] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:01 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 4 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 20/19] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:03 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 22 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 20/20] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:03 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 24 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 22/21] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:05 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 22/22] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:05 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 24/23] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:07 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 24/24] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:07 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 3 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 26/25] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:09 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 26/26] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:09 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+[pid: 21634|app: 0|req: 28/27] 127.0.0.1 () {42 vars in 672 bytes} [Tue Feb 19 20:45:11 2019] GET /sat_tracker/api/rotator/log => generated 43 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 28/28] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 19 20:45:11 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 3 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 29/29] 127.0.0.1 () {40 vars in 714 bytes} [Tue Feb 19 20:45:12 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator.first())
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 30/30] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 20:45:36 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator.first())
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 263, in jsonify
+    (dumps(data, indent=indent, separators=separators), '\n'),
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 123, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/simplejson/__init__.py", line 399, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 293, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 698, in _iterencode
+    o = _default(o)
+  File "/usr/lib/python2.7/dist-packages/flask/json.py", line 80, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/usr/lib/python2.7/dist-packages/simplejson/encoder.py", line 268, in default
+    o.__class__.__name__)
+TypeError: Object of type Rotator is not JSON serializable
+[pid: 21634|app: 0|req: 31/31] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 20:46:35 2019] GET /sat_tracker/api/rotator/status => generated 47 bytes in 2 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 20:47:12 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x556eea3ce190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x556eea3ce190 pid: 21877 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 21877)
+spawned uWSGI worker 1 (pid: 21880, cores: 2)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(rotator.first())
+AttributeError: 'Rotator' object has no attribute 'first'
+[pid: 21880|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 20:47:51 2019] GET /sat_tracker/api/rotator/status => generated 41 bytes in 8 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 20:50:36 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55e0cd6a0190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55e0cd6a0190 pid: 22039 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 22039)
+spawned uWSGI worker 1 (pid: 22042, cores: 2)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:111]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 102, in get_rotator_status
+    json_result = jsonify(dict(rotator.items))
+AttributeError: 'Rotator' object has no attribute 'items'
+[pid: 22042|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 20:50:57 2019] GET /sat_tracker/api/rotator/status => generated 41 bytes in 12 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 20:58:20 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x557978969190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x557978969190 pid: 22323 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 22323)
+spawned uWSGI worker 1 (pid: 22326, cores: 2)
+[pid: 22326|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 20:58:34 2019] GET /sat_tracker/api/rotator/status => generated 296 bytes in 12 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 21:00:31 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55a4b1e04190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55a4b1e04190 pid: 22431 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 22431)
+spawned uWSGI worker 1 (pid: 22434, cores: 2)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:114]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [GET]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 105, in get_rotator_status
+    json_result = jsonify(rotator.as_dict())
+AttributeError: 'BaseQuery' object has no attribute 'as_dict'
+[pid: 22434|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 21:00:41 2019] GET /sat_tracker/api/rotator/status => generated 45 bytes in 22 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Tue Feb 19 21:01:17 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x559fd8992190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x559fd8992190 pid: 22496 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 22496)
+spawned uWSGI worker 1 (pid: 22501, cores: 2)
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+[pid: 22501|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Tue Feb 19 21:01:26 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 78 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 22501|app: 0|req: 2/2] 127.0.0.1 () {36 vars in 467 bytes} [Fri Feb 22 18:16:55 2019] POST /sat_tracker/api/rotator/status => generated 178 bytes in 45 msecs (HTTP/1.1 405) 3 headers in 108 bytes (1 switches on core 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Fri Feb 22 18:19:27 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x5583a95cc190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x5583a95cc190 pid: 4449 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 4449)
+spawned uWSGI worker 1 (pid: 4479, cores: 2)
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+[pid: 4479|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Fri Feb 22 18:20:33 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 94 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 4479|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 745 bytes} [Fri Feb 22 18:20:35 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 4 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:135]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 114, in set_rotator_status
+    json_request = request.get_json(force=True)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 162, in get_json
+    rv = self.on_json_loading_failed(e)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 181, in on_json_loading_failed
+    raise BadRequest('Failed to decode JSON object: {0}'.format(e))
+BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+[pid: 4479|app: 0|req: 3/3] 127.0.0.1 () {36 vars in 467 bytes} [Fri Feb 22 18:21:23 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 36 msecs (HTTP/1.1 200) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 4479|app: 0|req: 4/4] 127.0.0.1 () {42 vars in 745 bytes} [Fri Feb 22 18:21:35 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 9 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 1)
+[pid: 4479|app: 0|req: 5/5] 127.0.0.1 () {42 vars in 745 bytes} [Fri Feb 22 18:21:37 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 3 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 4479|app: 0|req: 6/6] 127.0.0.1 () {42 vars in 745 bytes} [Fri Feb 22 18:24:22 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 1)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:135]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 114, in set_rotator_status
+    json_request = request.get_json(force=True)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 162, in get_json
+    rv = self.on_json_loading_failed(e)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 181, in on_json_loading_failed
+    raise BadRequest('Failed to decode JSON object: {0}'.format(e))
+BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+[pid: 4479|app: 0|req: 7/7] 127.0.0.1 () {36 vars in 467 bytes} [Fri Feb 22 18:32:03 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 3 msecs (HTTP/1.1 200) 2 headers in 78 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 10:34:59 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x5622a889c190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x5622a889c190 pid: 10792 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 10792)
+spawned uWSGI worker 1 (pid: 10798, cores: 2)
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+[pid: 10798|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 745 bytes} [Sat Feb 23 10:35:23 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 166 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 10798|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 745 bytes} [Sat Feb 23 10:35:35 2019] GET /sat_tracker/api/rotator/status => generated 301 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 1)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: ./Rotator.json
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 115, in set_rotator_status
+    json_request = request.get_json(force=True)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 162, in get_json
+    rv = self.on_json_loading_failed(e)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 181, in on_json_loading_failed
+    raise BadRequest('Failed to decode JSON object: {0}'.format(e))
+BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+[pid: 10798|app: 0|req: 3/3] 127.0.0.1 () {36 vars in 481 bytes} [Sat Feb 23 10:39:04 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 17 msecs (HTTP/1.1 200) 2 headers in 78 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: 
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 115, in set_rotator_status
+    json_request = request.get_json(force=True)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 162, in get_json
+    rv = self.on_json_loading_failed(e)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 181, in on_json_loading_failed
+    raise BadRequest('Failed to decode JSON object: {0}'.format(e))
+BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+[pid: 10798|app: 0|req: 4/4] 127.0.0.1 () {36 vars in 479 bytes} [Sat Feb 23 10:43:54 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 78 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {
+  "id": "1",   
+  "rotator_name": "SatTrackerPi Rotator",  
+  "azimuth_degrees": "1.0", 
+  "azimuth_steps": "2", 
+  "elevation_degrees": "1.0", 
+  "elevation_steps": "2", 
+  "polarity_degrees": "0.0", 
+  "polarity_steps": "0",  
+  "polarity_is_tracking": "False", 
+  "polarity_tracking_speed": "0"
+
+}
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 116, in set_rotator_status
+    dict_request = json.loads(json_request)
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+TypeError: expected string or buffer
+[pid: 10798|app: 0|req: 5/5] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 10:49:00 2019] POST /sat_tracker/api/rotator/status => generated 25 bytes in 19 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {
+  "id": "1",   
+  "rotator_name": "SatTrackerPi Rotator",  
+  "azimuth_degrees": "1.0", 
+  "azimuth_steps": "2", 
+  "elevation_degrees": "1.0", 
+  "elevation_steps": "2", 
+  "polarity_degrees": "0.0", 
+  "polarity_steps": "0",  
+  "polarity_is_tracking": "False", 
+  "polarity_tracking_speed": "0"
+}
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 116, in set_rotator_status
+    dict_request = json.loads(json_request)
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+TypeError: expected string or buffer
+[pid: 10798|app: 0|req: 6/6] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 10:51:25 2019] POST /sat_tracker/api/rotator/status => generated 25 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 10:58:00 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55d55d038190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55d55d038190 pid: 11466 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 11466)
+spawned uWSGI worker 1 (pid: 11469, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {
+  "id": "1",   
+  "rotator_name": "SatTrackerPi Rotator",  
+  "azimuth_degrees": "1.0", 
+  "azimuth_steps": "2", 
+  "elevation_degrees": "1.0", 
+  "elevation_steps": "2", 
+  "polarity_degrees": "0.0", 
+  "polarity_steps": "0",  
+  "polarity_is_tracking": "False", 
+  "polarity_tracking_speed": "0"
+}
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 116, in set_rotator_status
+    dict_request = json.loads(str(json_request))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting property name: line 1 column 2 (char 1)
+[pid: 11469|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 10:58:15 2019] POST /sat_tracker/api/rotator/status => generated 49 bytes in 4 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 116, in set_rotator_status
+    dict_request = json.loads(str(json_request))
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 380, in raw_decode
+    obj, end = self.scan_once(s, idx)
+ValueError: Expecting property name: line 1 column 2 (char 1)
+[pid: 11469|app: 0|req: 2/2] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 11:00:05 2019] POST /sat_tracker/api/rotator/status => generated 49 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 1)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {id: "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 115, in set_rotator_status
+    json_request = request.get_json(force=True)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 162, in get_json
+    rv = self.on_json_loading_failed(e)
+  File "/usr/lib/python2.7/dist-packages/flask/wrappers.py", line 181, in on_json_loading_failed
+    raise BadRequest('Failed to decode JSON object: {0}'.format(e))
+BadRequest: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+[pid: 11469|app: 0|req: 3/3] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 11:00:59 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 1 msecs (HTTP/1.1 200) 2 headers in 78 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 11:16:53 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55c235d8b190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55c235d8b190 pid: 12298 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 12298)
+spawned uWSGI worker 1 (pid: 12301, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+--------------------------------------------------------------------------------
+ERROR in SatTrackerWeb [./SatTrackerWeb.py:136]:
+An Exception Has Occurred!
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ERROR in app [/usr/lib/python2.7/dist-packages/flask/app.py:1560]:
+Exception on /sat_tracker/api/rotator/status [POST]
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./SatTrackerWeb.py", line 128, in set_rotator_status
+    db.session.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 1023, in commit
+    self.transaction.commit()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 487, in commit
+    self._prepare_impl()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 466, in _prepare_impl
+    self.session.flush()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2436, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2574, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 67, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/session.py", line 2534, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 416, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/unitofwork.py", line 583, in execute
+    uow,
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 236, in save_obj
+    update,
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/persistence.py", line 976, in _emit_update_statements
+    statement, multiparams
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 980, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py", line 273, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1099, in _execute_clauseelement
+    distilled_params,
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1174, in _execute_context
+    e, util.text_type(statement), parameters, None, None
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1458, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/compat.py", line 296, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/base.py", line 1171, in _execute_context
+    context = constructor(dialect, self, conn, *args)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/engine/default.py", line 703, in _init_compiled
+    param.append(processors[key](compiled_params[key]))
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py", line 1769, in process
+    value = _strict_as_bool(value)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py", line 1744, in _strict_as_bool
+    raise TypeError("Not a boolean value: %r" % value)
+StatementError: (exceptions.TypeError) Not a boolean value: u'False' [SQL: u'UPDATE rotator SET azimuth_steps=?, azimuth_degrees=?, elevation_steps=?, elevation_degrees=?, polarity_steps=?, polarity_degrees=?, polarity_is_tracking=?, polarity_tracking_speed=? WHERE rotator.id = ?'] [parameters: [{'polarity_steps': u'0', 'rotator_id': 1, 'azimuth_steps': u'2', 'elevation_degrees': u'1.0', 'azimuth_degrees': u'1.0', 'polarity_is_tracking': u'False', 'elevation_steps': u'2', 'polarity_degrees': u'0.0', 'polarity_tracking_speed': u'0'}]]
+[pid: 12301|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 11:17:16 2019] POST /sat_tracker/api/rotator/status => generated 52 bytes in 162 msecs (HTTP/1.1 200) 2 headers in 79 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:43:03 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55d4207f4190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55d4207f4190 pid: 14816 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 14816)
+spawned uWSGI worker 1 (pid: 14819, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1740, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'bool' object is not callable
+[pid: 14819|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 12:43:27 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 337 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:44:03 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+error removing unix socket, unlink(): Operation not permitted [core/socket.c line 198]
+bind(): Address already in use [core/socket.c line 230]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:45:01 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x5626de03d190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x5626de03d190 pid: 14940 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 14940)
+spawned uWSGI worker 1 (pid: 14943, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1740, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'bool' object is not callable
+[pid: 14943|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 12:45:33 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 160 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:47:08 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x563cea526190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x563cea526190 pid: 15065 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 15065)
+spawned uWSGI worker 1 (pid: 15068, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1740, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'bool' object is not callable
+[pid: 15068|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 12:47:19 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 177 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:51:32 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x5563b6462190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x5563b6462190 pid: 15226 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 15226)
+spawned uWSGI worker 1 (pid: 15229, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1740, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'bool' object is not callable
+[pid: 15229|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 12:56:16 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 155 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 12:58:41 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x560355813190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x560355813190 pid: 15506 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 15506)
+spawned uWSGI worker 1 (pid: 15511, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1997, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1985, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1540, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1615, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1630, in finalize_request
+    response = self.make_response(rv)
+  File "/usr/lib/python2.7/dist-packages/flask/app.py", line 1740, in make_response
+    rv = self.response_class.force_type(rv, request.environ)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 921, in force_type
+    response = BaseResponse(*_run_wsgi_app(response, environ))
+  File "/usr/lib/python2.7/dist-packages/werkzeug/wrappers.py", line 59, in _run_wsgi_app
+    return _run_wsgi_app(*args)
+  File "/usr/lib/python2.7/dist-packages/werkzeug/test.py", line 923, in run_wsgi_app
+    app_rv = app(environ, start_response)
+TypeError: 'bool' object is not callable
+[pid: 15511|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 12:58:51 2019] POST /sat_tracker/api/rotator/status => generated 0 bytes in 154 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 13:01:48 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55e676035190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x55e676035190 pid: 15670 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 15670)
+spawned uWSGI worker 1 (pid: 15673, cores: 2)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 13:03:06 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55872554a190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55872554a190 pid: 15709 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 15709)
+spawned uWSGI worker 1 (pid: 15712, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "1.0", "elevation_steps": "2", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+[pid: 15712|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 13:04:12 2019] POST /sat_tracker/api/rotator/status => generated 302 bytes in 175 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 13:15:32 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55b7e2e65190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+  File "./SatTrackerWeb.py", line 126
+    if ("True" == dict_request["polarity_is_tracking"]):
+                                                       ^
+IndentationError: unindent does not match any outer indentation level
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 16110)
+spawned uWSGI worker 1 (pid: 16112, cores: 2)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: unix socket /tmp/SatTrackerWeb.sock removed.
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 13:16:00 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x563e8671e190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+  File "./SatTrackerWeb.py", line 126
+    if ("True" == dict_request["polarity_is_tracking"]):
+                                                       ^
+IndentationError: unindent does not match any outer indentation level
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 16134)
+spawned uWSGI worker 1 (pid: 16136, cores: 2)
+--- no python application found, check your startup logs for errors ---
+[pid: 16136|app: -1|req: -1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 13:20:26 2019] POST /sat_tracker/api/rotator/status => generated 21 bytes in 0 msecs (HTTP/1.1 500) 2 headers in 83 bytes (0 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
+*** Starting uWSGI 2.0.18 (64bit) on [Sat Feb 23 13:23:15 2019] ***
+compiled with version: 7.3.0 on 18 February 2019 14:06:32
+os: Linux-4.15.0-45-lowlatency #48-Ubuntu SMP PREEMPT Tue Jan 29 17:45:27 UTC 2019
+nodename: Apollo
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 4
+current working directory: /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma
+detected binary path: /usr/local/bin/uwsgi
+chdir() to /home/blake/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+your processes number limit is 31093
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /tmp/SatTrackerWeb.sock fd 3
+Python version: 2.7.15rc1 (default, Nov 12 2018, 14:31:15)  [GCC 7.3.0]
+Python main interpreter initialized at 0x55983f97d190
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55983f97d190 pid: 16576 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 16576)
+spawned uWSGI worker 1 (pid: 16579, cores: 2)
+--------------------------------------------------------------------------------
+INFO in SatTrackerWeb [./SatTrackerWeb.py:114]:
+a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_name": "SatTrackerPi Rotator",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "2.0", "elevation_steps": "4", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+--------------------------------------------------------------------------------
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  "storage." % (dialect.name, dialect.driver)
+[pid: 16579|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 13:23:27 2019] POST /sat_tracker/api/rotator/status => generated 302 bytes in 167 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)

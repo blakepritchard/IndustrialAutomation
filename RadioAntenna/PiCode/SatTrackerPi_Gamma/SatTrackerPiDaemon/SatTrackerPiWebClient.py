@@ -17,7 +17,19 @@ def main(argv=None):
     parser = ArgumentParser(description=program_license, formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
     parser.add_argument("-r", "--rotctl", dest="rotctl", help="set rotctl-gpredict serial port [default: %(default)s]")
+    parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
+    parser.add_argument("-w", "--webserver", dest="webserver", help="set SatTrackerWebsite webserver URL [default: %(default)s]")
     serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/webclient_serial.config")
+
+    # Process arguments
+    args = parser.parse_args()
+    verbose = args.loglevel
+    name_port_rotctl = args.rotctl
+    url_webserver = args.webserver
+    speed_serial = args.speed
+
+    logging.basicConfig(filename='sat_tracker_webclient.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
 
 
@@ -41,6 +53,8 @@ def get_rotator_status():
     
     except Exception as exception:
         return handle_web_exception(exception)
+
+
 
 #@sat_tracker_app.route("/sat_tracker/api/rotator/polarity", methods=["POST"])
 def set_polarity_json():
