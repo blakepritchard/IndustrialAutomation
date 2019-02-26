@@ -22,7 +22,6 @@ function screen_update_toggle(){
 }
 
 function update_rotor_status(){
-    polarity_tracking_update()
     req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});    
 }
@@ -46,11 +45,6 @@ function polarity_tracking_update()
 
 function polarity_set(int_polarity_next){
     int_polarity_next = $("#polarity_next").val()
-    polarity_move(int_polarity_next)
-}
-
-
-function polarity_move(int_polarity_next){
     obj_polarity_next = {polarity_new: int_polarity_next};
     json_polarity_next = JSON.stringify(obj_polarity_next);
     resp_polarity_next = jQuery.ajax ({
