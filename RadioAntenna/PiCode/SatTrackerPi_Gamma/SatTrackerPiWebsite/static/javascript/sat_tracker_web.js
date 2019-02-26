@@ -69,10 +69,9 @@ function polarity_move(int_polarity_next){
 
 
 function update_dashboard(data){
-    rotator_status = JSON.parse(data)
-    $("#azimuth_current").text(rotator_status.azimuth_degrees);
-    $("#elevation_current").text(rotator_status.elevation_degrees);
-    $("#polarity_current").text(rotator_status.polarity_degrees);
+    $("#azimuth_current").text(data.azimuth_degrees);
+    $("#elevation_current").text(data.elevation_degrees);
+    $("#polarity_current").text(data.polarity_degrees);
 }
 function update_logview(data){
     log_records = JSON.parse(data);
