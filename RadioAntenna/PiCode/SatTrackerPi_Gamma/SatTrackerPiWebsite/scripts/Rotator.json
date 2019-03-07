@@ -1,1 +1,1 @@
-{"id": "1", "rotator_name": "SatTrackerPi",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "0.0", "elevation_steps": "0", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
+{"id": "1", "rotator_name": "SatTrackerPi",  "azimuth_degrees": "1.0", "azimuth_steps": "2", "elevation_degrees": "4.0", "elevation_steps": "8", "polarity_degrees": "0.0", "polarity_steps": "0",  "polarity_is_tracking": "False", "polarity_tracking_speed": "0"}
