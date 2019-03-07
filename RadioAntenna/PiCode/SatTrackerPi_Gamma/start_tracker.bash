@@ -3,8 +3,10 @@ logfileRotctl=pseudoterminalsRotctl.txt
 logfileWebsite=pseudoterminalsWebsite.txt
 verbosityLevel="20"
 
-trap "kill 0 & rm $logfileRotctl & rm $logfileWebsite" EXIT
+trap "kill 0 " EXIT
 
+(`rm $logfileRotctl`)
+(`rm $logfileWebsite`)
 
 echo $(date -u) " Open Virtual Com Port to RotorContol-GPredict (rotctld)"
 (`socat -d -d -lf $logfileRotctl pty,raw,echo=0 pty,raw,echo=0`)&
@@ -41,7 +43,7 @@ echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tra
 #sleep 2
 
 #('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
-# wait
+wait
 
 
 #(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiWebsite/webclient_serial.config`)&

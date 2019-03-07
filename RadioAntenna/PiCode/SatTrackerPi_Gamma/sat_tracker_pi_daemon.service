@@ -3,7 +3,7 @@ Description=My service
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=/bin/bash start_tracker.bash
 WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
 StandardOutput=inherit
