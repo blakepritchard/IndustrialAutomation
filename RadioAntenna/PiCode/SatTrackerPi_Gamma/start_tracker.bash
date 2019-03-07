@@ -41,7 +41,7 @@ echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tra
 #sleep 2
 
 #('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
-wait
+# wait
 
 
 #(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiWebsite/webclient_serial.config`)&
