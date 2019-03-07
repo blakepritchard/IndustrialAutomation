@@ -2351,3 +2351,13 @@ a POST to set_rotator_status Has Been Recieved with data: {"id": "1", "rotator_n
 /usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/sqltypes.py:639: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
   "storage." % (dialect.name, dialect.driver)
 [pid: 16579|app: 0|req: 1/1] 127.0.0.1 () {36 vars in 483 bytes} [Sat Feb 23 13:23:27 2019] POST /sat_tracker/api/rotator/status => generated 302 bytes in 167 msecs (HTTP/1.1 200) 2 headers in 72 bytes (2 switches on core 0)
+[pid: 16579|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 678 bytes} [Tue Feb 26 18:59:15 2019] GET / => generated 259 bytes in 204 msecs (HTTP/1.1 302) 3 headers in 121 bytes (1 switches on core 1)
+[pid: 16579|app: 0|req: 3/3] 127.0.0.1 () {42 vars in 702 bytes} [Tue Feb 26 18:59:15 2019] GET /sat_tracker/ => generated 2385 bytes in 54 msecs (HTTP/1.1 200) 2 headers in 81 bytes (1 switches on core 0)
+[pid: 16579|app: 0|req: 5/4] 127.0.0.1 () {46 vars in 786 bytes} [Tue Feb 26 18:59:15 2019] GET /static/css/sat_tracker_web.css => generated 0 bytes in 62 msecs (HTTP/1.1 304) 5 headers in 205 bytes (0 switches on core 0)
+[pid: 16579|app: 0|req: 6/5] 127.0.0.1 () {42 vars in 669 bytes} [Tue Feb 26 18:59:15 2019] GET /static/javascript/jquery-3.3.1.js => generated 271751 bytes in 134 msecs via sendfile() (HTTP/1.1 200) 8 headers in 304 bytes (0 switches on core 1)
+[pid: 16579|app: 0|req: 6/6] 127.0.0.1 () {46 vars in 783 bytes} [Tue Feb 26 18:59:15 2019] GET /static/javascript/sat_tracker_web.js => generated 2751 bytes in 70 msecs via sendfile() (HTTP/1.1 200) 8 headers in 301 bytes (0 switches on core 0)
+Gracefully killing worker 1 (pid: 16579)...
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 3 seconds
+goodbye to uWSGI.
+unlink(): Operation not permitted [core/uwsgi.c line 1660]
