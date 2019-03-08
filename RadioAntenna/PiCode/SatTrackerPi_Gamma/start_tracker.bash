@@ -19,10 +19,9 @@ mapfile -t arraySocatRotctlOutput < "$logfileRotctl"
 path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[0]}")"
 path_tracker_rotctl_in="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[1]}")"
 
-echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} "
+echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} and SatTrackerPi listener will listen to: ${path_tracker_rotctl_in}"
 (`rotctld -m 202 -s 9600 -r ${path_rotctld_out}`)&
 
-echo $(date -u) " The SatTrackerPi listener will listen to: ${path_tracker_rotctl_in} for Heading-Azimuth and Inclination-Elevation"
 
 echo $(date -u) " Opening Virtual Com Port to Website"
 (`socat -d -d -lf $logfileWebsite pty,raw,echo=0 pty,raw,echo=0`)&
@@ -39,6 +38,7 @@ path_tracker_web_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 sleep 2
 
 echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tracker WebInput will listen to: ${path_tracker_web_in} "
+echo $PWD
 ('python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}')&
 #sleep 2
 
