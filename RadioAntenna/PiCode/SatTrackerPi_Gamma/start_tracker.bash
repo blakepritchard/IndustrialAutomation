@@ -43,6 +43,8 @@ echo $PWD
 sleep 2
 
 (`/usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log`)
+sleep 5
+
 ('chown www-data /tmp/SatTrackerWeb.sock')
 
 #('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
