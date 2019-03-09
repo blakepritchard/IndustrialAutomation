@@ -1,0 +1,15 @@
+[Unit]
+Description=SatTrackerPi Web Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/uwsgi --ini uwsgi_config.ini --uid www-data --gid www-data --daemonize sat_tracker_web_uwsgi.log
+WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/
+StandardOutput=inherit
+StandardError=inherit
+Restart=no
+User=www-data
+
+[Install]
+WantedBy=multi-user.target

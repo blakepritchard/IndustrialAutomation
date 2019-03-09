@@ -42,10 +42,10 @@ echo $PWD
 (`/usr/bin/python /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}`)&
 sleep 2
 
-(`/usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log`)
-sleep 5
+#(`/usr/local/bin/uwsgi --ini ./SatTrackerPiWebsite/uwsgi_config.ini --uid www-data --gid www-data --daemonize ./SatTrackerPiWebsite/sat_tracker_web_uwsgi.log`)
+# sleep 5
 
-('chown www-data /tmp/SatTrackerWeb.sock')
+#('chown www-data /tmp/SatTrackerWeb.sock')
 
 #('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
 wait
