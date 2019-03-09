@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/uwsgi --ini uwsgi_config.ini --uid www-data --gid www-data --daemonize sat_tracker_web_uwsgi.log
+ExecStart=/usr/local/bin/uwsgi --ini uwsgi_config.ini --uid www-data --gid www-data
 WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/
 StandardOutput=inherit
 StandardError=inherit
