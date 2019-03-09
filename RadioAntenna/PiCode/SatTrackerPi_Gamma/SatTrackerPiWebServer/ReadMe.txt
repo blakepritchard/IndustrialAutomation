@@ -37,10 +37,14 @@
 
 
 #On Raspian Use systemd to start the WebServer, TrackerDaemon, and WebClient.
-#As root, Copy the following files into /etc/systemd/system:
-  sudo cp /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/sat_tracker_pi_daemon.service /etc/systemd/system
-
+#As root, Create Symbolic Link to  the following files into /etc/systemd/system:
+    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/sat_tracker_pi_daemon.service /etc/systemd/system
+    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/sat_tracker_pi_web_server.service /etc/systemd/system 
+    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/sat_tracker_pi_web_client.service /etc/systemd/system 
 
 # test the scripts by starting them manually:
    sudo systemctl start sat_tracker_pi_daemon.service  
+
+# view the logs with the systemctl status command:
+   sudo systemctl status sat_tracker_pi_daemon.service  
 

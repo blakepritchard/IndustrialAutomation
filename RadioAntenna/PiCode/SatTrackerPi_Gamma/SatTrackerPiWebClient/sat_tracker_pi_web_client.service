@@ -3,7 +3,7 @@ Description=My service
 After=network.target
 
 [Service]
-ExecStart=/bin/bash start_tracker.bash > start_tracker.log
+ExecStart=python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2
 WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
 StandardOutput=inherit
 StandardError=inherit
