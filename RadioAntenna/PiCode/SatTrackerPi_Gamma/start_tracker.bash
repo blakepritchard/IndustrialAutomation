@@ -1,12 +1,13 @@
 #!/bin/bash
 logfileRotctl=pseudoterminalsRotctl.txt
-logfileWebsite=pseudoterminalsWebsite.txt
+logfileWebServer=pseudoterminalsWebServer.txt
+
 verbosityLevel="20"
 
 trap "kill 0 " EXIT
 
 (`rm $logfileRotctl`)
-(`rm $logfileWebsite`)
+(`rm $logfileWebServer`)
 
 echo $(date -u) " Open Virtual Com Port to RotorContol-GPredict (rotctld)"
 (`socat -d -d -lf $logfileRotctl pty,raw,echo=0 pty,raw,echo=0`)&
@@ -24,17 +25,17 @@ echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} and Sa
 
 
 echo $(date -u) " Opening Virtual Com Port to Website"
-(`socat -d -d -lf $logfileWebsite pty,raw,echo=0 pty,raw,echo=0`)&
+(`socat -d -d -lf $logfileWebServer pty,raw,echo=0 pty,raw,echo=0`)&
 
 sleep 2
 
 declare -a arraySocatWebsiteOutput
-mapfile -t arraySocatWebsiteOutput < "$logfileWebsite"
+mapfile -t arraySocatWebsiteOutput < "$logfileWebServer"
 
 path_webclient_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
 path_tracker_web_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
-(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiWebsite/webclient_serial.config`)&
+(`echo {\"SERIAL_PORT_NAME\": \"${path_webclient_out}\"} > ./SatTrackerPiWebClient/webclient_serial.config`)&
 sleep 2
 
 echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tracker WebInput will listen to: ${path_tracker_web_in} "

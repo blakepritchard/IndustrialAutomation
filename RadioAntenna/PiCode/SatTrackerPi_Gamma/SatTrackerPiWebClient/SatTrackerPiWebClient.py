@@ -22,7 +22,7 @@ def main(argv=None):
 
     parser = ArgumentParser(description="SatTrackerPi Web Client", formatter_class=RawDescriptionHelpFormatter)
     parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
-    parser.add_argument("-r", "--rotator", dest="rotator", help="set tracker serial port name for output[default: %(default)s]")
+    parser.add_argument("-r", "--rotator", dest="rotator", help="config file with serial port name for output[default: %(default)s]")
     parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
     parser.add_argument("-w", "--webserver", dest="webserver", help="set SatTrackerWebsite webserver URL [default: %(default)s]")
     parser.add_argument("-i", "--interval", dest="interval", help="set Interval between Status Updates")
@@ -43,14 +43,20 @@ if __name__ == "__main__":
 
 class SatTrackerPiWebClient:
 
-    def __init__(self,  verbose, name_port_rotator, speed_serial, url_webserver, interval):
+    def __init__(self,  verbose, config_file_serial, speed_serial, url_webserver, interval):
         self.verbose = verbose
-        self.name_port_rotator = name_port_rotator
+        self.config_file_serial = config_file_serial
         self.url_webserver = url_webserver
         self.speed_serial = speed_serial
         self.interval = interval
         self.start_time = time.time()
         self.scheduler = sched.scheduler(time.time, time.sleep)
+
+        with open(self.config_file_serial, 'r') as f:
+            config_dict = json.load(f)
+        self.serial_port_name = config_dict['SERIAL_PORT_NAME']
+
+
     
     def start_client_loop(self):
         try:
@@ -142,8 +148,7 @@ class SatTrackerPiWebClient:
         try:
             #self.serial_lock.acquire()
             serial_response = ""
-            serial_port_name = self.name_port_rotator
-            serial_port = serial.Serial(str(serial_port_name), self.speed_serial, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
+            serial_port = serial.Serial(str(self.serial_port_name), self.speed_serial, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
             logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(serial_port_name) )
 
             # Send Command
