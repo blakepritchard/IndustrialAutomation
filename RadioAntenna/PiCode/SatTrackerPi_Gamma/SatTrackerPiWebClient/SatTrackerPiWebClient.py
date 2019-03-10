@@ -30,10 +30,11 @@ class SatTrackerPiWebClient:
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
 
+        self.serial_port_name = ""
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
             self.serial_port_name = config_dict['SERIAL_PORT_NAME']
-        logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
+            logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
