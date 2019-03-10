@@ -14,40 +14,9 @@ import time
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    else:
-        sys.argv.extend(argv)
-
-    parser = ArgumentParser(description="SatTrackerPi Web Client", formatter_class=RawDescriptionHelpFormatter)
-    parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
-    parser.add_argument("-r", "--rotator", dest="rotator", help="config file with serial port name for output[default: %(default)s]")
-    parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
-    parser.add_argument("-w", "--webserver", dest="webserver", help="set SatTrackerWebsite webserver URL [default: %(default)s]")
-    parser.add_argument("-i", "--interval", dest="interval", help="set Interval between Status Updates")
-    # serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/webclient_serial.config")
-
-    # Process arguments
-    args = parser.parse_args()
-    logging.basicConfig(filename='sat_tracker_webclient.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    logging.info("Verbose mode on Log Level: "+str(args.loglevel))
-    
-    sat_tracker_webclient = SatTrackerPiWebClient(args.loglevel, args.rotator, args.speed, args.webserver, args.interval)
-
-    logging.info("Starting Web Client Loop")
-    sat_tracker_webclient.start_client_loop()
-
-    logging.info("Exiting Main")
-    return 0
-
-if __name__ == "__main__":
-    r = main()
-    logging.info("Exiting with Return Code: "+str(r))
-    sys.exit(r)
-
-
-
+#################################################################################################################################################################
+# Worker Class to Execute Commands From Website
+#################################################################################################################################################################
 class SatTrackerPiWebClient:
 
     def __init__(self,  verbose, config_file_serial, speed_serial, url_webserver, interval):
@@ -152,10 +121,6 @@ class SatTrackerPiWebClient:
             return self.handle_exception(exception)
 
 
-
-
-
-
     # Send Serial Command, Get Serial Response
     def execute_serial_command(self, serial_command, serial_timeout=0):
 
@@ -219,3 +184,39 @@ class SatTrackerPiWebClient:
             logging.error("An Exception Has Occurred!")        
             logging.exception(ex)
             return(ex)  
+
+#####################################################################################################################################
+
+
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    else:
+        sys.argv.extend(argv)
+
+    parser = ArgumentParser(description="SatTrackerPi Web Client", formatter_class=RawDescriptionHelpFormatter)
+    parser.add_argument("-l", "--loglevel", dest="loglevel", help="set loglevel level [default: %(default)s]")
+    parser.add_argument("-r", "--rotator", dest="rotator", help="config file with serial port name for output[default: %(default)s]")
+    parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
+    parser.add_argument("-w", "--webserver", dest="webserver", help="set SatTrackerWebsite webserver URL [default: %(default)s]")
+    parser.add_argument("-i", "--interval", dest="interval", help="set Interval between Status Updates")
+    # serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/webclient_serial.config")
+
+    # Process arguments
+    args = parser.parse_args()
+    logging.basicConfig(filename='sat_tracker_webclient.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    logging.info("Verbose mode on Log Level: "+str(args.loglevel))
+    
+    sat_tracker_webclient = SatTrackerPiWebClient(args.loglevel, args.rotator, args.speed, args.webserver, args.interval)
+
+    logging.info("Starting Web Client Loop")
+    sat_tracker_webclient.start_client_loop()
+
+    logging.info("Exiting Main")
+    return 0
+
+if __name__ == "__main__":
+    r = main()
+    logging.info("Exiting with Return Code: "+str(r))
+    sys.exit(r)
+
