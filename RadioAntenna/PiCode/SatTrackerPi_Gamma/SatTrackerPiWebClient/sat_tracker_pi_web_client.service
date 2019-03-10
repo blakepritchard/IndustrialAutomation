@@ -7,7 +7,7 @@ ExecStart=/usr/bin/python /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiC
 WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/
 StandardOutput=inherit
 StandardError=inherit
-Restart=always
+Restart=no
 User=pi
 
 [Install]
