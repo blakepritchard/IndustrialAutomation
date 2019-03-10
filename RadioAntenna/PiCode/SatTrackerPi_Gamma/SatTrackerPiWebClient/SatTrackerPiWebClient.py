@@ -26,24 +26,32 @@ def main(argv=None):
     parser.add_argument("-s", "--speed", dest="speed", type=int, help="set serial port speed [default: %(default)s]")
     parser.add_argument("-w", "--webserver", dest="webserver", help="set SatTrackerWebsite webserver URL [default: %(default)s]")
     parser.add_argument("-i", "--interval", dest="interval", help="set Interval between Status Updates")
-    serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/webclient_serial.config")
+    # serial_config_filename = ("/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/webclient_serial.config")
 
     # Process arguments
     args = parser.parse_args()
     logging.basicConfig(filename='sat_tracker_webclient.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     logging.info("Verbose mode on Log Level: "+str(args.loglevel))
-
+    
     sat_tracker_webclient = SatTrackerPiWebClient(args.loglevel, args.rotator, args.speed, args.webserver, args.interval)
+
+    logging.info("Starting Web Client Loop")
     sat_tracker_webclient.start_client_loop()
 
+    logging.info("Exiting Main")
+    return 0
+
 if __name__ == "__main__":
-    sys.exit(main())
+    r = main()
+    logging.info("Exiting with Return Code: "+str(r))
+    sys.exit(r)
 
 
 
 class SatTrackerPiWebClient:
 
     def __init__(self,  verbose, config_file_serial, speed_serial, url_webserver, interval):
+        logging.info("Initializing Web Client Object.")
         self.verbose = verbose
         self.config_file_serial = config_file_serial
         self.url_webserver = url_webserver
@@ -51,17 +59,20 @@ class SatTrackerPiWebClient:
         self.interval = interval
         self.start_time = time.time()
         self.scheduler = sched.scheduler(time.time, time.sleep)
+        self.client_loop_event = self.scheduler.enter(self.interval, 1, self._execute_client_loop(), ())
 
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
         self.serial_port_name = config_dict['SERIAL_PORT_NAME']
 
-
+    def __del__(self):
+        logging.info("Destructing Web Client, Stopping Client Loop")
+        self.scheduler.cancel(self.client_loop_event)
+        
     
     def start_client_loop(self):
         try:
             logging.info("Starting Client Loop With Interval: "+str(self.interval))
-            self.scheduler.enter(self.interval, 1, self._execute_client_loop(), ())
             self.scheduler.run()
         except Exception as exception:
             return self.handle_exception(exception)
