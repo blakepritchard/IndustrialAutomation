@@ -1,5 +1,5 @@
 [Unit]
-Description=My service
+Description=SatTrackerPi Web Client
 After=network.target
 
 [Service]
