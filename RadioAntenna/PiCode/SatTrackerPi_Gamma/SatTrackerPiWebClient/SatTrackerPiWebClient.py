@@ -24,11 +24,11 @@ class SatTrackerPiWebClient:
         self.verbose = verbose
         self.config_file_serial = config_file_serial
         self.url_webserver = url_webserver
-        self.speed_serial = speed_serial
-        self.interval = interval
+        self.speed_serial = int(speed_serial)
+        self.interval = float(interval)
         self.start_time = time.time()
         self.scheduler = sched.scheduler(time.time, time.sleep)
-        self.client_loop_event = self.scheduler.enter(self.interval, 1, self._execute_client_loop(), ())
+        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
 
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
