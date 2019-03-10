@@ -60,6 +60,7 @@ class SatTrackerPiWebClient:
     
     def start_client_loop(self):
         try:
+            logging.info("Starting Client Loop With Interval: "+str(self.interval))
             self.scheduler.enter(self.interval, 1, self._execute_client_loop(), ())
             self.scheduler.run()
         except Exception as exception:
@@ -78,7 +79,9 @@ class SatTrackerPiWebClient:
     def post_rotator_status(self):
         try:
             data = self.get_rotator_status()
-            r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", data = data)        
+            logging.info("Posting Rotator Status: "+str(data))
+            r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", data = data)
+            logging.info("Post Response Text: "+str(r.text))        
             return r.text
         except Exception as exception:
             return self.handle_exception(exception)       
@@ -149,7 +152,7 @@ class SatTrackerPiWebClient:
             #self.serial_lock.acquire()
             serial_response = ""
             serial_port = serial.Serial(str(self.serial_port_name), self.speed_serial, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
-            logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(serial_port_name) )
+            logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(self.serial_port_name) )
 
             # Send Command
             serial_command += "\n"
@@ -176,7 +179,7 @@ class SatTrackerPiWebClient:
                         char_next = ''
                         byte_next = 0
                 serial_response = characters_recieved
-                logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(serial_port_name) )
+                logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(self.serial_port_name) )
 
             #Close Port, Return Result
             serial_port.close()
