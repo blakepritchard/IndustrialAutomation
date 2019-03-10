@@ -32,7 +32,8 @@ class SatTrackerPiWebClient:
 
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
-        self.serial_port_name = config_dict['SERIAL_PORT_NAME']
+            self.serial_port_name = config_dict['SERIAL_PORT_NAME']
+        logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
