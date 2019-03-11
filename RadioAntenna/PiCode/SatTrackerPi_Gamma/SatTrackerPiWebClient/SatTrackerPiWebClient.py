@@ -53,8 +53,10 @@ class SatTrackerPiWebClient:
             self.start_time = time.time()
             self.post_rotator_status()
             current_time = time.time()
-            interval_next = self.interval- (( current_time - self.start_time) % self.interval )
-            self.scheduler.enter(interval_next, 1, self._execute_client_loop(), ())
+            run_time = current_time - self.start_time
+            interval_next = self.interval- (run_time % self.interval )
+            logging.info("Run Time:" + str(run_time)+ " Next Start Time:"+ str(interval_next))
+            #self.scheduler.enter(interval_next, 1, self._execute_client_loop(), ())
         except Exception as exception:
             return self.handle_exception(exception)
 
@@ -206,7 +208,7 @@ def main(argv=None):
 
     # Process arguments
     args = parser.parse_args()
-    logging.basicConfig(filename='sat_tracker_webclient.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    logging.basicConfig(filename='sat_tracker_pi_web_client.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     logging.info("Verbose mode on Log Level: "+str(args.loglevel))
     
     sat_tracker_webclient = SatTrackerPiWebClient(args.loglevel, args.rotator, args.speed, args.webserver, args.interval)
