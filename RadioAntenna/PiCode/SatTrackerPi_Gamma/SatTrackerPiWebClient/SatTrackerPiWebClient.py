@@ -26,15 +26,17 @@ class SatTrackerPiWebClient:
         self.url_webserver = url_webserver
         self.speed_serial = int(speed_serial)
         self.interval = float(interval)
-        self.start_time = time.time()
-        self.scheduler = sched.scheduler(time.time, time.sleep)
-        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
 
-        self.serial_port_name = ""
+        self.serial_port_name = "/dev/pts/3"
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
             self.serial_port_name = config_dict['SERIAL_PORT_NAME']
-            logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
+        
+        logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
+
+        self.start_time = time.time()
+        self.scheduler = sched.scheduler(time.time, time.sleep)
+        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
@@ -56,16 +58,20 @@ class SatTrackerPiWebClient:
             run_time = current_time - self.start_time
             interval_next = self.interval- (run_time % self.interval )
             logging.info("Run Time:" + str(run_time)+ " Next Start Time:"+ str(interval_next))
-            #self.scheduler.enter(interval_next, 1, self._execute_client_loop(), ())
+            self.scheduler.enter(interval_next, 1, self._execute_client_loop())
         except Exception as exception:
             return self.handle_exception(exception)
 
     def post_rotator_status(self):
         try:
             data = self.get_rotator_status()
-            logging.info("Posting Rotator Status: "+str(data))
-            r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", data = data)
-            logging.info("Post Response Text: "+str(r.text))        
+            
+            if(not isinstance(data, Exception)):
+                logging.info("Posting Rotator Status: "+str(data))
+                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", data = data)
+                logging.info("Post Response Text: "+str(r.text))
+            else:
+                logging.exception("Recieved Serial Exception: "+str(data))
             return r.text
         except Exception as exception:
             return self.handle_exception(exception)       
