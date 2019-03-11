@@ -27,7 +27,7 @@ class SatTrackerPiWebClient:
         self.speed_serial = int(speed_serial)
         self.interval = float(interval)
 
-        self.serial_port_name = "/dev/pts/3"
+        self.serial_port_name = "/dev/pts/10"
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
             self.serial_port_name = config_dict['SERIAL_PORT_NAME']
@@ -57,7 +57,7 @@ class SatTrackerPiWebClient:
             current_time = time.time()
             run_time = current_time - self.start_time
             interval_next = self.interval- (run_time % self.interval )
-            logging.info("Run Time:" + str(run_time)+ " Next Start Time:"+ str(interval_next))
+            logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ ", Next Start Time:"+ str(interval_next))
             self.scheduler.enter(interval_next, 1, self._execute_client_loop())
         except Exception as exception:
             return self.handle_exception(exception)
