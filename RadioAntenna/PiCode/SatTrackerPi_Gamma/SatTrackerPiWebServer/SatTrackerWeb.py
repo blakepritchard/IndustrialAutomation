@@ -101,7 +101,7 @@ def get_rotator_log():
 @sat_tracker_app.route("/sat_tracker/api/rotator/status", methods=["GET"])
 def get_rotator_status():
     try:
-        rotator = Rotator.query.filter_by(id=1).first()
+        rotator = Rotator.query.get(1)
         json_result = jsonify(rotator.as_dict())
         return json_result
     
@@ -115,7 +115,7 @@ def set_rotator_status():
         dict_request = request.get_json()
         # dict_request = json.loads(str(json_request))     
 
-        rotator = Rotator.query.filter_by(id=1).first()
+        rotator = Rotator.query.get(1)
 
         rotator.azimuth_degrees = dict_request["azimuth_degrees"]
         rotator.azimuth_steps = dict_request["azimuth_steps"]
