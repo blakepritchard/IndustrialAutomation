@@ -65,14 +65,15 @@ class SatTrackerPiWebClient:
 
     def post_rotator_status(self):
         try:
-            data = self.get_rotator_status()
+            rotator_serial_response = self.get_rotator_status()
             
-            if(not isinstance(data, Exception)):
-                logging.info("Posting Rotator Status: "+str(data))
-                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", data = data)
+            if(not isinstance(rotator_serial_response, Exception)):
+                logging.info("Posting Rotator Status: "+str(rotator_serial_response))
+                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=rotator_serial_response)
                 logging.info("Post Response Text: "+str(r.text))
             else:
-                logging.exception("Recieved Serial Exception: "+str(data))
+                logging.info("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
+                raise(rotator_serial_response)
             return r.text
         except Exception as exception:
             return self.handle_exception(exception)       
