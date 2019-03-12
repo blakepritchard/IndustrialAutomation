@@ -34,6 +34,7 @@ class SatTrackerPiWebClient:
         
         logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
 
+        logging.info("Initializing Scheduler With Interval: "+str(self.interval))
         self.start_time = time.time()
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
@@ -56,7 +57,7 @@ class SatTrackerPiWebClient:
             self.post_rotator_status()
             current_time = time.time()
             run_time = current_time - self.start_time
-            interval_next = self.interval- (run_time % self.interval )
+            interval_next = 1000 * self.interval- (run_time % self.interval )
             logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ ", Next Start Time:"+ str(interval_next))
             self.scheduler.enter(interval_next, 1, self._execute_client_loop())
         except Exception as exception:
