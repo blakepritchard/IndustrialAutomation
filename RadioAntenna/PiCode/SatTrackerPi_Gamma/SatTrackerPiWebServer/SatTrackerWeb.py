@@ -115,7 +115,7 @@ def set_rotator_status():
         dict_request = request.get_json()
         # dict_request = json.loads(str(json_request))     
 
-        rotator = Rotator.query.get()
+        rotator = Rotator.query.get(1)
 
         rotator.azimuth_degrees = dict_request["azimuth_degrees"]
         rotator.azimuth_steps = dict_request["azimuth_steps"]
