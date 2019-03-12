@@ -30,7 +30,7 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 class Rotator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    rotator_name = db.Column(db.String(64), index=True, unique=True)
+    rotator_name = db.Column(db.String(64), index=False, unique=True)
     rotator_commands = db.relationship("RotatorCommand", backref="Rotator", lazy=True)
 
     azimuth_steps = db.Column(db.Integer, index=False, unique=False)
@@ -115,7 +115,7 @@ def set_rotator_status():
         dict_request = request.get_json()
         # dict_request = json.loads(str(json_request))     
 
-        rotator = Rotator.query.get(int(1))
+        rotator = Rotator.query.get()
 
         rotator.azimuth_degrees = dict_request["azimuth_degrees"]
         rotator.azimuth_steps = dict_request["azimuth_steps"]
