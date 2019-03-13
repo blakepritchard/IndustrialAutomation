@@ -40,7 +40,7 @@ class SatTrackerPiWebClient:
         logging.info("Initializing Scheduler With Interval: "+str(self.interval))
         self.start_time = time.time()
         self.scheduler = sched.scheduler(time.time, time.sleep)
-        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop(), ())
+        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop())
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
@@ -62,7 +62,7 @@ class SatTrackerPiWebClient:
             run_time = current_time - self.start_time
             interval_next = self.interval- (run_time % self.interval )
             logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ ", Interval Until Next Start Time:"+ str(interval_next))
-            self.scheduler.enter(interval_next, 1, self._execute_client_loop())
+            self.scheduler.enter(float(interval_next), 1, self._execute_client_loop())
         except Exception as exception:
             return self.handle_exception(exception)
 
