@@ -3,7 +3,7 @@
 
 
 # make www-data the owner of the subfolder:
-    sudo chown www-data /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
+    sudo chown www-data /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer
 
 # to configure nginx for website copy file: 
    cp /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/SatTrackerWeb_proxy /etc/nginx/sites-available/

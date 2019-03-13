@@ -112,20 +112,22 @@ def get_rotator_status():
 def set_rotator_status():
     try:
         sat_tracker_app.logger.info("a POST to set_rotator_status Has Been Recieved with data: " + request.get_data())
-        dict_request = request.get_json()
-        # dict_request = json.loads(str(json_request))     
+        str_json_post = request.get_json()
+        obj_json_post = json.loads(str_json_post)     
 
         rotator = Rotator.query.get(1)
-
-        rotator.azimuth_degrees = dict_request["azimuth_degrees"]
-        rotator.azimuth_steps = dict_request["azimuth_steps"]
-        rotator.elevation_degrees = dict_request["elevation_degrees"]
-        rotator.elevation_steps = dict_request["elevation_steps"]
-        rotator.polarity_steps = dict_request["polarity_steps"]
-        rotator.polarity_degrees = dict_request["polarity_degrees"]
-        if ("True" == dict_request["polarity_is_tracking"]):
+        sat_tracker_app.logger.info("Found Database Record for Rotator Name:" + rotator.rotator_name )
+        sat_tracker_app.logger.info("Request Data Object:" + str(obj_json_post))
+        
+        rotator.azimuth_degrees = obj_json_post["azimuth_degrees"]
+        rotator.azimuth_steps = obj_json_post["azimuth_steps"]
+        rotator.elevation_degrees = obj_json_post["elevation_degrees"]
+        rotator.elevation_steps = obj_json_post["elevation_steps"]
+        rotator.polarity_steps = obj_json_post["polarity_steps"]
+        rotator.polarity_degrees = obj_json_post["polarity_degrees"]
+        if ("True" == obj_json_post["polarity_is_tracking"]):
             rotator.polarity_is_tracking = True
-            rotator.polarity_tracking_speed = dict_request["polarity_tracking_speed"]
+            rotator.polarity_tracking_speed = obj_json_post["polarity_tracking_speed"]
         else:
             rotator.polarity_is_tracking = False
             rotator.polarity_tracking_speed = 0
@@ -133,7 +135,7 @@ def set_rotator_status():
         db.session.commit()
 
         return jsonify(rotator.as_dict())
-    
+   
     except Exception as exception:
         return handle_web_exception(exception)
 
