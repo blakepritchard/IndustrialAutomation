@@ -118,7 +118,7 @@ def set_rotator_status():
         rotator = Rotator.query.get(1)
         sat_tracker_app.logger.info("Found Database Record for Rotator Name:" + rotator.rotator_name )
         sat_tracker_app.logger.info("Request Data Object:" + str(dict_json_post))
-        sat_tracker_app.logger.info("Request String Data Type:" + type(str_json_post)+", Dictionary Object Data Type:" + type(dict_json_post) )
+        sat_tracker_app.logger.info("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
         
         rotator.azimuth_degrees = dict_json_post["azimuth_degrees"]
         rotator.azimuth_steps = dict_json_post["azimuth_steps"]
