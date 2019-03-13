@@ -37,10 +37,11 @@ class SatTrackerPiWebClient:
         
         logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
 
-        logging.info("Initializing Scheduler With Interval: "+str(self.interval))
+        
         self.start_time = time.time()
+        logging.info("Initializing Scheduler With Interval: "+str(self.interval))
         self.scheduler = sched.scheduler(time.time, time.sleep)
-        self.client_loop_event = self.scheduler.enterabs(float(time.time() + self.interval), 1, self._execute_client_loop())
+        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop())
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
@@ -58,13 +59,13 @@ class SatTrackerPiWebClient:
         try:
             self.start_time = time.time()
             self.post_rotator_status()
-            current_time = time.time()
-            run_time = current_time - self.start_time
-            interval_next = self.interval - (run_time % self.interval )
-            start_time_next = float(time.time()+ interval_next)
-            logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
-            logging.info("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
-            self.scheduler.enterabs(start_time_next, 1, self._execute_client_loop())
+            #current_time = time.time()
+            #run_time = current_time - self.start_time
+            #interval_next = self.interval - (run_time % self.interval )
+            #start_time_next = float(time.time()+ interval_next)
+            #logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
+            #logging.info("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
+            #self.scheduler.enterabs(start_time_next, 1, self._execute_client_loop())
         except Exception as exception:
             return self.handle_exception(exception)
 
