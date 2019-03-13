@@ -8,6 +8,7 @@ import json
 import requests 
 import argparse
 
+#from threading import Timer
 import sched
 import time
 
@@ -37,19 +38,22 @@ class SatTrackerPiWebClient:
         
         logging.info("Serial Port Output Set to: " + str(self.serial_port_name))
 
-        
+        self._timer     = None
+        self.is_running = False
         self.start_time = time.time()
-        logging.info("Initializing Scheduler With Interval: "+str(self.interval))
-        self.scheduler = sched.scheduler(time.time, time.sleep)
-        self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop())
+       
 
     def __del__(self):
         logging.info("Destructing Web Client, Stopping Client Loop")
-        self.scheduler.cancel(self.client_loop_event)
+        #self.scheduler.cancel(self.client_loop_event)
+        
         
     
     def start_client_loop(self):
         try:
+            logging.info("Initializing Timer With Interval: "+str(self.interval))
+            self.scheduler = sched.scheduler(time.time, time.sleep)
+            self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop())
             logging.info("Starting Client Loop With Interval: "+str(self.interval))
             self.scheduler.run()
         except Exception as exception:
