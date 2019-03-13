@@ -60,7 +60,7 @@ class SatTrackerPiWebClient:
             self.post_rotator_status()
             current_time = time.time()
             run_time = current_time - self.start_time
-            interval_next = 1000 * self.interval- (run_time % self.interval )
+            interval_next = self.interval- (run_time % self.interval )
             logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ ", Interval Until Next Start Time:"+ str(interval_next))
             self.scheduler.enter(interval_next, 1, self._execute_client_loop())
         except Exception as exception:
