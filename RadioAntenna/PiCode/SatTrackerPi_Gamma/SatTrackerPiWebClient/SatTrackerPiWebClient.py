@@ -53,7 +53,7 @@ class SatTrackerPiWebClient:
         try:
             logging.info("Initializing Timer With Interval: "+str(self.interval))
             self.scheduler = sched.scheduler(time.time, time.sleep)
-            self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop())
+            self.client_loop_event = self.scheduler.enter(float(self.interval), 1, self._execute_client_loop, ())
             logging.info("Starting Client Loop With Interval: "+str(self.interval))
             self.scheduler.run()
         except Exception as exception:
