@@ -649,11 +649,11 @@ class Rotator(object):
     def get_rotator_status(self):
         status_dict = {}
         status_dict["azimuth_degrees"] = self.get_azimuth_degrees()
-        status_dict["azimuth_stepper_count"] = self.get_azimuth_stepper_count()
+        status_dict["azimuth_steps"] = self.get_azimuth_stepper_count()
         status_dict["elevation_degrees"] = self.get_elevation_degrees()
-        status_dict["elevation_stepper_count"] = self.get_elevation_stepper_count()
+        status_dict["elevation_steps"] = self.get_elevation_stepper_count()
         status_dict["polarity_degrees"] = self.get_polarity_degrees()
-        status_dict["polarity_stepper_count"] = self.get_polarity_stepper_count()
+        status_dict["polarity_steps"] = self.get_polarity_stepper_count()
         
         json_result = json.dumps(status_dict)
         logging.debug("Rotator Status: " + json_result)
