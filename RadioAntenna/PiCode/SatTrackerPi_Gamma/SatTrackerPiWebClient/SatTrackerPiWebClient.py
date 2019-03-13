@@ -76,7 +76,7 @@ class SatTrackerPiWebClient:
             
             if(not isinstance(rotator_serial_response, Exception)):
                 logging.info("Posting Rotator Status: "+str(str_json_post))
-                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=json.dumps(str_json_post))
+                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=str_json_post)
                 logging.info("Post Response Text: "+str(r.text))
             else:
                 logging.info("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
