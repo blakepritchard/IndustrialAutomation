@@ -27,7 +27,10 @@ class SatTrackerPiWebClient:
         self.speed_serial = int(speed_serial)
         self.interval = float(interval)
 
-        self.serial_port_name = "/dev/pts/10"
+        self.polarity_is_tracking = False
+        self.polarity_tracking_speed = 0
+
+        self.serial_port_name = "/dev/pts/999"
         with open(self.config_file_serial, 'r') as f:
             config_dict = json.load(f)
             self.serial_port_name = config_dict['SERIAL_PORT_NAME']
@@ -66,10 +69,14 @@ class SatTrackerPiWebClient:
     def post_rotator_status(self):
         try:
             rotator_serial_response = self.get_rotator_status()
+            dict_json_post = json.loads(rotator_serial_response)
+            dict_json_post["polarity_is_tracking"] = self.polarity_is_tracking
+            dict_json_post["polarity_tracking_speed"] = self.polarity_tracking_speed
+            str_json_post = json.dumps(dict_json_post)
             
             if(not isinstance(rotator_serial_response, Exception)):
                 logging.info("Posting Rotator Status: "+str(rotator_serial_response))
-                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=rotator_serial_response)
+                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=json.dumps(str_json_post))
                 logging.info("Post Response Text: "+str(r.text))
             else:
                 logging.info("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
