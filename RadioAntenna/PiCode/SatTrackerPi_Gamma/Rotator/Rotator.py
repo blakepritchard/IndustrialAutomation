@@ -304,7 +304,7 @@ class Rotator(object):
         try:
             logging.info("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
             encoderposition_azimuth_current = self._adc.read_adc(0)
-            encoderposition_azimuth_previous = 0
+            encoderposition_azimuth_previous = encoderposition_azimuth_current
             logging.info("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
             nSteps = 0
