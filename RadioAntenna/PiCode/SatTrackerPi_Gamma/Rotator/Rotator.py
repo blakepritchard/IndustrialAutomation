@@ -317,11 +317,11 @@ class Rotator(object):
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 2 ):
-                        logging.info("Received Unexpected Encoder with Previous Value"+str(encoderposition_azimuth_previous)+"; New Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
+                        logging.warning("Received Unexpected Encoder with Previous Value"+str(encoderposition_azimuth_previous)+"; New Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
                         time.sleep(1)
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         encoderposition_azimuth_previous = encoderposition_azimuth_current
-                        logging.info("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))
+                        logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
@@ -330,11 +330,11 @@ class Rotator(object):
                     encoderposition_azimuth_current = self._adc.read_adc(0)
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 2 ):
-                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
+                        logging.warning("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
                         time.sleep(1)
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         encoderposition_azimuth_previous = encoderposition_azimuth_current
-                        logging.info("Re-Reading Encoder with New Previous Value"+str(encoderposition_azimuth_previous)+"; New Outlier Value "+str(encoderposition_azimuth_current))                    
+                        logging.warning("Re-Reading Encoder with New Previous Value"+str(encoderposition_azimuth_previous)+"; New Outlier Value "+str(encoderposition_azimuth_current))                    
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             self._is_busy = False
