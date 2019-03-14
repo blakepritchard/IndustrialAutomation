@@ -1,6 +1,7 @@
 [Unit]
 Description=SatTrackerPi Web Client
-After=network.target
+After=network.target sat_tracker_pi_daemon.service sat_tracker_pi_web_server.service
+Requires=sat_tracker_pi_daemon.service sat_tracker_pi_web_server.service
 
 [Service]
 ExecStart=/usr/bin/python ./SatTrackerPiWebClient.py  -l 20 -r ./webclient_serial.config -s 9600 -w "http://sat-tracker-pi" -i 2
