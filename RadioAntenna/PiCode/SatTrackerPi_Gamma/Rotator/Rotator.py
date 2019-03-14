@@ -304,20 +304,33 @@ class Rotator(object):
         try:
             logging.info("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
             encoderposition_azimuth_current = self._adc.read_adc(0)
+            encoderposition_azimuth_previous = 0
             logging.info("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
             nSteps = 0
+
             self._is_busy = True
             while (encoderposition_azimuth_current < self._encoderposition_azimuth_center):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+                    encoderposition_azimuth_previous = encoderposition_azimuth_current
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
+                    #check it see if the encoder value is bouncing, if so then re-read encoder
+                    if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 1 ):
+                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current))
+                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        logging.info("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
+                    #check it see if the encoder value is bouncing, if so then re-read encoder
+                    if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 1 ):
+                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current))
+                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        logging.info("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))                    
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             self._is_busy = False
@@ -331,7 +344,6 @@ class Rotator(object):
         except Exception as e:
             self.handle_exception(e)
             return e
-
 
 
     #Plan Horizontal Motion Based on encoder limits

@@ -34,8 +34,21 @@ function polarity_tracking_update()
         $("#btnSetPolarity").prop("disabled",true);
         $("#polarity_next").prop("disabled",true);       
         int_polarity_current = Number($("#polarity_current").text())
-        int_polarity_next = int_polarity_current + Number($("#polarity_speed").val());
-        polarity_move(int_polarity_next)
+        int_polarity_speed = Number($("#polarity_speed").val());
+
+        var date = new Date();
+        obj_polarity_command = {rotator_id: 1, issue_time: date.toString(), execution_time:"",  command_code:"PT", command_value:str(int_polarity_speed) };
+        json_polarity_command = JSON.stringify(obj_polarity_next);
+        resp_polarity_command = jQuery.ajax ({
+            url: "/sat_tracker/api/rotator/command",
+            type: "POST",
+            data: json_polarity_command,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                $("#polarity_current").text(data.polarity_degrees);
+            }
+        });
     }
     else{
         $("#btnSetPolarity").prop("disabled",false);

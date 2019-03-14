@@ -140,6 +140,46 @@ def set_rotator_status():
     except Exception as exception:
         return handle_web_exception(exception)
 
+
+@sat_tracker_app.route("/sat_tracker/api/rotator/commands", methods=["GET"])
+def read_rotator_status():
+    try:
+        commands = RotatorCommand.query.all()
+        json_result = jsonify(commands.as_dict())
+        return json_result
+    
+    except Exception as exception:
+        return handle_web_exception(exception)
+
+@sat_tracker_app.route("/sat_tracker/api/rotator/command", methods=["POST"])
+def create_rotator_command():
+    try:
+        sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data())
+        str_json_post = request.get_json()
+        dict_json_post = json.loads(str_json_post)     
+
+        sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
+        sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
+        
+        command = RotatorCommand()
+        command.rotator_id = dict_json_post["rotator_id"]
+        command.issue_time = dict_json_post["issue_time"]
+        command.execution_time = dict_json_post["execution_time"]
+        command.command_code = dict_json_post["command_code"]
+        command.command_value = dict_json_post["command_value"]
+
+        db.session.commit()
+
+        return jsonify(command.as_dict())
+   
+    except Exception as exception:
+        return handle_web_exception(exception)
+
+
+
+
+################################################################################################################
+# Exception Handling
 def handle_web_exception(exception):
         sat_tracker_app.logger.error("An Exception Has Occurred!")        
         sat_tracker_app.log_exception(exception)
