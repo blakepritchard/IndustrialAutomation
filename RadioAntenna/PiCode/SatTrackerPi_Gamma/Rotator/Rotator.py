@@ -317,7 +317,8 @@ class Rotator(object):
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 1 ):
-                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current))
+                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
+                        time.sleep(1)
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         logging.info("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
@@ -328,7 +329,8 @@ class Rotator(object):
                     encoderposition_azimuth_current = self._adc.read_adc(0)
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 1 ):
-                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current))
+                        logging.info("Received Unexpected Encoder with Outlier Value "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
+                        time.sleep(1)
                         encoderposition_azimuth_current = self._adc.read_adc(0)
                         logging.info("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))                    
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
