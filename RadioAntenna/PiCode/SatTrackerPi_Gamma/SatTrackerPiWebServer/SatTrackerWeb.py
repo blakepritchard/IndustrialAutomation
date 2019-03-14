@@ -145,7 +145,7 @@ def set_rotator_status():
 def read_rotator_status():
     try:
         commands = RotatorCommand.query.all()
-        json_result = jsonify(commands.as_dict())
+        json_result = jsonify(commands)
         return json_result
     
     except Exception as exception:
