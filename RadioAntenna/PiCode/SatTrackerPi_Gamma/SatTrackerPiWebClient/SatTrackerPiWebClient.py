@@ -22,6 +22,7 @@ class SatTrackerPiWebClient:
 
     def __init__(self,  verbose, config_file_serial, speed_serial, url_webserver, interval):
         logging.info("Initializing Web Client Object.")
+        self.rotator_id = 1
         self.verbose = verbose
         self.config_file_serial = config_file_serial
         self.url_webserver = url_webserver
@@ -70,8 +71,8 @@ class SatTrackerPiWebClient:
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
             start_time_next = float(time.time()+ interval_next)
-            logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
-            logging.info("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
+            logging.debug("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
+            logging.debug("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
             self.scheduler.enter(interval_next, 1, self._execute_client_loop, ())
         except Exception as exception:
             return self.handle_exception(exception)
@@ -80,6 +81,7 @@ class SatTrackerPiWebClient:
         try:
             rotator_serial_response = self.get_rotator_status()
             dict_json_post = json.loads(rotator_serial_response)
+            dict_json_post["id"] = self.rotator_id
             dict_json_post["polarity_is_tracking"] = self.polarity_is_tracking
             dict_json_post["polarity_tracking_speed"] = self.polarity_tracking_speed
             str_json_post = json.dumps(dict_json_post)

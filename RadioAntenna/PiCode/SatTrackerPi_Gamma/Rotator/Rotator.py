@@ -708,7 +708,7 @@ class Rotator(object):
                 if len(rotator_command) == 2:
                     if  "RS" == rotator_command:
                        result = str(self.get_rotator_status()) 
-                       logging.info("Received Rotator Status Request, Result: " + str(result)) 
+                       logging.debug("Received Rotator Status Request, Result: " + str(result)) 
                     elif    "AZ" == rotator_command: 
                         result = str(self.get_azimuth_degrees())
                         logging.debug("Received Azimuth Request, Result: " + str(result))

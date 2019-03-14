@@ -115,7 +115,7 @@ def set_rotator_status():
         str_json_post = request.get_json()
         dict_json_post = json.loads(str_json_post)     
 
-        rotator = Rotator.query.get(1)
+        rotator = Rotator.query.get(dict_json_post["id"])
         sat_tracker_app.logger.info("Found Database Record for Rotator Name:" + rotator.rotator_name )
         sat_tracker_app.logger.info("Request Data Object:" + str(dict_json_post))
         sat_tracker_app.logger.info("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
