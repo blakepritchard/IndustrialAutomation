@@ -312,13 +312,13 @@ class Rotator(object):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)           
-                    logging.debug("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
             
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_current = self._adc.read_adc(0)
-                    logging.debug("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
+                    logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
 
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
