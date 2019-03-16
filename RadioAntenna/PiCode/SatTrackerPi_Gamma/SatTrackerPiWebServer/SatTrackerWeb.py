@@ -169,7 +169,7 @@ def create_rotator_command():
  
         command = RotatorCommand()
         command.rotator_id = dict_json_post["rotator_id"]
-        command.issue_time = datetime.datetime(dict_json_post["issue_time"])
+        command.issue_time = datetime.now()
         #command.execution_time = dict_json_post["execution_time"]
         command.command_code = dict_json_post["command_code"]
         command.command_value = dict_json_post["command_value"]
