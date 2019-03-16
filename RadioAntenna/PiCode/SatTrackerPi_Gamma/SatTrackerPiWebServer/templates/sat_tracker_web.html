@@ -47,11 +47,18 @@
                 </div>
                 <div id="polaritySet">
                   <button id="btnSetPolarity" onclick="polarity_set()">Set Polarity</button>
+                </div>
+                <div id="polarityTrackingStart">
+                  <button id="btnPolarityTrackignStart" onclick="polarity_tracking_update(1)">Start Polarity Tracking</button>
+                </div>                
+                <div id="polarityTrackingStop">
+                  <button id="btnPolarityTrackingSet" onclick="polarity_tracking_update(0)">Stop Polarity Tracking</button>
                 </div>                
                 <div id="polarityTracking">
                   <input type="checkbox"  id="chkTrackPolarity">Track</button>
                 </div>
                 <div id="polaritySpeed">
+                    Polarity Tracking polaritySpeed
                     <input type="text" id="polarity_speed"><br>
                   </div>
             </div>
