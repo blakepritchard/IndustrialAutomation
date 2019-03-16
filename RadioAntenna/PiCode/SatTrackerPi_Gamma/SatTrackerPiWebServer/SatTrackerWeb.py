@@ -173,6 +173,7 @@ def create_rotator_command():
         command.command_code = dict_json_post["command_code"]
         command.command_value = dict_json_post["command_value"]
 
+        db.session.add(command)
         db.session.commit()
 
         return jsonify(command.as_dict())
