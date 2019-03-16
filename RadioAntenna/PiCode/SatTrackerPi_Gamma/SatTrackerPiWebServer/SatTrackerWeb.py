@@ -61,6 +61,9 @@ class RotatorCommand(db.Model):
 
     def __repr__(self):
         return '<RotatorCommand {}>'.format(str(self.execution_time) + ", " + str(self.command_code) + ", " + str(self.command_value) )    
+    
+    def as_dict(self):
+       return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 
 
