@@ -48,7 +48,7 @@ function polarity_tracking_update(is_tracking)
 
     var date = new Date();
     obj_polarity_command = {rotator_id: 1, issue_time: date.toString(), execution_time:"",  command_code:command, command_value:int_polarity_speed };
-    json_polarity_command = JSON.stringify(obj_polarity_next);
+    json_polarity_command = JSON.stringify(obj_polarity_command);
     resp_polarity_command = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/command",
         type: "POST",
@@ -65,7 +65,7 @@ function polarity_tracking_update(is_tracking)
 function polarity_set(int_polarity_next){
     int_polarity_next = $("#polarity_next").val()
     obj_polarity_command = {rotator_id: 1, issue_time: date.toString(), execution_time:"",  command_code:"PP", command_value:int_polarity_next };
-    json_polarity_command = JSON.stringify(obj_polarity_next);
+    json_polarity_command = JSON.stringify(obj_polarity_command);
     resp_polarity_next = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/command",
         type: "POST",
