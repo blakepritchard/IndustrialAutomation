@@ -154,7 +154,7 @@ def read_rotator_status():
 @sat_tracker_app.route("/sat_tracker/api/rotator/command", methods=["POST"])
 def create_rotator_command():
     try:
-        sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data())
+        sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data() + "... JSON:"+ request.get_json())
         str_json_post = request.get_json()
         dict_json_post = json.loads(str_json_post)     
 
