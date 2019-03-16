@@ -4,6 +4,7 @@ import sys
 import logging
 import socket
 import json
+import datetime
 
 from flask import Flask, redirect, url_for, jsonify
 from flask import render_template
@@ -168,8 +169,8 @@ def create_rotator_command():
  
         command = RotatorCommand()
         command.rotator_id = dict_json_post["rotator_id"]
-        command.issue_time = dict_json_post["issue_time"]
-        command.execution_time = "1970-01-01 12:00:00" #dict_json_post["execution_time"]
+        command.issue_time = datetime.datetime(dict_json_post["issue_time"])
+        #command.execution_time = dict_json_post["execution_time"]
         command.command_code = dict_json_post["command_code"]
         command.command_value = dict_json_post["command_value"]
 
