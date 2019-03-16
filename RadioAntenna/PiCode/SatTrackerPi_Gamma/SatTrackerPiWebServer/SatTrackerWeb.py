@@ -155,12 +155,14 @@ def read_rotator_status():
 def create_rotator_command():
     try:
         sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data() + "... get_json returned Type:"+ str(type(request.get_json())))
-        str_json_post = request.get_json()
-        dict_json_post = json.loads(str_json_post)     
+        #str_json_post = request.get_json()
+        #dict_json_post = json.loads(str_json_post)     
+        dict_json_post = request.get_json()
 
         sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
-        sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
-        
+        #sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
+        sat_tracker_app.logger.debug(" Dictionary Object Data Type:" + str(type(dict_json_post)) )
+ 
         command = RotatorCommand()
         command.rotator_id = dict_json_post["rotator_id"]
         command.issue_time = dict_json_post["issue_time"]
