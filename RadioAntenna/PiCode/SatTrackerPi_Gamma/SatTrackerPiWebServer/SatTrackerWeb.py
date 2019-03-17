@@ -146,10 +146,12 @@ def set_rotator_status():
 
 
 @sat_tracker_app.route("/sat_tracker/api/rotator/commands", methods=["GET"])
-def read_rotator_status():
+def read_rotator_commands():
     try:
-        commands = RotatorCommand.query.all()
-        json_result = jsonify(commands)
+        sat_tracker_app.logger.info("a GET request has been received to read_rotator_commands")
+        list_of_commands = RotatorCommand.query.all()
+        list_of_dictionaries = [command.as_dict() for command in list_of_commands]
+        json_result = jsonify(list_of_dictionaries)
         return json_result
     
     except Exception as exception:
