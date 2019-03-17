@@ -67,6 +67,9 @@ class SatTrackerPiWebClient:
         try:
             self.start_time = time.time()
             self.post_rotator_status()
+
+            self.execute_client_commands()
+            
             current_time = time.time()
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
@@ -76,6 +79,52 @@ class SatTrackerPiWebClient:
             self.scheduler.enter(interval_next, 1, self._execute_client_loop, ())
         except Exception as exception:
             return self.handle_exception(exception)
+
+    def execute_client_commands(self):
+        try:
+            url = self.url_webserver + "/sat_tracker/api/rotator/commands"
+            r = requests.get(url)
+            list_of_commands = r.json()
+            sorted_list_of_commands = sorted(list_of_commands, key = lambda command: (command['issue_time']))
+
+            results = [self.execute_client_command(command) for command in sorted_list_of_commands]
+
+        except Exception as exception:
+            return self.handle_exception(exception)
+
+    def execute_client_command(self, command):
+        try:
+            if "PT" == command['command_code']:
+                self.start_polarity_tracking(command)
+            elif "SP" == command['command_code']:
+                self.stop_polarity_tracking(command)
+        except Exception as exception:
+            return self.handle_exception(exception)
+
+    
+    def start_polarity_tracking(self, command):
+        try:
+            self.polarity_is_tracking = True
+            self.polarity_tracking_speed = command['command_value']
+            logging.info("Start Polarity Tracking Command Issued at: " + command['issue_time'])
+        except Exception as exception:
+            return self.handle_exception(exception)
+
+    def stop_polarity_tracking(self, command):
+        try:
+            self.polarity_is_tracking = False
+            self.polarity_tracking_speed = 0
+            logging.info("Stop Polarity Tracking Command Issued at: " + command['issue_time'])
+
+        except Exception as exception:
+            return self.handle_exception(exception)
+
+    def execute_polarity_tracking(self, command_json):
+        try:
+            self.polarity_tracking_speed
+        except Exception as exception:
+            return self.handle_exception(exception)
+
 
     def post_rotator_status(self):
         try:
@@ -88,7 +137,8 @@ class SatTrackerPiWebClient:
             
             if(not isinstance(rotator_serial_response, Exception)):
                 logging.info("Posting Rotator Status: "+str(str_json_post))
-                r = requests.post(url = self.url_webserver + "/sat_tracker/api/rotator/status", json=str_json_post)
+                url = self.url_webserver + "/sat_tracker/api/rotator/status"
+                r = requests.post(url, json=str_json_post)
                 logging.info("Post Response Text: "+str(r.text))
             else:
                 logging.info("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))

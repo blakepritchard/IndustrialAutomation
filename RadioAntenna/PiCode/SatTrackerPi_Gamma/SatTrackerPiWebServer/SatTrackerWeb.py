@@ -160,13 +160,10 @@ def read_rotator_commands():
 @sat_tracker_app.route("/sat_tracker/api/rotator/command", methods=["POST"])
 def create_rotator_command():
     try:
-        sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data() + "... get_json returned Type:"+ str(type(request.get_json())))
-        #str_json_post = request.get_json()
-        #dict_json_post = json.loads(str_json_post)     
+        sat_tracker_app.logger.info("a POST to create_rotator_command Has Been Recieved with data: " + request.get_data() + "... get_json returned Type:"+ str(type(request.get_json())))  
         dict_json_post = request.get_json()
 
         sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
-        #sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
         sat_tracker_app.logger.debug(" Dictionary Object Data Type:" + str(type(dict_json_post)) )
  
         command = RotatorCommand()
@@ -184,7 +181,16 @@ def create_rotator_command():
     except Exception as exception:
         return handle_web_exception(exception)
 
+@sat_tracker_app.route("/sat_tracker/api/rotator/command/<int:id>", methods=["DELETE"])
+def delete_rotator_command():
+    try:
+        sat_tracker_app.logger.info("a Delete request has been received to delete_rotator_command")
+        command = RotatorCommand.get(id)
+        db.session.delete(command)
+        db.session.commit()
 
+    except Exception as exception:
+        return handle_web_exception(exception)
 
 
 ################################################################################################################
