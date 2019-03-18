@@ -69,7 +69,7 @@ class SatTrackerPiWebClient:
             self.post_rotator_status()
 
             self.execute_client_commands()
-            
+
             current_time = time.time()
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
@@ -96,8 +96,18 @@ class SatTrackerPiWebClient:
         try:
             if "PT" == command['command_code']:
                 self.start_polarity_tracking(command)
+                self.delete_client_command(command)
             elif "SP" == command['command_code']:
                 self.stop_polarity_tracking(command)
+                self.delete_client_command(command)
+        except Exception as exception:
+            return self.handle_exception(exception)
+
+    def delete_client_command(self, command):
+        try:
+            url = self.url_webserver + "/sat_tracker/api/rotator/command/"+str(command['id'])
+            r = requests.delete(url)
+            logging.info("Delete Issued for Tracking Command Id: " + command['id'])
         except Exception as exception:
             return self.handle_exception(exception)
 
