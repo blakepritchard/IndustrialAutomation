@@ -758,13 +758,10 @@ class Rotator(object):
                         elif "EL" == command_operation:
                             logging.info("Received Elevation Command: " + str(command_parameters))      
                             result = self.set_elevation(command_parameters)       
-                        elif "PP" == command_operation:
+                        elif "PO" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
                             result = self.set_polarity(command_parameters)
-                            logging.info("Returning Polarity Position: " + str(result))     
-                        elif "PT" == command_operation:
-                            logging.info("Received Polarity Tracking Command: " + str(command_parameters))
-                            self.set_polarity(command_parameters)     
+                            logging.info("Returning Polarity Position: " + str(result))         
                     else:
                         result = "Busy"
                         logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(rotator_command))

@@ -42,7 +42,8 @@ class Rotator(db.Model):
     polarity_degrees = db.Column(db.Float, index=False, unique=False)
     polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False)
     polarity_tracking_speed = db.Column(db.Numeric, index=False, unique=False)
-   
+    polarity_degrees_to_move = 0
+
     def __repr__(self):
         return '<Rotator {}>'.format(str(self.id) + ", " + str(self.rotator_name))    
 
@@ -182,7 +183,7 @@ def create_rotator_command():
         return handle_web_exception(exception)
 
 @sat_tracker_app.route("/sat_tracker/api/rotator/command/<int:id>", methods=["DELETE"])
-def delete_rotator_command():
+def delete_rotator_command(id):
     try:
         sat_tracker_app.logger.info("a Delete request has been received to delete_rotator_command")
         command = RotatorCommand.get(id)

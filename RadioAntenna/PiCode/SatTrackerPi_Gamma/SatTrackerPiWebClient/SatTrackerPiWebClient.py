@@ -29,8 +29,13 @@ class SatTrackerPiWebClient:
         self.speed_serial = int(speed_serial)
         self.interval = float(interval)
 
+        self.polarity_degrees_current = False
         self.polarity_is_tracking = False
         self.polarity_tracking_speed = 0
+        self.polarity_degrees_to_move = 0
+
+        self.polarity_steps_per_degree = 2
+        self.polarity_degrees_per_step = 1/self.polarity_steps_per_degree
 
         self.serial_port_name = "/dev/pts/999"
         with open(self.config_file_serial, 'r') as f:
@@ -131,7 +136,19 @@ class SatTrackerPiWebClient:
 
     def execute_polarity_tracking(self, command_json):
         try:
-            self.polarity_tracking_speed
+            # tracking speed in degrees per second multiplied by number of seconds per client loop interval
+            self.polarity_degrees_to_move += (self.polarity_tracking_speed * self.interval)
+
+            # set next polarity to a value equal to steps
+            steps, degrees_remainder = divmod(self.polarity_degrees_to_move, self.polarity_degrees_per_step )
+            polarity_degrees_move_rounded = steps * self.polarity_degrees_per_step
+            polarity_degrees_position_next = self.polarity_degrees_current + polarity_degrees_move_rounded
+
+            self.execute_serial_command("PO"+ str(polarity_degrees_position_next)+"\n")
+            
+            # carry over remainder to next iteration of the client loop 
+            self.polarity_degrees_to_move = degrees_remainder
+
         except Exception as exception:
             return self.handle_exception(exception)
 
@@ -144,7 +161,9 @@ class SatTrackerPiWebClient:
             dict_json_post["polarity_is_tracking"] = self.polarity_is_tracking
             dict_json_post["polarity_tracking_speed"] = self.polarity_tracking_speed
             str_json_post = json.dumps(dict_json_post)
-            
+
+            self.polarity_degrees_current = dict_json_post["polarity_degrees"]
+
             if(not isinstance(rotator_serial_response, Exception)):
                 logging.info("Posting Rotator Status: "+str(str_json_post))
                 url = self.url_webserver + "/sat_tracker/api/rotator/status"
