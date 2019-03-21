@@ -186,7 +186,7 @@ def create_rotator_command():
 def delete_rotator_command(id):
     try:
         sat_tracker_app.logger.info("a Delete request has been received to delete_rotator_command")
-        command = RotatorCommand.get(id)
+        command = RotatorCommand.query.get(id)
         db.session.delete(command)
         db.session.commit()
 
