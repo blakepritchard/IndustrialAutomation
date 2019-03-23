@@ -31,8 +31,8 @@ class SatTrackerPiWebClient:
 
         self.polarity_degrees_current = False
         self.polarity_is_tracking = False
-        self.polarity_tracking_speed = 0
-        self.polarity_degrees_to_move = 0
+        self.polarity_tracking_speed = float(0.0)
+        self.polarity_degrees_to_move = float(0.0)
 
         self.polarity_steps_per_degree = 2
         self.polarity_degrees_per_step = 1/self.polarity_steps_per_degree
