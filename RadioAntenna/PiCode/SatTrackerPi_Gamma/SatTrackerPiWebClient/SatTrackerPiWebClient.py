@@ -125,7 +125,7 @@ class SatTrackerPiWebClient:
     def start_polarity_tracking(self, command):
         try:
             self.polarity_is_tracking = True
-            self.polarity_tracking_speed = command['command_value']
+            self.polarity_tracking_speed = float(command['command_value'])
             logging.info("Start Polarity Tracking Command Issued at: " + command['issue_time'])
         except Exception as exception:
             return self.handle_exception(exception)
@@ -133,7 +133,7 @@ class SatTrackerPiWebClient:
     def stop_polarity_tracking(self, command):
         try:
             self.polarity_is_tracking = False
-            self.polarity_tracking_speed = 0
+            self.polarity_tracking_speed = float(0.0)
             logging.info("Stop Polarity Tracking Command Issued at: " + command['issue_time'])
 
         except Exception as exception:
@@ -145,15 +145,16 @@ class SatTrackerPiWebClient:
             logging.info("TypeOf Speed: " + str(type(self.polarity_tracking_speed))+ ", TypeOf Interval: " + str(type(self.interval)))
             self.polarity_degrees_to_move += (float(self.polarity_tracking_speed) * float(self.interval))
 
-            # set next polarity to a value equal to steps
-            steps, degrees_remainder = divmod(self.polarity_degrees_to_move, self.polarity_degrees_per_step )
-            polarity_degrees_move_rounded = steps * self.polarity_degrees_per_step
-            polarity_degrees_position_next = self.polarity_degrees_current + polarity_degrees_move_rounded
+            if(0 != self.polarity_degrees_to_move):
+                # set next polarity to a value equal to steps
+                steps, degrees_remainder = divmod(self.polarity_degrees_to_move, self.polarity_degrees_per_step )
+                polarity_degrees_move_rounded = steps * self.polarity_degrees_per_step
+                polarity_degrees_position_next = self.polarity_degrees_current + polarity_degrees_move_rounded
 
-            self.execute_serial_command("PO"+ str(polarity_degrees_position_next)+"\n")
-            
-            # carry over remainder to next iteration of the client loop 
-            self.polarity_degrees_to_move = degrees_remainder
+                self.execute_serial_command("PO"+ str(polarity_degrees_position_next)+"\n")
+                
+                # carry over remainder to next iteration of the client loop 
+                self.polarity_degrees_to_move = degrees_remainder
 
         except Exception as exception:
             return self.handle_exception(exception)
