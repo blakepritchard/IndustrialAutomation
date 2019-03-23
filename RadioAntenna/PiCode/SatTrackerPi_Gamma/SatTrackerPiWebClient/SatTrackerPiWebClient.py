@@ -75,6 +75,9 @@ class SatTrackerPiWebClient:
 
             self.execute_client_commands()
 
+            if(self.polarity_is_tracking):
+                self.execute_polarity_tracking()
+
             current_time = time.time()
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
@@ -98,6 +101,7 @@ class SatTrackerPiWebClient:
             return self.handle_exception(exception)
 
     def execute_client_command(self, command):
+        logging.info("Execute Tracking Command Id: " + command['id'] + ", Code: " + command['command_code'] + ", Value: " +command['command_value'])
         try:
             if "PT" == command['command_code']:
                 self.start_polarity_tracking(command)
@@ -134,7 +138,7 @@ class SatTrackerPiWebClient:
         except Exception as exception:
             return self.handle_exception(exception)
 
-    def execute_polarity_tracking(self, command_json):
+    def execute_polarity_tracking(self):
         try:
             # tracking speed in degrees per second multiplied by number of seconds per client loop interval
             self.polarity_degrees_to_move += (self.polarity_tracking_speed * self.interval)
