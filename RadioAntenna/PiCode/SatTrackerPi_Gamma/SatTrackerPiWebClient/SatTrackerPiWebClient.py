@@ -142,7 +142,8 @@ class SatTrackerPiWebClient:
     def execute_polarity_tracking(self):
         try:
             # tracking speed in degrees per second multiplied by number of seconds per client loop interval
-            self.polarity_degrees_to_move += (self.polarity_tracking_speed * self.interval)
+            logging.info("TypeOf Speed: " + str(type(self.polarity_tracking_speed))+ ", TypeOf Interval: " + str(type(self.interval)))
+            self.polarity_degrees_to_move += (float(self.polarity_tracking_speed) * float(self.interval))
 
             # set next polarity to a value equal to steps
             steps, degrees_remainder = divmod(self.polarity_degrees_to_move, self.polarity_degrees_per_step )
