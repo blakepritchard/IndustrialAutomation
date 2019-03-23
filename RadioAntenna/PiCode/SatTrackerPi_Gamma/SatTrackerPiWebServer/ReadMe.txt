@@ -42,9 +42,18 @@
     sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/sat_tracker_pi_web_server.service /etc/systemd/system 
     sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/sat_tracker_pi_web_client.service /etc/systemd/system 
 
+
+#enable services to strat at boot:
+   sudo systemctl enable sat_tracker_pi_daemon.service 
+   sudo systemctl enable sat_tracker_pi_web_server.service
+   sudo systemctl enable sat_tracker_pi_web_client.service 
+
+
 # test the scripts by starting them manually:
    sudo systemctl start sat_tracker_pi_daemon.service  
 
 # view the logs with the systemctl status command:
    sudo systemctl status sat_tracker_pi_daemon.service  
+
+
 
