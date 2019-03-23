@@ -35,8 +35,8 @@ class SatTrackerPiWebClient:
         self.polarity_degrees_to_move = float(0.0)
         self.polarity_degrees_current = float(0.0)        
 
-        self.polarity_steps_per_degree = 2
-        self.polarity_degrees_per_step = 1/self.polarity_steps_per_degree
+        self.polarity_steps_per_degree = int(2)
+        self.polarity_degrees_per_step = float(0.5)
 
         self.serial_port_name = "/dev/pts/999"
         with open(self.config_file_serial, 'r') as f:
@@ -142,7 +142,7 @@ class SatTrackerPiWebClient:
     def execute_polarity_tracking(self):
         try:
             # tracking speed in degrees per second multiplied by number of seconds per client loop interval
-            logging.info("TypeOf Speed: " + str(type(self.polarity_tracking_speed))+ ", TypeOf Interval: " + str(type(self.interval)))
+            logging.info("TypeOf Speed: " + str(type(self.polarity_tracking_speed))+ ", TypeOf Interval: " + str(type(self.interval)) + ", Degrees Per Step: " + str(self.polarity_degrees_per_step))
             self.polarity_degrees_to_move += (float(self.polarity_tracking_speed) * float(self.interval))
 
             if(0 != self.polarity_degrees_to_move):
