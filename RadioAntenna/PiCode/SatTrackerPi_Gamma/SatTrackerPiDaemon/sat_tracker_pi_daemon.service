@@ -1,6 +1,7 @@
 [Unit]
 Description=SatTrackerPi Daemon
 After=network.target
+Before=sat_tracker_pi_web_server.service sat_tracker_pi_web_client.service
 
 [Service]
 Type=simple
