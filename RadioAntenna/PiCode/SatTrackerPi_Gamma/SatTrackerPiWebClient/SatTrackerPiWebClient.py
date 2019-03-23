@@ -272,7 +272,7 @@ class SatTrackerPiWebClient:
                         char_next = ''
                         byte_next = 0
                 serial_response = characters_recieved
-                logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(self.serial_port_name) )
+                logging.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(self.serial_port_name) )
 
             #Close Port, Return Result
             serial_port.close()
