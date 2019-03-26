@@ -56,26 +56,29 @@ header h1.logo:hover {
 }
 .azimuth{
   display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  height: 90%;
   border-color: black;
   border-style: solid;
-  height: 90%;
-  width: 30%;
   text-align: center;
 }
 .elevation{
   display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  height: 90%;
   border-color: black;
   border-style: solid;
-  height: 90%;
-  width: 30%;
   text-align: center;
 }
 .polarity{
   display: inline-block;
+  vertical-align: top;
+  width: 30%;
+  height: 90%;
   border-color: black;
   border-style: solid;
-  height: 90%;
-  width: 30%;
   text-align: center;
 }
 #logview {
