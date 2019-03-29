@@ -48,6 +48,9 @@ function polarity_tracking_update(is_tracking)
 
     var date = new Date();
     obj_polarity_command = {rotator_id: 1, command_code:command, command_value:int_polarity_speed };
+    func_success = function(data){ $("#polarity_current").text(data.polarity_degrees); }
+    function post_rotator_command(obj_polarity_command, func_success)
+ /*
     json_polarity_command = JSON.stringify(obj_polarity_command);
     resp_polarity_command = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/command",
@@ -59,9 +62,13 @@ function polarity_tracking_update(is_tracking)
             $("#polarity_current").text(data.polarity_degrees);
         }
     });
+*/
 
 }
 
+
+
+/*
 function polarity_set(int_polarity_next){
     int_polarity_next = $("#polarity_next").val()
     obj_polarity_command = {rotator_id: 1, command_code:"PP", command_value:int_polarity_next };
@@ -69,7 +76,7 @@ function polarity_set(int_polarity_next){
     resp_polarity_next = jQuery.ajax ({
         url: "/sat_tracker/api/rotator/command",
         type: "POST",
-        data: json_polarity_next,
+        data: json_polarity_command,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(data){
@@ -78,7 +85,42 @@ function polarity_set(int_polarity_next){
         }
     });
 } 
+*/
 
+function polarity_set(int_polarity_next){
+    int_polarity_next = $("#polarity_next").val()
+    obj_polarity_command = {rotator_id: 1, command_code:"PP", command_value:int_polarity_next };
+    func_success = function(data){$("#polarity_current").text(data.polarity_degrees);}
+    post_rotator_command(obj_polarity_command, func_success);
+} 
+function azimuth_set(int_azimuth_next){
+    int_azimuth_next = $("#azimuth_next").val()
+    obj_azimuth_command = {rotator_id: 1, command_code:"AZ", command_value:int_azimuth_next };
+    func_success = function(data){$("#azimuth_current").text(data.azimuth_degrees);}
+    post_rotator_command(obj_azimuth_command, func_success);
+} 
+function elevation_set(int_elevation_next){
+    int_elevation_next = $("#elevation_next").val()
+    obj_elevation_command = {rotator_id: 1, command_code:"EL", command_value:int_elevation_next };
+    func_success = function(data){$("#elevation_current").text(data.elevation_degrees);}
+    post_rotator_command(obj_elevation_command, func_success);
+} 
+
+
+function post_rotator_command(obj_rotator_command, func_success){
+    json_rotator_command = JSON.stringify(obj_rotator_command);
+    resp_rotator_next = jQuery.ajax ({
+        url: "/sat_tracker/api/rotator/command",
+        type: "POST",
+        data: json_rotator_command,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            $("#polarity_current").text(data.polarity_degrees);
+            
+        }
+    });    
+}
 
 
 function update_dashboard(data){

@@ -23,19 +23,25 @@
                 <h1>Azimuth: <br>
                   <span id="azimuth_current"></span>
                 </h1>
-                <form action="set_azimuth" method="POST">
-                Set Azimuth: <input type="text" name="azimuth_new"><br>
-                <input type="submit" value="Submit">
-                </form>
+                <div id="elevationNext"></div>
+                  Set Azimuth: 
+                  <input type="text" name="azimuth_next"><br>
+                </div>
+                <div id="azimuthSet">
+                  <button id="btnSetAzimuth" onclick="azimuth_set()">Set Azimuth</button>
+                </div>                
             </div>
             <div class="elevation">
                 <h1>Elevation: <br>
                   <span id="elevation_current"></span>
                 </h1>
-                <form action="set_elevation" method="POST">
-                Set Elevation: <input type="text" name="elevation_new"><br>
-                <input type="submit" value="Submit">
-                </form>
+                <div id="elevationNext"></div>
+                  Set Elevation: 
+                  <input type="text" name="elevation_next"><br>
+                </div>
+                <div id="elevationSet">
+                  <button id="btnSetElevation" onclick="elevation_set()">Set Elevation</button>
+                </div>
             </div>
             <div class="polarity">
                 <h1>Polarity: <br>
