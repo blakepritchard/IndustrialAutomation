@@ -31,12 +31,13 @@ sys.path.insert(0, os.path.abspath(path_lib_stepper))
 sys.path.insert(0, os.path.abspath(path_lib_gpio))
 sys.path.insert(0, os.path.abspath(path_lib_adc))
 
+# Import ADC (MCP3208) library.
+from mcp3208 import MCP3208
+
 # Import Stepper
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 
-# Import SPI library (for hardware SPI) and MCP3008 library.
-import Adafruit_GPIO.SPI as SPI
-import Adafruit_MCP3008
+
 
 
 
@@ -52,17 +53,17 @@ class Rotator(object):
     _stepperAzimuth = 0
     _stepperElevation = 0
 
-    _encoderposition_azimuth_center = 701
-    _encoderposition_azimuth_min = 600
-    _encoderposition_azimuth_max = 764
+    _encoderposition_azimuth_center = 2816
+    _encoderposition_azimuth_min = 2489
+    _encoderposition_azimuth_max = 3028
 
-    _encoderposition_elevation_center = 421
-    _encoderposition_elevation_min = 314
-    _encoderposition_elevation_max = 430
+    _encoderposition_elevation_center = 1696
+    _encoderposition_elevation_min = 1260
+    _encoderposition_elevation_max = 1744
 
-    _encoderposition_polarity_center = 855
-    _encoderposition_polarity_min = 625
-    _encoderposition_polarity_max = 920
+    _encoderposition_polarity_center = 3148 
+    _encoderposition_polarity_min = 2464
+    _encoderposition_polarity_max = 3424
     
 
     # Hardware SPI configuration:
@@ -105,7 +106,7 @@ class Rotator(object):
         self._encoder_B = Adafruit_MotorHAT(addr=0x61)
 
         # Analog Digital Converter
-        self._adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(self.SPI_PORT, self.SPI_DEVICE))
+        self._adc = MCP3208()
 
 
         if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
@@ -181,7 +182,7 @@ class Rotator(object):
     def recenter_elevation(self):
         try:
             logging.info("Recentering Elevation at Value: " + str(self._encoderposition_elevation_center))
-            encoderposition_elevation_current = self._adc.read_adc(1)
+            encoderposition_elevation_current = self._adc.read(1)
             logging.info("Elevation Encoder Reading = " + str(encoderposition_elevation_current))
 
             nSteps = 0
@@ -191,7 +192,7 @@ class Rotator(object):
                 and (encoderposition_elevation_current > self._encoderposition_elevation_min)):
                     nSteps+=1
                     self._stepperElevation.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_elevation_current = self._adc.read_adc(1)           
+                    encoderposition_elevation_current = self._adc.read(1)           
 
             
             while ((encoderposition_elevation_current > self._encoderposition_elevation_center)
@@ -199,14 +200,14 @@ class Rotator(object):
                 and (encoderposition_elevation_current > self._encoderposition_elevation_min)):
                     nSteps-=1
                     self._stepperElevation.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_elevation_current = self._adc.read_adc(1)
+                    encoderposition_elevation_current = self._adc.read(1)
 
             self._is_busy = False
             logging.info("Steps: " + str(nSteps))
                   
 
             self.set_elevation_stepper_count(0)
-            encoderposition_elevation_current = self._adc.read_adc(1)
+            encoderposition_elevation_current = self._adc.read(1)
             self._elevation_requires_calibration = False
             logging.info("Current Elevation Reading:"+str(self.get_elevation_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_elevation_current))
             return self.get_elevation_degrees()
@@ -303,7 +304,7 @@ class Rotator(object):
     def recenter_azimuth(self):
         try:
             logging.info("Recentering Azimuth To Encoder Value: "+ str(self._encoderposition_azimuth_center))
-            encoderposition_azimuth_current = self._adc.read_adc(0)
+            encoderposition_azimuth_current = self._adc.read(0)
             encoderposition_azimuth_previous = encoderposition_azimuth_current
             logging.info("Cable Tension Start = " + str(encoderposition_azimuth_current))
 
@@ -314,12 +315,12 @@ class Rotator(object):
                     nSteps+=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_azimuth_previous = encoderposition_azimuth_current
-                    encoderposition_azimuth_current = self._adc.read_adc(0)           
+                    encoderposition_azimuth_current = self._adc.read(0)           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 2 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_azimuth_previous)+"; New Outlier Value: "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
                         time.sleep(1)
-                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        encoderposition_azimuth_current = self._adc.read(0)
                         encoderposition_azimuth_previous = encoderposition_azimuth_current
                         logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_azimuth_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
@@ -327,12 +328,12 @@ class Rotator(object):
             while (encoderposition_azimuth_current > self._encoderposition_azimuth_center):
                     nSteps-=1
                     self._stepperAzimuth.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_azimuth_current = self._adc.read_adc(0)
+                    encoderposition_azimuth_current = self._adc.read(0)
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_azimuth_current - encoderposition_azimuth_previous) > 2 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_azimuth_current)+"; New Outlier Value: "+str(encoderposition_azimuth_current)+"; sleeping 1 second")
                         time.sleep(1)
-                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        encoderposition_azimuth_current = self._adc.read(0)
                         encoderposition_azimuth_previous = encoderposition_azimuth_current
                         logging.warning("Re-Reading Encoder with New Value"+str(encoderposition_azimuth_previous))                    
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_azimuth_current))
@@ -342,7 +343,7 @@ class Rotator(object):
                   
             self.set_azimuth_stepper_count(0)
             self._azimuth_requires_calibration = False
-            logging.info("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read_adc(0)))
+            logging.info("Current Azimuth Reading: "+str(self.get_azimuth_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
             return self.get_azimuth_degrees()
 
         except Exception as e:
@@ -434,7 +435,7 @@ class Rotator(object):
 
                 # Scope Variables
                 steps_actual = 0
-                encoderposition_azimuth_current = self._adc.read_adc(0)
+                encoderposition_azimuth_current = self._adc.read(0)
 
                 self._is_busy = True
                 keep_moving = True
@@ -449,13 +450,13 @@ class Rotator(object):
 
                         # Increment Counters
                         steps_actual = 1 + steps_actual 
-                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        encoderposition_azimuth_current = self._adc.read(0)
 
                     # If Azimuth Travel Has Exceeded Limits, Reverse Direction, Recenter, then Stop Moving
                     else:
                         logging.info("Target Cable Tension Maxed Out In Current Direction at: "+str(encoderposition_azimuth_current)+" Re-centering to unwind cable")
                         self.recenter_azimuth()
-                        encoderposition_azimuth_current = self._adc.read_adc(0)
+                        encoderposition_azimuth_current = self._adc.read(0)
                         keep_moving = False
 
                     # Update Object
@@ -512,7 +513,7 @@ class Rotator(object):
     def recenter_polarity(self):
         try:
             logging.info("Recentering Polarity at Value: " + str(self._encoderposition_polarity_center))
-            encoderposition_polarity_current = self._adc.read_adc(2)
+            encoderposition_polarity_current = self._adc.read(2)
             logging.info("Polarity Encoder Reading = " + str(encoderposition_polarity_current))
 
             nSteps = 0
@@ -522,7 +523,7 @@ class Rotator(object):
                 and (encoderposition_polarity_current > self._encoderposition_polarity_min)):
                     nSteps+=1
                     self._stepperPolarity.step(1, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_polarity_current = self._adc.read_adc(2)           
+                    encoderposition_polarity_current = self._adc.read(2)           
 
             
             while ((encoderposition_polarity_current > self._encoderposition_polarity_center)
@@ -530,14 +531,14 @@ class Rotator(object):
                 and (encoderposition_polarity_current > self._encoderposition_polarity_min)):
                     nSteps-=1
                     self._stepperPolarity.step(1, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_polarity_current = self._adc.read_adc(2)
+                    encoderposition_polarity_current = self._adc.read(2)
 
             self._is_busy = False
             logging.info("Steps: " + str(nSteps))
                   
 
             self.set_polarity_stepper_count(0)
-            encoderposition_polarity_current = self._adc.read_adc(2)
+            encoderposition_polarity_current = self._adc.read(2)
             self._polarity_requires_calibration = False
             logging.info("Current polarity Reading:"+str(self.get_polarity_degrees())+", Now Centered on Tripod with Cable Tension = " + str(encoderposition_polarity_current))
             return self.get_polarity_degrees()
@@ -562,7 +563,7 @@ class Rotator(object):
                 logging.info("Holding polarity Steady at: "+ str(polarity_target))
             else:
                 
-                encoderposition_polarity_current = self._adc.read_adc(2)
+                encoderposition_polarity_current = self._adc.read(2)
 
                 # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
@@ -589,7 +590,7 @@ class Rotator(object):
 
                     # Set Polarity Value to Be Returned to GPredict                    
                     self.set_polarity_stepper_count(self.get_polarity_stepper_count() + stepper_incriment)
-                    encoderposition_polarity_current = self._adc.read_adc(2)
+                    encoderposition_polarity_current = self._adc.read(2)
                     if self._verbose > 3 :
                         logging.debug("Interim Polarity Stepper Count:"+str(self.get_polarity_stepper_count())+"; Interim Polarity Degrees: " + str(self.get_polarity_degrees()) + " EncoderValue: "+ str(encoderposition_polarity_current))
 
