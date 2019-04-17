@@ -20,6 +20,10 @@ class RotationalAxis(object):
     _encoderposition_min = 0
     _encoderposition_max = 0
 
+    _steppercount_center = 0
+    _steppercount_min = 0
+    _steppercount_max = 0
+
     _target_degrees = 0
     _stepper_count = 0
     _steps_per_degree = 2
@@ -29,6 +33,7 @@ class RotationalAxis(object):
     def __init__(self, stepper, adc, center, min, max):
         self._stepper = stepper
         self._adc = adc
+        self._adc_channel = 0
         self._encoderposition_center = 0
         self._encoderposition_min = 0
         self._encoderposition_max = 0
@@ -60,41 +65,38 @@ class RotationalAxis(object):
    #Re-Center
     def recenter(self):
         try:
-            logging.info("Recentering  To Encoder Value: "+ str(self._encoderposition_center))
-            encoderposition_current = self._adc.read(0)
+            logging.info("Recentering To Encoder Value: "+ str(self._encoderposition_center))
+            encoderposition_current = self._adc.read(self._adc_channel)
             encoderposition_previous = encoderposition_current
-            logging.info("Cable Tension Start = " + str(encoderposition_current))
-
+            logging.info("Current Encoder Value = " + str(encoderposition_current))
             nSteps = 0
 
+            # set default direction forward
+            direction_required = Adafruit_MotorHAT.FORWARD
+            stepper_incriment = 1
+            
+            # then check to see if we need to go backward
+            if (encoderposition_current < self._encoderposition_center):
+                direction_required = Adafruit_MotorHAT.BACKWARD
+                stepper_incriment = -1
+
             self._is_busy = True
-            while (encoderposition_current < self._encoderposition_center):
-                    nSteps+=1
-                    self._stepper.step(1, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+            while ((encoderposition_current != self._encoderposition_center) and 
+                    (encoderposition_current < self._encoderposition_max) and
+                    (encoderposition_current > self._encoderposition_min)):
+                    nSteps+=stepper_incriment
+                    self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_previous = encoderposition_current
-                    encoderposition_current = self._adc.read(0)           
+                    encoderposition_current = self._adc.read(self._adc_channel)           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_current - encoderposition_previous) > 2 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
                         time.sleep(1)
-                        encoderposition_current = self._adc.read(0)
+                        encoderposition_current = self._adc.read(self._adc_channel)
                         encoderposition_previous = encoderposition_current
                         logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
             
-            while (encoderposition_current > self._encoderposition_center):
-                    nSteps-=1
-                    self._stepper.step(1, Adafruit_MotorHAT.BACKWARD,Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_current = self._adc.read(0)
-                    #check it see if the encoder value is bouncing, if so then re-read encoder
-                    if( abs(encoderposition_current - encoderposition_previous) > 2 ):
-                        logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_current)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
-                        time.sleep(1)
-                        encoderposition_current = self._adc.read(0)
-                        encoderposition_previous = encoderposition_current
-                        logging.warning("Re-Reading Encoder with New Value"+str(encoderposition_previous))                    
-                    logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
-
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
                   
@@ -124,7 +126,7 @@ class RotationalAxis(object):
                 logging.info("Holding  Steady at: "+ str(_target))
             else:
                 
-                encoderpositioncurrent = self._adc.read(2)
+                encoder_position_current = self._adc.read(self._adc_channel)
 
                 # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
@@ -151,7 +153,7 @@ class RotationalAxis(object):
 
                     # Set  Value to Be Returned to GPredict                    
                     self.set_stepper_count(self.get_stepper_count() + stepper_incriment)
-                    encoderposition_current = self._adc.read(2)
+                    encoderposition_current = self._adc.read(self._adc_channel)
                     
                     logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
 
