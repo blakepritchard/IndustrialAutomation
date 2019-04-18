@@ -30,8 +30,9 @@ class RotationalAxis(object):
     _degrees_per_step   = 1/_steps_per_degree
     _requires_calibration = True
 
-    def __init__(self, stepper, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
+    def __init__(self, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
         self._stepper = stepper
+        self._steps_per_degree = steps_per_degree
         self._adc = adc
         self._adc_channel = adc_channel
         
@@ -169,7 +170,7 @@ class RotationalAxis(object):
                         logging.warning(" Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_current)+ "; Re-Centering .")
                         self.recenter()
                         break
-                    if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min))):
+                    if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
                         logging.warning(" Exceeded "+str(limit_label)+" Stepper Limit Value at: " + str()+ "; Re-Centering .")
                         self.recenter()
                         break
