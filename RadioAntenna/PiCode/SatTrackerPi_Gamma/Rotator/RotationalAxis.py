@@ -15,6 +15,7 @@ class RotationalAxis(object):
     _is_busy = False
     _adc = 0
     _stepper = 0
+    _axis_name = "AxisNameHere"
 
     _encoderposition_center = 0
     _encoderposition_min = 0
@@ -30,7 +31,8 @@ class RotationalAxis(object):
     _degrees_per_step   = 1/_steps_per_degree
     _requires_calibration = True
 
-    def __init__(self, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
+    def __init__(self, axis_name, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
+        self._axis_name = axis_name
         self._stepper = stepper
         self._steps_per_degree = steps_per_degree
         self._adc = adc
@@ -71,7 +73,7 @@ class RotationalAxis(object):
    #Re-Center
     def recenter(self):
         try:
-            logging.info("Recentering To Encoder Value: "+ str(self._encoderposition_center))
+            logging.info("Recentering "+str(self._axis_name = axis_name)+" To Encoder Value: "+ str(self._encoderposition_center))
             encoderposition_current = self._adc.read(self._adc_channel)
             encoderposition_previous = encoderposition_current
             logging.info("Current Encoder Value = " + str(encoderposition_current))
@@ -108,7 +110,7 @@ class RotationalAxis(object):
                   
             self.set_stepper_count(self._steppercount_center)
             self._requires_calibration = False
-            logging.info("Current  Reading: "+str(self.get_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
+            logging.info("Current  Reading: "+str(self.get_degrees())+" "+str(self._axis_name = axis_name)+ ", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
             return self.get_degrees()
 
         except Exception as e:

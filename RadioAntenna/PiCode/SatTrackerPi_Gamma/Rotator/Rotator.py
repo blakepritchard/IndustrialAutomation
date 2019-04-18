@@ -49,9 +49,12 @@ class Rotator(object):
     _encoder_B = 0
     _adc = 0
 
+
     _steps_azimuth_center = 360
     _steps_azimuth_min = 0
     _steps_azimuth_max = 720
+
+    _encoder_channel_azimuth = 0
     _encoderposition_azimuth_center = 2816
     _encoderposition_azimuth_min = 2489
     _encoderposition_azimuth_max = 3028
@@ -59,6 +62,8 @@ class Rotator(object):
     _steps_elevation_center = 0
     _steps_elevation_min = 0
     _steps_elevation_max = 360
+
+    _encoder_channel_elevation = 1
     _encoderposition_elevation_center = 1696
     _encoderposition_elevation_min = 1260
     _encoderposition_elevation_max = 1744
@@ -66,9 +71,11 @@ class Rotator(object):
     _steps_polarity_center = 0
     _steps_polarity_min = 0
     _steps_polarity_max = 180
-    _encoderposition_polarity_center = 3148 
-    _encoderposition_polarity_min = 2464
-    _encoderposition_polarity_max = 3424
+
+    _encoder_channel_polarity = 2
+    _encoderposition_polarity_center = 3420
+    _encoderposition_polarity_min = 3300
+    _encoderposition_polarity_max = 3500
     
 
     # Hardware SPI configuration:
@@ -129,17 +136,17 @@ class Rotator(object):
         logging.info(str(self._encoder_A))
         logging.info(str(self._encoder_B))
 
-        self._Azimuth = RotationalAxis.RotationalAxis( self._stepperAzimuth, self._azimuth_steps_per_degree, self._adc, 0,
-                                        self._steps_azimuth_center, self._steps_azimuth_min, self._steps_azimuth_max, 
-                                        self._encoderposition_azimuth_center, self._encoderposition_azimuth_min, self._encoderposition_azimuth_max)
+        self._Azimuth = RotationalAxis.RotationalAxis("Azimuth",  self._stepperAzimuth, self._azimuth_steps_per_degree, self._adc, self._encoder_channel_azimuth,
+                                                        self._steps_azimuth_center, self._steps_azimuth_min, self._steps_azimuth_max, 
+                                                        self._encoderposition_azimuth_center, self._encoderposition_azimuth_min, self._encoderposition_azimuth_max)
 
-        self._Elevation = RotationalAxis.RotationalAxis( self._stepperElevation, self._elevation_steps_per_degree, self._adc, 0,
-                                                self._steps_elevation_center, self._steps_elevation_min, self._steps_elevation_max, 
-                                                self._encoderposition_elevation_center, self._encoderposition_elevation_min, self._encoderposition_elevation_max)
+        self._Elevation = RotationalAxis.RotationalAxis("Elevation",  self._stepperElevation, self._elevation_steps_per_degree, self._adc, self._encoder_channel_elevation,
+                                                        self._steps_elevation_center, self._steps_elevation_min, self._steps_elevation_max, 
+                                                        self._encoderposition_elevation_center, self._encoderposition_elevation_min, self._encoderposition_elevation_max)
 
-        self._Polarity = RotationalAxis.RotationalAxis( self._stepperPolarity, self._polarity_steps_per_degree, self._adc, 0,
-                                                self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
-                                                self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
+        self._Polarity = RotationalAxis.RotationalAxis("Polarity",  self._stepperPolarity, self._polarity_steps_per_degree, self._adc, self._encoder_channel_polarity,
+                                                        self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
+                                                        self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
         
         self._Azimuth.recenter()
         self._Elevation.recenter()
