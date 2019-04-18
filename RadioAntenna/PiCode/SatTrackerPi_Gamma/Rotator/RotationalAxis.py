@@ -90,7 +90,7 @@ class RotationalAxis(object):
             direction_required = Adafruit_MotorHAT.FORWARD
             stepper_incriment = 1
 
-            if (encoderposition_current < self._encoderposition_center):
+            if (encoderposition_current > self._encoderposition_center):
                 is_forward = False
 
             if (self._reverse_encoder):

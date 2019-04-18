@@ -147,7 +147,6 @@ class Rotator(object):
         self._Polarity = RotationalAxis.RotationalAxis("Polarity", self._stepperPolarity, self._polarity_steps_per_degree, self._adc, self._encoder_channel_polarity,
                                                         self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
                                                         self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
-        self._Polarity.reverse_encoder()
 
         self._Azimuth.recenter()
         self._Elevation.recenter()
