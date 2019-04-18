@@ -30,13 +30,18 @@ class RotationalAxis(object):
     _degrees_per_step   = 1/_steps_per_degree
     _requires_calibration = True
 
-    def __init__(self, stepper, adc, center, min, max):
+    def __init__(self, stepper, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
         self._stepper = stepper
         self._adc = adc
-        self._adc_channel = 0
-        self._encoderposition_center = 0
-        self._encoderposition_min = 0
-        self._encoderposition_max = 0
+        self._adc_channel = adc_channel
+        
+        self._steppercount_center = stepper_center
+        self._steppercount_min = stepper_min
+        self._steppercount_max = stepper_max
+
+        self._encoderposition_center = encoder_center
+        self._encoderposition_min = encoder_min
+        self._encoderposition_max = encoder_max
 
     def __del__(self):
         # body of destructor
@@ -100,7 +105,7 @@ class RotationalAxis(object):
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
                   
-            self.set_stepper_count(0)
+            self.set_stepper_count(self._steppercount_center)
             self._requires_calibration = False
             logging.info("Current  Reading: "+str(self.get_degrees())+", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
             return self.get_degrees()
@@ -133,7 +138,7 @@ class RotationalAxis(object):
                 direction_label = "Clockwise"
                 limit_label = "Maximum"
                 stepper_incriment = 1
-                
+              
                 # then check to see if we need to go backward
                 if steps_required < 0:
                     direction_required = Adafruit_MotorHAT.BACKWARD
@@ -143,6 +148,8 @@ class RotationalAxis(object):
 
                 logging.info(" Target: "+str(_target)+",  Current: "+str(_current_degrees))
                 logging.info(" Stepper Count: "+str(self.get_stepper_count())+", Moving  "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
+
+
 
                 #execute rotation    
                 self._is_busy = True               
@@ -162,7 +169,10 @@ class RotationalAxis(object):
                         logging.warning(" Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_current)+ "; Re-Centering .")
                         self.recenter()
                         break
-
+                    if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min))):
+                        logging.warning(" Exceeded "+str(limit_label)+" Stepper Limit Value at: " + str()+ "; Re-Centering .")
+                        self.recenter()
+                        break
             self._is_busy = False
             logging.info("New  Stepper Count: "+str(self.get_stepper_count())+"; New  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
             return self.get_degrees()
