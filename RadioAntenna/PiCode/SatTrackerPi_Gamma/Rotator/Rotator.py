@@ -34,12 +34,12 @@ sys.path.insert(0, os.path.abspath(path_lib_adc))
 import RotationalAxis
 
 # Import ADC (MCP3208) library.
-import MCP3208
+from mcp3208 import MCP3208
 
 # Import Stepper
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 
-
+                                                                                                                                                                     
 class Rotator(object):
 
     _verbose = 0
