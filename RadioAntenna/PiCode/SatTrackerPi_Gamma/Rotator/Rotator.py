@@ -136,18 +136,19 @@ class Rotator(object):
         logging.info(str(self._encoder_A))
         logging.info(str(self._encoder_B))
 
-        self._Azimuth = RotationalAxis.RotationalAxis("Azimuth",  self._stepperAzimuth, self._azimuth_steps_per_degree, self._adc, self._encoder_channel_azimuth,
+        self._Azimuth = RotationalAxis.RotationalAxis("Azimuth", self._stepperAzimuth, self._azimuth_steps_per_degree, self._adc, self._encoder_channel_azimuth,
                                                         self._steps_azimuth_center, self._steps_azimuth_min, self._steps_azimuth_max, 
                                                         self._encoderposition_azimuth_center, self._encoderposition_azimuth_min, self._encoderposition_azimuth_max)
 
-        self._Elevation = RotationalAxis.RotationalAxis("Elevation",  self._stepperElevation, self._elevation_steps_per_degree, self._adc, self._encoder_channel_elevation,
+        self._Elevation = RotationalAxis.RotationalAxis("Elevation", self._stepperElevation, self._elevation_steps_per_degree, self._adc, self._encoder_channel_elevation,
                                                         self._steps_elevation_center, self._steps_elevation_min, self._steps_elevation_max, 
                                                         self._encoderposition_elevation_center, self._encoderposition_elevation_min, self._encoderposition_elevation_max)
 
-        self._Polarity = RotationalAxis.RotationalAxis("Polarity",  self._stepperPolarity, self._polarity_steps_per_degree, self._adc, self._encoder_channel_polarity,
+        self._Polarity = RotationalAxis.RotationalAxis("Polarity", self._stepperPolarity, self._polarity_steps_per_degree, self._adc, self._encoder_channel_polarity,
                                                         self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
                                                         self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
-        
+        self._Polarity.reverse_encoder()
+
         self._Azimuth.recenter()
         self._Elevation.recenter()
         self._Polarity.recenter()

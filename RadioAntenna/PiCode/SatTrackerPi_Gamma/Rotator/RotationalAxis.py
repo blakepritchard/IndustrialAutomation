@@ -29,7 +29,9 @@ class RotationalAxis(object):
     _stepper_count = 0
     _steps_per_degree = 2
     _degrees_per_step   = 1/_steps_per_degree
+
     _requires_calibration = True
+    _reverse_encoder = False
 
     def __init__(self, axis_name, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
         self._axis_name = axis_name
@@ -70,6 +72,10 @@ class RotationalAxis(object):
     def set_stepper_count(self, stepper_count):
         self._stepper_count = stepper_count
     
+    def reverse_encoder(self):
+        self._reverse_encoder = not self._reverse_encoder
+
+
    #Re-Center
     def recenter(self):
         try:
@@ -80,11 +86,18 @@ class RotationalAxis(object):
             nSteps = 0
 
             # set default direction forward
+            is_forward = True
             direction_required = Adafruit_MotorHAT.FORWARD
             stepper_incriment = 1
-            
-            # then check to see if we need to go backward
+
             if (encoderposition_current < self._encoderposition_center):
+                is_forward = False
+
+            if (self._reverse_encoder):
+                is_forward = not is_forward
+
+            # then check to see if we need to go backward
+            if (is_forward is False):
                 direction_required = Adafruit_MotorHAT.BACKWARD
                 stepper_incriment = -1
 
@@ -97,7 +110,7 @@ class RotationalAxis(object):
                     encoderposition_previous = encoderposition_current
                     encoderposition_current = self._adc.read(self._adc_channel)           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
-                    if( abs(encoderposition_current - encoderposition_previous) > 2 ):
+                    if( abs(encoderposition_current - encoderposition_previous) > 4 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
                         time.sleep(1)
                         encoderposition_current = self._adc.read(self._adc_channel)
