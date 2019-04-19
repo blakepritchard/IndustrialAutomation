@@ -147,7 +147,7 @@ class RotationalAxis(object):
                 logging.info("Holding  Steady at: "+ str(_target))
             else:
                 
-                encoder_position_current = self._adc.read(self._adc_channel)
+                encoder_position_current = self.read_encoder_average()
 
                 # set default direction forward
                 direction_required = Adafruit_MotorHAT.FORWARD
@@ -222,6 +222,13 @@ class RotationalAxis(object):
 
         except Exception as e:
             self.handle_exception(e)
+
+    def read_encoder_average(self):
+        num_samples = 6
+        for i in range(num_samples):
+            sample_subtotal = self._adc.read(self._adc_channel)
+        encoder_average = sample_subtotal/num_samples
+        return encoder_average
 
     def stop(self):
         try:        
