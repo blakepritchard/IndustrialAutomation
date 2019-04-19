@@ -80,7 +80,7 @@ class RotationalAxis(object):
     def recenter(self):
         try:
             logging.info("Recentering " + str(self._axis_name)+" To Encoder Value: "+ str(self._encoderposition_center))
-            encoderposition_current = self._adc.read(self._adc_channel)
+            encoderposition_current = self.read_encoder_average()
             encoderposition_previous = encoderposition_current
             logging.info("Current Encoder Value = " + str(encoderposition_current))
             nSteps = 0
@@ -108,12 +108,12 @@ class RotationalAxis(object):
                     nSteps+=stepper_incriment
                     self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_previous = encoderposition_current
-                    encoderposition_current = self._adc.read(self._adc_channel)           
+                    encoderposition_current = self.read_encoder_average()           
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_current - encoderposition_previous) > 4 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
                         time.sleep(1)
-                        encoderposition_current = self._adc.read(self._adc_channel)
+                        encoderposition_current = self.read_encoder_average()
                         encoderposition_previous = encoderposition_current
                         logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
                     logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
