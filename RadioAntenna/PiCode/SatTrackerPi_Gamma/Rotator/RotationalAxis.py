@@ -108,7 +108,8 @@ class RotationalAxis(object):
                     nSteps+=stepper_incriment
                     self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
                     encoderposition_previous = encoderposition_current
-                    encoderposition_current = self.read_encoder_average()           
+                    encoderposition_current = self.read_encoder_average()  
+                             
                     #check it see if the encoder value is bouncing, if so then re-read encoder
                     if( abs(encoderposition_current - encoderposition_previous) > 4 ):
                         logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
