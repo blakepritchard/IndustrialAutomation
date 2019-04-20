@@ -102,29 +102,36 @@ class RotationalAxis(object):
                 stepper_incriment = -1
 
             self._is_busy = True
-            while ((encoderposition_current != self._encoderposition_center) and 
-                    (encoderposition_current < self._encoderposition_max) and
-                    (encoderposition_current > self._encoderposition_min)):
-                    nSteps+=stepper_incriment
-                    self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
-                    encoderposition_previous = encoderposition_current
-                    encoderposition_current = self.read_encoder_average()  
+            keep_moving = True
+            while (keep_moving):
+                nSteps+=stepper_incriment
+                self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
+                encoderposition_previous = encoderposition_current
+                encoderposition_current = self.read_encoder_average()  
 
-                    #check it see if the encoder value is bouncing, if so then re-read encoder
-                    if( abs(encoderposition_current - encoderposition_previous) > 4 ):
-                        logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
-                        time.sleep(1)
-                        encoderposition_current = self.read_encoder_average()
-                        encoderposition_previous = encoderposition_current
-                        logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
-                    logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
-            
+                #check it see if the encoder value is bouncing, if so then re-read encoder
+                if( abs(encoderposition_current - encoderposition_previous) > 4 ):
+                    logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
+                    time.sleep(1)
+                    encoderposition_current = self.read_encoder_average()
+                    encoderposition_previous = encoderposition_current
+                    logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
+                logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
+
+                if ((encoderposition_current < self._encoderposition_max) or (encoderposition_current > self._encoderposition_min)):
+                    keep_moving = False
+                if ((is_forward is True) and (encoderposition_current > self._encoderposition_center)):
+                    keep_moving = False
+                if ((is_forward is False) and (encoderposition_current < self._encoderposition_center)):
+                    keep_moving = False
+
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
                   
             self.set_stepper_count(self._steppercount_center)
             self._requires_calibration = False
             logging.info("Current  Reading: "+str(self.get_degrees())+" "+str(self._axis_name)+ ", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
+
             return self.get_degrees()
 
         except Exception as e:
