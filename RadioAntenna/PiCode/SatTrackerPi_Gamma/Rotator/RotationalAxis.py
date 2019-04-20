@@ -229,7 +229,10 @@ class RotationalAxis(object):
             sample_subtotal += self._adc.read(self._adc_channel)
 
         encoder_average = sample_subtotal/num_samples
-        encoder_tuple = divmod(encoder_average, 1)
+        logging.info("Encoder Average: " + str(encoder_average))
+        encoder_tuple = divmod(encoder_average, 1.0)
+
+        logging.info("Encoder Rounded: " + encoder_tuple[0])
         return encoder_tuple[0]
 
     def stop(self):
