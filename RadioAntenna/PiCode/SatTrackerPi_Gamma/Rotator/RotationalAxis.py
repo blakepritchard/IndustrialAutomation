@@ -201,12 +201,12 @@ class RotationalAxis(object):
             steps = int(0)
             _remainder = 0.0
 
-            self._target = float(_target)
-            _tuple = divmod(self._target, self._degrees_per_step)
+            self._target_degrees = float(_target)
+            _tuple = divmod(self._target_degrees, self._degrees_per_step)
             _remainder = float(_tuple[1])
             
             #round down to nearest half degree
-            _target = float(self._target - _remainder)
+            _target = float(self._target_degrees - _remainder)
             
             #round back up if remainder was closer to upper bound
             if _remainder > (self._degrees_per_step / 2):
@@ -229,10 +229,9 @@ class RotationalAxis(object):
             sample_subtotal += self._adc.read(self._adc_channel)
 
         encoder_average = sample_subtotal/num_samples
-        logging.info("Encoder Average: " + str(encoder_average))
+        logging.debug("Encoder Average: " + str(encoder_average))
         encoder_tuple = divmod(encoder_average, 1.0)
-
-        logging.info("Encoder Rounded: " + str(encoder_tuple[0]))
+        logging.debug("Encoder Rounded: " + str(encoder_tuple[0]))
         return encoder_tuple[0]
 
     def stop(self):
