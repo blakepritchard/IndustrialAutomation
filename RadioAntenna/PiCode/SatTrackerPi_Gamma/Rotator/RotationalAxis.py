@@ -166,8 +166,6 @@ class RotationalAxis(object):
                 logging.info(" Target: "+str(_target)+",  Current: "+str(_current_degrees))
                 logging.info(" Stepper Count: "+str(self.get_stepper_count())+", Moving  "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
-
-
                 #execute rotation    
                 self._is_busy = True               
                 for steps_taken in range(abs(steps_required)):         
@@ -227,7 +225,7 @@ class RotationalAxis(object):
     def read_encoder_average(self):
         num_samples = 6
         sample_subtotal = 0
-        for i in range(num_samples):
+        for i in range(0, num_samples):
             sample_subtotal += self._adc.read(self._adc_channel)
 
         encoder_average = sample_subtotal/num_samples
