@@ -232,7 +232,7 @@ class RotationalAxis(object):
         logging.info("Encoder Average: " + str(encoder_average))
         encoder_tuple = divmod(encoder_average, 1.0)
 
-        logging.info("Encoder Rounded: " + encoder_tuple[0])
+        logging.info("Encoder Rounded: " + str(encoder_tuple[0]))
         return encoder_tuple[0]
 
     def stop(self):
