@@ -120,9 +120,12 @@ class RotationalAxis(object):
                     logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
                 logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
 
-                if ((encoderposition_current < self._encoderposition_max) or (encoderposition_current > self._encoderposition_min)):
-                    logging.info("Reached Limit Stopping Motion")
-                    keep_moving = False
+                if (encoderposition_current > self._encoderposition_max):
+                    logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
+                    break
+                if (encoderposition_current < self._encoderposition_min):
+                    logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
+                    break
                 if ((is_forward is True) and (encoderposition_current > self._encoderposition_center)):
                     logging.info("Stepping Forward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
@@ -192,12 +195,8 @@ class RotationalAxis(object):
                     logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
 
                     # Check Limits
-                    if ((encoderposition_current > self._encoderposition_max) or (encoderposition_current < self._encoderposition_min)):
-                        logging.warning(" Exceeded "+str(limit_label)+" Encoder Value at: " + str(encoderposition_current)+ "; Re-Centering .")
-                        self.recenter()
-                        break
                     if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
-                        logging.warning(" Exceeded "+str(limit_label)+" Stepper Limit Value at: " + str()+ "; Re-Centering .")
+                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Stepper Limit Value at: " + str()+ "; Re-Centering .")
                         self.recenter()
                         break
             self._is_busy = False
