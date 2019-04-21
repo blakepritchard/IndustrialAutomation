@@ -90,20 +90,22 @@ class RotationalAxis(object):
             direction_required = Adafruit_MotorHAT.FORWARD
             stepper_incriment = 1
 
+            # then check to see if we need to go backward
             if (encoderposition_current > self._encoderposition_center):
                 is_forward = False
 
             if (self._reverse_encoder):
                 is_forward = not is_forward
 
-            # then check to see if we need to go backward
+            # set reverse if needed
             if (is_forward is False):
                 direction_required = Adafruit_MotorHAT.BACKWARD
                 stepper_incriment = -1
 
+            # start motion
             self._is_busy = True
             keep_moving = True
-            while (keep_moving):
+            while (keep_moving is True):
                 nSteps+=stepper_incriment
                 self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
                 encoderposition_previous = encoderposition_current
@@ -119,10 +121,13 @@ class RotationalAxis(object):
                 logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
 
                 if ((encoderposition_current < self._encoderposition_max) or (encoderposition_current > self._encoderposition_min)):
+                    logging.info("Reached Limit Stopping Motion")
                     keep_moving = False
                 if ((is_forward is True) and (encoderposition_current > self._encoderposition_center)):
+                    logging.info("Stepping Forward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
                 if ((is_forward is False) and (encoderposition_current < self._encoderposition_center)):
+                    logging.info("Stepping Backward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
 
             self._is_busy = False
