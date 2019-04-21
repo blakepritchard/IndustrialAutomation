@@ -215,7 +215,7 @@ class RotationalAxis(object):
 
             self._target_degrees = float(_target)
             logging.info("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
-            _tuple = divmod(self._target_degrees, self._degrees_per_step)
+            _tuple = divmod(float(self._target_degrees), float(self._degrees_per_step))
             logging.info("typeOf tuple: "+str(type(_tuple)))
             if(_tuple != None):
                 _remainder = float(_tuple[1])
