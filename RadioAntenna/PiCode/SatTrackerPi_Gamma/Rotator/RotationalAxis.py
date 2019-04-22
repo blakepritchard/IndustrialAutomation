@@ -28,7 +28,7 @@ class RotationalAxis(object):
     _target_degrees = 0
     _stepper_count = 0
     _steps_per_degree = 2
-    _degrees_per_step = 1/_steps_per_degree
+    _degrees_per_step = 0.5
 
     _requires_calibration = True
     _reverse_encoder = False
@@ -37,7 +37,7 @@ class RotationalAxis(object):
         self._axis_name = axis_name
         self._stepper = stepper
         self._steps_per_degree = steps_per_degree
-        self._degrees_per_step = float(1/self._steps_per_degree)
+        self._degrees_per_step = float(1.0)/self._steps_per_degree
         self._adc = adc
         self._adc_channel = adc_channel
         
@@ -216,7 +216,17 @@ class RotationalAxis(object):
             self._target_degrees = float(_target)
             logging.info("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
             logging.info("Type Of Taget: "+str(type(self._target_degrees)) + ", Type Of Steps: "+ str(type(self._steps_per_degree)))
+
+             #round down to nearest half degree
+            _remainder = self._target_degrees % self._degrees_per_step
+            _target = float(self._target_degrees - _remainder)
             
+            #round back up if remainder was closer to upper bound
+            if _remainder > (self._degrees_per_step / 2):
+                _target += self._degrees_per_step
+            else:
+                logging.info("Error During Step Calculation. divmod returned Null ")
+
             degrees = float(_target) - float(self.get_degrees())
             steps = int(self._steps_per_degree * degrees)
             logging.debug("Steps Per Degree: "+ str(self._steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps)+ "; Remainder: "+ str(_remainder)) 
