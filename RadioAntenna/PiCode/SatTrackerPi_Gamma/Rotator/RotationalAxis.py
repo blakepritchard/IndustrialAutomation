@@ -217,16 +217,6 @@ class RotationalAxis(object):
             logging.info("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
             logging.info("Type Of Taget: "+str(type(self._target_degrees)) + ", Type Of Steps: "+ str(type(self._steps_per_degree)))
             
-            #round down to nearest half degree
-            _remainder = self._target_degrees % self._degrees_per_step
-            _target = float(self._target_degrees - _remainder)
-            
-            #round back up if remainder was closer to upper bound
-            if _remainder > (self._degrees_per_step / 2):
-                _target += self._degrees_per_step
-            else:
-                logging.info("Error During Step Calculation. divmod returned Null ")
-
             degrees = float(_target) - float(self.get_degrees())
             steps = int(self._steps_per_degree * degrees)
             logging.debug("Steps Per Degree: "+ str(self._steps_per_degree) +"; Degrees: "+str(degrees)+"; Steps: " + str(steps)+ "; Remainder: "+ str(_remainder)) 
