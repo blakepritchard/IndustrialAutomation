@@ -37,7 +37,7 @@ class RotationalAxis(object):
         self._axis_name = axis_name
         self._stepper = stepper
         self._steps_per_degree = steps_per_degree
-        self._degrees_per_step = 1/self._steps_per_degree
+        self._degrees_per_step = float(1/self._steps_per_degree)
         self._adc = adc
         self._adc_channel = adc_channel
         
@@ -215,6 +215,8 @@ class RotationalAxis(object):
 
             self._target_degrees = float(_target)
             logging.info("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
+            logging.info("Type Of Taget: "+str(type(self._target_degrees)) + ", Type Of Steps: "+ str(type(self._steps_per_degree)))
+            
             _tuple = divmod(float(self._target_degrees), float(self._degrees_per_step))
             logging.info("typeOf tuple: "+str(type(_tuple)))
             if(_tuple != None):
