@@ -241,7 +241,7 @@ class RotationalAxis(object):
             self.handle_exception(e)
 
 
-    def check_encoder_limits(self, encoderposition_current)
+    def check_encoder_limits(self, encoderposition_current):
         is_within_limits = True
         if (encoderposition_current > self._encoderposition_max):
             logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
