@@ -31,7 +31,7 @@ class RotationalAxis(object):
     _degrees_per_step = 0.5
 
     _requires_calibration = True
-    _reverse_encoder = False
+    _reverse_movement = False
 
     def __init__(self, axis_name, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
         self._axis_name = axis_name
@@ -73,8 +73,8 @@ class RotationalAxis(object):
     def set_stepper_count(self, stepper_count):
         self._stepper_count = stepper_count
     
-    def reverse_encoder(self):
-        self._reverse_encoder = not self._reverse_encoder
+    def reverse_movement                                                                                                                                                                                                            reverse_position_movement                                                                        (self):
+        self._reverse_movement = not self._reverse_movement                                                                                                                                                                                                           reverse_position_movement                                                                         = not self._reverse_movement                                                                                                                                                                                                            reverse_position_movement                                                                        
 
 
    #Re-Center
@@ -94,9 +94,6 @@ class RotationalAxis(object):
             # then check to see if we need to go backward
             if (encoderposition_current > self._encoderposition_center):
                 is_forward = False
-
-            if (self._reverse_encoder):
-                is_forward = not is_forward
 
             # set reverse if needed
             if (is_forward is False):
@@ -121,18 +118,16 @@ class RotationalAxis(object):
                     logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
                 logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
 
-                if (encoderposition_current > self._encoderposition_max):
-                    logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
-                    break
-                if (encoderposition_current < self._encoderposition_min):
-                    logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
-                    break
                 if ((is_forward is True) and (encoderposition_current > self._encoderposition_center)):
                     logging.info("Stepping Forward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
                 if ((is_forward is False) and (encoderposition_current < self._encoderposition_center)):
                     logging.info("Stepping Backward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
+                if False == check_encoder_limits(encoderposition_current):
+                    logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
+                    keep_moving = False
+
 
             self._is_busy = False
             logging.info("Total Steps: " + str(nSteps))
@@ -167,6 +162,7 @@ class RotationalAxis(object):
                 encoder_position_current = self.read_encoder_average()
 
                 # set default direction forward
+                is_forward = True
                 direction_required = Adafruit_MotorHAT.FORWARD
                 direction_label = "Clockwise"
                 limit_label = "Maximum"
@@ -174,6 +170,13 @@ class RotationalAxis(object):
               
                 # then check to see if we need to go backward
                 if steps_required < 0:
+                    is_forward = False
+                
+                #check for reverse gear ratio (Elevation)
+                if self._reverse_movement == True:
+                    is_forward = not is_forward
+
+                if(is_forward == False):
                     direction_required = Adafruit_MotorHAT.BACKWARD
                     direction_label = "CounterClockwise"
                     limit_label = "Minimum"
@@ -197,9 +200,14 @@ class RotationalAxis(object):
 
                     # Check Limits
                     if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
-                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Stepper Limit Value at: " + str()+ "; Re-Centering .")
+                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Stepper Limit Value at: " + str(self.get_stepper_count())+ "; Re-Centering .")
                         self.recenter()
                         break
+                    if False == check_encoder_limits(encoderposition_current):
+                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
+                        self.recenter()
+                        break
+
             self._is_busy = False
             logging.info("New  Stepper Count: "+str(self.get_stepper_count())+"; New  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
             return self.get_degrees()
@@ -214,8 +222,7 @@ class RotationalAxis(object):
             _remainder = 0.0
 
             self._target_degrees = float(_target)
-            logging.info("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
-            logging.info("Type Of Taget: "+str(type(self._target_degrees)) + ", Type Of Steps: "+ str(type(self._steps_per_degree)))
+            logging.debug("Calculating Steps to Taget: "+str(self._target_degrees) + ", with: "+ str(self._steps_per_degree) + " Steps Per Degree.")
 
              #round down to nearest half degree
             _remainder = self._target_degrees % self._degrees_per_step
@@ -224,8 +231,6 @@ class RotationalAxis(object):
             #round back up if remainder was closer to upper bound
             if _remainder > (self._degrees_per_step / 2):
                 _target += self._degrees_per_step
-            else:
-                logging.info("Error During Step Calculation. divmod returned Null ")
 
             degrees = float(_target) - float(self.get_degrees())
             steps = int(self._steps_per_degree * degrees)
@@ -235,6 +240,18 @@ class RotationalAxis(object):
 
         except Exception as e:
             self.handle_exception(e)
+
+
+    def check_encoder_limits(self, encoderposition_current)
+        is_within_limits = True
+        if (encoderposition_current > self._encoderposition_max):
+            logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
+            is_within_limits = True
+        if (encoderposition_current < self._encoderposition_min):
+            logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
+            is_within_limits = True
+        return is_within_limits
+
 
     def read_encoder_average(self):
         num_samples = 6
