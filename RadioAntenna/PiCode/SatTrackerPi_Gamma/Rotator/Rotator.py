@@ -148,6 +148,8 @@ class Rotator(object):
                                                         self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
                                                         self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
 
+        self._Elevation._reverse_movement()
+
         self._Azimuth.recenter()
         self._Elevation.recenter()
         self._Polarity.recenter()

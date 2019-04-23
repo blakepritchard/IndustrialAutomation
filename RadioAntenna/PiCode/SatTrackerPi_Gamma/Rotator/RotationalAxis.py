@@ -73,9 +73,8 @@ class RotationalAxis(object):
     def set_stepper_count(self, stepper_count):
         self._stepper_count = stepper_count
     
-    def reverse_movement                                                                                                                                                                                                            reverse_position_movement                                                                        (self):
-        self._reverse_movement = not self._reverse_movement                                                                                                                                                                                                           reverse_position_movement                                                                         = not self._reverse_movement                                                                                                                                                                                                            reverse_position_movement                                                                        
-
+    def reverse_movement(self):
+        self._reverse_movement = not self._reverse_movement
 
    #Re-Center
     def recenter(self):
