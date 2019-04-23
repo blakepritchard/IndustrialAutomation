@@ -89,6 +89,7 @@ class RotationalAxis(object):
             is_forward = True
             direction_required = Adafruit_MotorHAT.FORWARD
             stepper_incriment = 1
+            limit_label = "Maximum"
 
             # then check to see if we need to go backward
             if (encoderposition_current > self._encoderposition_center):
@@ -98,6 +99,7 @@ class RotationalAxis(object):
             if (is_forward is False):
                 direction_required = Adafruit_MotorHAT.BACKWARD
                 stepper_incriment = -1
+                limit_label = "Minimum"
 
             # start motion
             self._is_busy = True
@@ -123,7 +125,7 @@ class RotationalAxis(object):
                 if ((is_forward is False) and (encoderposition_current < self._encoderposition_center)):
                     logging.info("Stepping Backward, Found Center at: " + str(encoderposition_current))
                     keep_moving = False
-                if False == check_encoder_limits(encoderposition_current):
+                if False == self.check_encoder_limits(encoderposition_current):
                     logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
                     keep_moving = False
 
@@ -202,7 +204,7 @@ class RotationalAxis(object):
                         logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Stepper Limit Value at: " + str(self.get_stepper_count())+ "; Re-Centering .")
                         self.recenter()
                         break
-                    if False == check_encoder_limits(encoderposition_current):
+                    if False == self.check_encoder_limits(encoderposition_current):
                         logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
                         self.recenter()
                         break
@@ -242,14 +244,18 @@ class RotationalAxis(object):
 
 
     def check_encoder_limits(self, encoderposition_current):
-        is_within_limits = True
-        if (encoderposition_current > self._encoderposition_max):
-            logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
+        try:
             is_within_limits = True
-        if (encoderposition_current < self._encoderposition_min):
-            logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
-            is_within_limits = True
-        return is_within_limits
+            if (encoderposition_current > self._encoderposition_max):
+                logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
+                is_within_limits = True
+            if (encoderposition_current < self._encoderposition_min):
+                logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
+                is_within_limits = True
+            return is_within_limits
+
+        except Exception as e:
+            self.handle_exception(e)
 
 
     def read_encoder_average(self):
