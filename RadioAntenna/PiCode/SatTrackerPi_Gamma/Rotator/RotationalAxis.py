@@ -90,9 +90,9 @@ class RotationalAxis(object):
     def recenter(self):
         try:
             logging.info("Recentering " + str(self._axis_name)+" To Encoder Value: "+ str(self._encoderposition_center))
-            encoderposition_current = self.read_encoder_average()
-            encoderposition_previous = encoderposition_current
-            logging.info("Current Encoder Value = " + str(encoderposition_current))
+            encoder_position_current = self.read_encoder_average()
+            encoderposition_previous = encoder_position_current
+            logging.info("Current Encoder Value = " + str(encoder_position_current))
             nSteps = 0
 
             # set default direction forward
@@ -102,7 +102,7 @@ class RotationalAxis(object):
             limit_label = "Maximum"
 
             # then check to see if we need to go backward
-            if (encoderposition_current > self._encoderposition_center):
+            if (encoder_position_current > self._encoderposition_center):
                 is_forward = False
 
             # set reverse if needed
@@ -117,26 +117,26 @@ class RotationalAxis(object):
             while (keep_moving is True):
                 nSteps+=stepper_incriment
                 self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
-                encoderposition_previous = encoderposition_current
-                encoderposition_current = self.read_encoder_average()  
+                encoderposition_previous = encoder_position_current
+                encoder_position_current = self.read_encoder_average()  
 
                 #check it see if the encoder value is bouncing, if so then re-read encoder
-                if( abs(encoderposition_current - encoderposition_previous) > 4 ):
-                    logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoderposition_current)+"; sleeping 1 second")
+                if( abs(encoder_position_current - encoderposition_previous) > 4 ):
+                    logging.warning("Received Unexpected Encoder with Previous Value: "+str(encoderposition_previous)+"; New Outlier Value: "+str(encoder_position_current)+"; sleeping 1 second")
                     time.sleep(1)
-                    encoderposition_current = self.read_encoder_average()
-                    encoderposition_previous = encoderposition_current
-                    logging.warning("Re-Reading Encoder with New Value "+str(encoderposition_current))
-                logging.info("Steps: " + str(nSteps) + ", "+str(encoderposition_current))
+                    encoder_position_current = self.read_encoder_average()
+                    encoderposition_previous = encoder_position_current
+                    logging.warning("Re-Reading Encoder with New Value "+str(encoder_position_current))
+                logging.info("Steps: " + str(nSteps) + ", "+str(encoder_position_current))
 
-                if ((is_forward is True) and (encoderposition_current > self._encoderposition_center)):
-                    logging.info("Stepping Forward, Found Center at: " + str(encoderposition_current))
+                if ((is_forward is True) and (encoder_position_current > self._encoderposition_center)):
+                    logging.info("Stepping Forward, Found Center at: " + str(encoder_position_current))
                     keep_moving = False
-                if ((is_forward is False) and (encoderposition_current < self._encoderposition_center)):
-                    logging.info("Stepping Backward, Found Center at: " + str(encoderposition_current))
+                if ((is_forward is False) and (encoder_position_current < self._encoderposition_center)):
+                    logging.info("Stepping Backward, Found Center at: " + str(encoder_position_current))
                     keep_moving = False
-                if False == self.check_encoder_limits(encoderposition_current):
-                    logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
+                if False == self.check_encoder_limits(encoder_position_current):
+                    logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoder_position_current)+ "; Re-Centering .")
                     keep_moving = False
 
 
@@ -206,22 +206,22 @@ class RotationalAxis(object):
 
                     # Set  Value to Be Returned to GPredict                    
                     self.set_stepper_count(self.get_stepper_count() + stepper_incriment)
-                    encoderposition_current = self._adc.read(self._adc_channel)
+                    encoder_position_current = self._adc.read(self._adc_channel)
                     
-                    logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
+                    logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoder_position_current))
 
                     # Check Limits
                     if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
                         logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Stepper Limit Value at: " + str(self.get_stepper_count())+ "; Re-Centering .")
                         self.recenter()
                         break
-                    if False == self.check_encoder_limits(encoderposition_current):
-                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoderposition_current)+ "; Re-Centering .")
+                    if False == self.check_encoder_limits(encoder_position_current):
+                        logging.warning(" Exceeded "+limit_label+" of: "+str(limit_label)+" Encoder Limit Value at: " + str(encoder_position_current)+ "; Re-Centering .")
                         self.recenter()
                         break
 
             self._is_busy = False
-            logging.info("New  Stepper Count: "+str(self.get_stepper_count())+"; New  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoderposition_current))
+            logging.info("New  Stepper Count: "+str(self.get_stepper_count())+"; New  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoder_position_current))
             return self.get_degrees()
             
         except Exception as e:
@@ -254,14 +254,14 @@ class RotationalAxis(object):
             self.handle_exception(e)
 
 
-    def check_encoder_limits(self, encoderposition_current):
+    def check_encoder_limits(self, encoder_position_current):
         try:
             is_within_limits = True
-            if (encoderposition_current > self._encoderposition_max):
-                logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
+            if (encoder_position_current > self._encoderposition_max):
+                logging.warning("Current Encoder Value of: "+str(encoder_position_current)+" Exceeded Maximum Encoder Value of: " + str(self._encoderposition_max))
                 is_within_limits = True
-            if (encoderposition_current < self._encoderposition_min):
-                logging.warning("Current Encoder Value of: "+str(encoderposition_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
+            if (encoder_position_current < self._encoderposition_min):
+                logging.warning("Current Encoder Value of: "+str(encoder_position_current)+" Exceeded Minimum Encoder Value of: " + str(self._encoderposition_min))
                 is_within_limits = True
             return is_within_limits
 
