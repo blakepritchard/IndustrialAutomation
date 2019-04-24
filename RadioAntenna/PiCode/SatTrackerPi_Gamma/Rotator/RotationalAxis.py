@@ -75,6 +75,16 @@ class RotationalAxis(object):
     
     def reverse_movement(self):
         self._reverse_movement = not self._reverse_movement
+        
+        #new_max_step = -1 * self._steppercount_min
+        #new_min_step = -1 * self._steppercount_max
+        #self._steppercount_min = new_min_step
+        #self._steppercount_max = new_max_step
+
+        #new_max_encoder = self._encoderposition_min
+        #new_min_encoder = self._encoderposition_max
+        #self._encoderposition_min = new_max_encoder
+        #self._encoderposition_max = new_min_encoder
 
    #Re-Center
     def recenter(self):
@@ -172,17 +182,18 @@ class RotationalAxis(object):
                 # then check to see if we need to go backward
                 if steps_required < 0:
                     is_forward = False
-                
+
                 #check for reverse gear ratio (Elevation)
                 if self._reverse_movement == True:
                     is_forward = not is_forward
+                    stepper_incriment *= -1
 
                 if(is_forward == False):
                     direction_required = Adafruit_MotorHAT.BACKWARD
                     direction_label = "CounterClockwise"
                     limit_label = "Minimum"
-                    stepper_incriment = -1
-
+                    stepper_incriment *= -1
+                    
                 logging.info(" Target: "+str(_target)+",  Current: "+str(_current_degrees))
                 logging.info(" Stepper Count: "+str(self.get_stepper_count())+", Moving  "+str(direction_label)+" by Estimated: " + str(steps_required) + " steps.")
 
