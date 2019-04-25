@@ -54,7 +54,8 @@ function polarity_tracking_update(is_tracking)
     var date = new Date();
     obj_polarity_command = {rotator_id: 1, command_code:command, command_value:int_polarity_speed };
     func_success = function(data){ $("#polarity_current").text(data.polarity_degrees); }
-    function post_rotator_command(obj_polarity_command, func_success)
+    post_rotator_command(obj_polarity_command, func_success)
+}
  /*
     json_polarity_command = JSON.stringify(obj_polarity_command);
     resp_polarity_command = jQuery.ajax ({
@@ -68,8 +69,6 @@ function polarity_tracking_update(is_tracking)
         }
     });
 */
-
-}
 
 
 
