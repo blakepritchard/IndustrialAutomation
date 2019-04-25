@@ -5,8 +5,13 @@ buttonTrackPolarity = false;
 
 
 $( document ).ready(function() {
-    $("#polarity_speed").val("1")
-    screen_update_toggle()
+    $("#polarity_speed").val("1");
+    $('#btnSetAzimuth').click(polarity_set());
+    $('#btnSetElevation').click(polarity_set());
+    $('#btnSetPolarity').click(polarity_set());
+    $('#btnPolarityTrackingStart').click(polarity_tracking_update(1));
+    $('#btnPolarityTrackingStop').click(polarity_tracking_update(0));
+    screen_update_toggle();
 });
 
 function screen_update_toggle(){
