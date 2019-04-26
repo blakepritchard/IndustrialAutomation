@@ -6,11 +6,11 @@ buttonTrackPolarity = false;
 
 $( document ).ready(function() {
     $("#polarity_speed").val("1");
-    $('#btnSetAzimuth').onclick = function(){azimuth_set()};
-    $('#btnSetElevation').onclick = function(){elevation_set()};
-    $('#btnSetPolarity').onclick = function(){polarity_set()};
-    $('#btnPolarityTrackingStart').onclick = function(){polarity_tracking_update(1)};
-    $('#btnPolarityTrackingStop').onclick = function(){polarity_tracking_update(0)};
+    $('#btnSetAzimuth').on("click" = function(){azimuth_set();});
+    $('#btnSetElevation').on("click" = function(){elevation_set();});
+    $('#btnSetPolarity').on("click" = function(){polarity_set();});
+    $('#btnPolarityTrackingStart').on("click" = function(){polarity_tracking_update(1);});
+    $('#btnPolarityTrackingStop').on("click" = function(){polarity_tracking_update(0);});
     screen_update_toggle();
 });
 
