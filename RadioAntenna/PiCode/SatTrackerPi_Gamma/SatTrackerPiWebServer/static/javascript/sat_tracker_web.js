@@ -57,41 +57,7 @@ function polarity_tracking_update(is_tracking)
     func_success = function(data){ $("#polarity_current").text(data.polarity_degrees); }
     post_rotator_command(obj_polarity_command, func_success)
 }
- /*
-    json_polarity_command = JSON.stringify(obj_polarity_command);
-    resp_polarity_command = jQuery.ajax ({
-        url: "/sat_tracker/api/rotator/command",
-        type: "POST",
-        data: json_polarity_command,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            $("#polarity_current").text(data.polarity_degrees);
-        }
-    });
-*/
-
-
-
-/*
-function polarity_set(int_polarity_next){
-    int_polarity_next = $("#polarity_next").val()
-    obj_polarity_command = {rotator_id: 1, command_code:"PP", command_value:int_polarity_next };
-    json_polarity_command = JSON.stringify(obj_polarity_command);
-    resp_polarity_next = jQuery.ajax ({
-        url: "/sat_tracker/api/rotator/command",
-        type: "POST",
-        data: json_polarity_command,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            $("#polarity_current").text(data.polarity_degrees);
-            
-        }
-    });
-} 
-*/
-
+ 
 function polarity_set(int_polarity_next){
     int_polarity_next = $("#polarity_next").val()
     obj_polarity_command = {rotator_id: 1, command_code:"PP", command_value:int_polarity_next };
