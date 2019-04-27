@@ -9,8 +9,8 @@ $( document ).ready(function() {
     $('#btnSetAzimuth').on("click", function(){ azimuth_set(); });
     $('#btnSetElevation').on("click", function(){ elevation_set(); });
     $('#btnSetPolarity').on("click", function(){ polarity_set(); });
-    $('#btnPolarityTrackingStart').on("click", function(){polarity_tracking_update(1); });
-    $('#btnPolarityTrackingStop').on("click", function(){polarity_tracking_update(0); });
+    $('#btnPolarityTrackingStart').on("click", function(){ polarity_tracking_update(1); });
+    $('#btnPolarityTrackingStop').on("click", function(){ polarity_tracking_update(0); });
     $('#btnUpdateScreen').on("click", function(){ screen_update_toggle(); });
     screen_update_toggle();
 });
