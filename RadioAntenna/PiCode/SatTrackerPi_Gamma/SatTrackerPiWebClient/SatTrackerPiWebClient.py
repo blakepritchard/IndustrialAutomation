@@ -83,8 +83,8 @@ class SatTrackerPiWebClient:
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
             start_time_next = float(time.time()+ interval_next)
-            logging.debug("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
-            logging.debug("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
+            logging.info("Start Time: "+str(self.start_time)+", Run Time:" + str(run_time)+ "End Time: "+ str(current_time))
+            logging.info("Interval Until Next Start Time:"+ str(interval_next) +", Next Start Time: "+ str(start_time_next))
             self.scheduler.enter(interval_next, 1, self._execute_client_loop, ())
         except Exception as exception:
             return self.handle_exception(exception)
