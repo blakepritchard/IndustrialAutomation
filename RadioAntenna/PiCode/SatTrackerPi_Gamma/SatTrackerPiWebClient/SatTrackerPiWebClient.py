@@ -168,6 +168,7 @@ class SatTrackerPiWebClient:
 
     def post_rotator_status(self):
         try:
+            logging.info("getting rotator status")
             rotator_serial_response = self.get_rotator_status()
             dict_json_post = json.loads(rotator_serial_response)
             dict_json_post["id"] = self.rotator_id
@@ -178,10 +179,10 @@ class SatTrackerPiWebClient:
             self.polarity_degrees_current = dict_json_post["polarity_degrees"]
 
             if(not isinstance(rotator_serial_response, Exception)):
-                logging.debug("Posting Rotator Status: "+str(str_json_post))
+                logging.info("Posting Rotator Status: "+str(str_json_post))
                 url = self.url_webserver + "/sat_tracker/api/rotator/status"
                 r = requests.post(url, json=str_json_post)
-                logging.debug("Post Response Text: "+str(r.text))
+                logging.info("Post Response Text: "+str(r.text))
             else:
                 logging.error("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
                 raise(rotator_serial_response)
@@ -193,7 +194,7 @@ class SatTrackerPiWebClient:
     def get_rotator_status(self):
         try:
             json_result = self.execute_serial_command("RS", None)
-            logging.debug("Rotator Status: " + json_result)
+            logging.info("Rotator Status: " + json_result)
             return json_result
         
         except Exception as exception:
