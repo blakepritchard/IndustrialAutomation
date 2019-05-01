@@ -71,6 +71,7 @@ class SatTrackerPiWebClient:
 
     def _execute_client_loop(self):
         try:
+            logging.info("Starting Client Loop Interval." )
             self.start_time = time.time()
             self.post_rotator_status()
 
