@@ -73,13 +73,18 @@ class SatTrackerPiWebClient:
         try:
             logging.info("Starting Client Loop Interval." )
             self.start_time = time.time()
+
+            logging.info("Posting Rotator Status" )
             self.post_rotator_status()
 
+            logging.info("Executing Client Commands" )
             self.execute_client_commands()
 
+            logging.info("Executing Polarity Tracking" )
             if(self.polarity_is_tracking):
                 self.execute_polarity_tracking()
 
+            logging.info("Calculating Time" )
             current_time = time.time()
             run_time = current_time - self.start_time
             interval_next = float(self.interval - (run_time % self.interval ))
