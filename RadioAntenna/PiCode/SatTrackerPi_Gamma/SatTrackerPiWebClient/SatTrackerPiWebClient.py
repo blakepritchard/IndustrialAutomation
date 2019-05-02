@@ -286,6 +286,7 @@ class SatTrackerPiWebClient:
             return serial_response
 
         except serial.SerialException as e:
+            logging.error("A Serial Exception Has Occurred!")
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             #logging.error(exc_type, fname, exc_tb.tb_lineno)
@@ -295,6 +296,7 @@ class SatTrackerPiWebClient:
             return e.args[0]
 
         except Exception as e:
+            logging.error("A General Exception Has Occurred!")
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             #logging.error(exc_type, fname, exc_tb.tb_lineno)
