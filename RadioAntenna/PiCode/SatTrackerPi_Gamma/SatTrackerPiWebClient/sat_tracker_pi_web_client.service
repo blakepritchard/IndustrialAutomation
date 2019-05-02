@@ -15,7 +15,7 @@ User=pi
 # Execute job if it missed a run due to machine being off
 Persistent=true
 # Run 120 seconds after boot for the first time
-OnBootSec=120
+OnBootSec=600
 
 
 [Install]
