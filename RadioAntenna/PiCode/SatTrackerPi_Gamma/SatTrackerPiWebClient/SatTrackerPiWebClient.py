@@ -168,25 +168,32 @@ class SatTrackerPiWebClient:
 
     def post_rotator_status(self):
         try:
+            return_val = ""
             logging.info("getting rotator status")
             rotator_serial_response = self.get_rotator_status()
-            dict_json_post = json.loads(rotator_serial_response)
-            dict_json_post["id"] = self.rotator_id
-            dict_json_post["polarity_is_tracking"] = self.polarity_is_tracking
-            dict_json_post["polarity_tracking_speed"] = self.polarity_tracking_speed
-            str_json_post = json.dumps(dict_json_post)
+            if(rotator_serial_response != "Busy"):
+                dict_json_post = json.loads(rotator_serial_response)
+                dict_json_post["id"] = self.rotator_id
+                dict_json_post["polarity_is_tracking"] = self.polarity_is_tracking
+                dict_json_post["polarity_tracking_speed"] = self.polarity_tracking_speed
+                str_json_post = json.dumps(dict_json_post)
 
-            self.polarity_degrees_current = dict_json_post["polarity_degrees"]
+                self.polarity_degrees_current = dict_json_post["polarity_degrees"]
 
-            if(not isinstance(rotator_serial_response, Exception)):
-                logging.info("Posting Rotator Status: "+str(str_json_post))
-                url = self.url_webserver + "/sat_tracker/api/rotator/status"
-                r = requests.post(url, json=str_json_post)
-                logging.info("Post Response Text: "+str(r.text))
+                if(not isinstance(rotator_serial_response, Exception)):
+                    logging.info("Posting Rotator Status: "+str(str_json_post))
+                    url = self.url_webserver + "/sat_tracker/api/rotator/status"
+                    r = requests.post(url, json=str_json_post)
+                    logging.info("Post Response Text: "+str(r.text))
+                else:
+                    logging.error("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
+                    raise(rotator_serial_response)
+                return_val = r.text
             else:
-                logging.error("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
-                raise(rotator_serial_response)
-            return r.text
+                logging.info("Rotator Is Busy. Not Ready to Post Rotator Status.")
+
+            return return_val
+
         except Exception as exception:
             return self.handle_exception(exception)       
 
