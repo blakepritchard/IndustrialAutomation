@@ -18,63 +18,63 @@
 
     </header>
     <div class="main_display">
-        <div class="dashboard">
-            <div class="azimuth">
-                <h1>Azimuth: <br>
-                  <span id="azimuth_current"></span>
-                </h1>
-                <div id="elevationNext"></div>
-                  Set Azimuth: 
-                  <input type="text" name="azimuth_next"><br>
-                </div>
-                <div id="azimuthSet">
-                  <button id="btnSetAzimuth">Set Azimuth</button>
-                </div>                
-            </div>
-            <div class="elevation">
-                <h1>Elevation: <br>
-                  <span id="elevation_current"></span>
-                </h1>
-                <div id="elevationNext"></div>
-                  Set Elevation: 
-                  <input type="text" name="elevation_next"><br>
-                </div>
-                <div id="elevationSet">
-                  <button id="btnSetElevation">Set Elevation</button>
-                </div>
-            </div>
-            <div class="polarity">
-                <h1>Polarity: <br>
-                  <span id="polarity_current"></span>
-                </h1>
-                <div id="polarityNext">
-                  Set Polarity:
-                  <input type="text" id="polarity_next"><br>
-                </div>
-                <div id="polaritySet">
-                  <button id="btnSetPolarity">Set Polarity</button>
-                </div>
-                <div id="polarityTrackingStart">
-                  <button id="btnPolarityTrackingStart">Start</button>
-                </div>                
-                <div id="polarityTrackingStop">
-                  <button id="btnPolarityTrackingStop">Stop</button>
-                </div>                
-                <div id="polarityTracking">
-                  <input type="checkbox"  id="chkTrackPolarity">Track</button>
-                </div>
-                <div id="polaritySpeed">
-                    Speed
-                    <input type="text" id="polarity_speed"><br>
-                  </div>
-            </div>
+      <div class="dashboard">
+        <div class="azimuth">
+          <h1>Azimuth: <br>
+            <span id="azimuth_current"></span>
+          </h1>
+          <div id="azimuthNext">
+            Set Azimuth: 
+            <input type="text" name="azimuth_next"><br>
+          </div>
+          <div id="azimuthSet">
+            <button id="btnSetAzimuth">Set Azimuth</button>
+          </div>                
         </div>
-        <div id="logview">
+        <div class="elevation">
+          <h1>Elevation: <br>
+            <span id="elevation_current"></span>
+          </h1>
+          <div id="elevationNext">
+            Set Elevation: 
+            <input type="text" name="elevation_next"><br>
+          </div>
+          <div id="elevationSet">
+            <button id="btnSetElevation">Set Elevation</button>
+          </div>
+        </div>
+        <div class="polarity">
+            <h1>Polarity: <br>
+              <span id="polarity_current"></span>
+            </h1>
+            <div id="polarityNext">
+              Set Polarity:
+              <input type="text" id="polarity_next"><br>
+            </div>
+            <div id="polaritySet">
+              <button id="btnSetPolarity">Set Polarity</button>
+            </div>
+            <div id="polarityTrackingStart">
+              <button id="btnPolarityTrackingStart">Start</button>
+            </div>                
+            <div id="polarityTrackingStop">
+              <button id="btnPolarityTrackingStop">Stop</button>
+            </div>                
+            <div id="polarityTracking">
+              <input type="checkbox"  id="chkTrackPolarity">Track</button>
+            </div>
+            <div id="polaritySpeed">
+                Speed
+                <input type="text" id="polarity_speed"><br>
+              </div>
+        </div>
+      </div>
+      <div id="logview">
 
-        </div>
-        <div id="menu_bar">
-            <input type="button" id="btnUpdateScreen" value="Stop Screen Updates">
-        </div>
+      </div>
+      <div id="menu_bar">
+          <input type="button" id="btnUpdateScreen" value="Stop Screen Updates">
+      </div>
     </div>
     </div>
       {% block content %}
