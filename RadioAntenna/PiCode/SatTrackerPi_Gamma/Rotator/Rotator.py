@@ -254,25 +254,25 @@ class Rotator(object):
                 if len(rotator_command) == 2:
                     if  "RS" == rotator_command:
                        result = str(self.get_rotator_status()) 
-                       logging.info("Received Rotator Status Request, Result: " + str(result)) 
+                       logging.debug("Received Rotator Status Request, Result: " + str(result)) 
                     elif    "AZ" == rotator_command: 
                         result = str(self._Azimuth.get_degrees())
-                        logging.info("Received Azimuth Request, Result: " + str(result))
+                        logging.debug("Received Azimuth Request, Result: " + str(result))
                     elif    "EL" == rotator_command: 
                         result = str(self._Elevation.get_degrees())
-                        logging.info("Received Elevation Request, Result: " + str(result))
+                        logging.debug("Received Elevation Request, Result: " + str(result))
                     elif    "PO" == rotator_command: 
                         result = str(self._Polarity.get_degrees())
-                        logging.info("Received Polarity Request, Result: " + str(result))
+                        logging.debug("Received Polarity Request, Result: " + str(result))
                     elif    "SA" == rotator_command: 
                         self._Azimuth.stop()
-                        logging.info("Received Stop Azimuth Command")
+                        logging.debug("Received Stop Azimuth Command")
                     elif    "SE" == rotator_command: 
                         self._Elevation.stop()
-                        logging.info("Received Stop Elevation Command")
+                        logging.debug("Received Stop Elevation Command")
                     elif    "SP" == rotator_command: 
                         self._Polarity.stop()
-                        logging.info("Received Stop Polarity Command")
+                        logging.debug("Received Stop Polarity Command")
                     elif    "VE" == rotator_command: result = self.get_version_text()
                     elif    "HE" == rotator_command: result = self.get_help_text()
                     

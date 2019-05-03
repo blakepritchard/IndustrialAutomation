@@ -169,7 +169,7 @@ class SatTrackerPiWebClient:
     def post_rotator_status(self):
         try:
             return_val = ""
-            logging.info("getting rotator status")
+            logging.debug("getting rotator status")
             rotator_serial_response = self.get_rotator_status()
             if(rotator_serial_response != "Busy"):
                 dict_json_post = json.loads(rotator_serial_response)
@@ -181,16 +181,16 @@ class SatTrackerPiWebClient:
                 self.polarity_degrees_current = dict_json_post["polarity_degrees"]
 
                 if(not isinstance(rotator_serial_response, Exception)):
-                    logging.info("Posting Rotator Status: "+str(str_json_post))
+                    logging.debug("Posting Rotator Status: "+str(str_json_post))
                     url = self.url_webserver + "/sat_tracker/api/rotator/status"
                     r = requests.post(url, json=str_json_post)
-                    logging.info("Post Response Text: "+str(r.text))
+                    logging.debug("Post Response Text: "+str(r.text))
                 else:
                     logging.error("Post_Rotator_Status recieved and will re-raise the exception: "+str(rotator_serial_response))
                     raise(rotator_serial_response)
                 return_val = r.text
             else:
-                logging.info("Rotator Is Busy. Not Ready to Post Rotator Status.")
+                logging.warning("Rotator Is Busy. Not Ready to Post Rotator Status.")
 
             return return_val
 
@@ -201,7 +201,7 @@ class SatTrackerPiWebClient:
     def get_rotator_status(self):
         try:
             json_result = self.execute_serial_command("RS", None)
-            logging.info("Rotator Status: " + json_result)
+            logging.debug("Rotator Status: " + json_result)
             return json_result
         
         except Exception as exception:
@@ -259,7 +259,7 @@ class SatTrackerPiWebClient:
             #self.serial_lock.acquire()
             serial_response = ""
             serial_port = serial.Serial(str(self.serial_port_name), self.speed_serial, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
-            logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(self.serial_port_name) )
+            logging.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is about to Send Serial Command: "+str(serial_command)+" to: "+ str(self.serial_port_name) )
 
             # Send Command
             serial_command += "\n"
@@ -286,7 +286,7 @@ class SatTrackerPiWebClient:
                         char_next = ''
                         byte_next = 0
                 serial_response = characters_recieved
-                logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(self.serial_port_name) )
+                logging.debug("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" to: "+ str(self.serial_port_name) )
 
             #Close Port, Return Result
             serial_port.close()
