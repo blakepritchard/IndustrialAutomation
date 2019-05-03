@@ -142,6 +142,9 @@ USAGE
         bytes_carraigereturn = bytes("\r")
         bytes_linefeed = bytes("\n")    
 
+        logging.info("Sending Serial Message to Web Client: Ready")
+        serial_port_website.write("Ready\n")
+
         logging.info("Reading Serial Port Loop")
         
         command_rotctl = ""

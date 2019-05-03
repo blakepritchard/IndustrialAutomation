@@ -313,6 +313,59 @@ class SatTrackerPiWebClient:
             return e.args[0]
 
 
+    def wait_until_rotator_ready(self, serial_timeout=0):
+
+        try:
+            #self.serial_lock.acquire()
+            serial_response = ""
+            serial_port = serial.Serial(str(self.serial_port_name), self.speed_serial, rtscts=True,dsrdtr=True, timeout=serial_timeout) 
+            logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " is waiting until Rotator is Ready, Listening to Port: "+ str(self.serial_port_name) )
+
+            # Send Command
+            bytes_carraigereturn = bytes("\r")
+            bytes_linefeed = bytes("\n")  
+            characters_recieved = ""
+            continue_reading=True
+            while continue_reading:
+                byte_next = serial_port.read()
+                char_next = byte_next.decode("utf-8")
+
+                # Continue Reading Bytes From the Serial Port Until We Find a NewLine Charater ("\n") LineFeed (LF) 0x0A
+                if byte_next:
+                    if ((byte_next == bytes_linefeed) or (byte_next == bytes_carraigereturn)):
+                        continue_reading=False
+                    else:
+                        characters_recieved += char_next         
+                    char_next = ''
+                    byte_next = 0
+            serial_response = characters_recieved
+            logging.info("User: " + str(pwd.getpwuid(os.getuid()).pw_name) + " Received Serial Response: "+str(serial_response)+" from Port: "+ str(self.serial_port_name) + ", at time: " + str(time.time()))
+
+            #Close Port, Return Result
+            serial_port.close()
+            return serial_response
+
+        except serial.SerialException as e:
+            logging.error("A Serial Exception Has Occurred While Waiting!")
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            #logging.error(exc_type, fname, exc_tb.tb_lineno)
+            logging.exception(e)
+            print(exc_type, fname, exc_tb.tb_lineno)
+            print(e)
+            return e.args[0]
+
+        except Exception as e:
+            logging.error("A General Exception Has Occurred While Waiting!")
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            #logging.error(exc_type, fname, exc_tb.tb_lineno)
+            logging.exception(e)
+            print(exc_type, fname, exc_tb.tb_lineno)
+            print(e)
+            return e.args[0]
+
+
     def handle_exception(self, ex):
             logging.error("An Exception Has Occurred!")        
             logging.exception(ex)
@@ -341,6 +394,9 @@ def main(argv=None):
     logging.info("Verbose mode on Log Level: "+str(args.loglevel))
     
     sat_tracker_webclient = SatTrackerPiWebClient(args.loglevel, args.rotator, args.speed, args.webserver, args.interval)
+
+    logging.info("Web Client Object Initialized at" + str(sat_tracker_webclient.start_time)+", Beginning to Wait for Rotator Ready")
+    sat_tracker_webclient.wait_until_rotator_ready()
 
     logging.info("Starting Web Client Loop")
     sat_tracker_webclient.start_client_loop()
