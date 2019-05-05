@@ -116,6 +116,8 @@ class SatTrackerPiWebClient:
             elif "SP" == command['command_code']:
                 self.stop_polarity_tracking(command)
                 self.delete_client_command(command)
+            elif "PO" == command['command_code']:
+                self.set_polarity_json(command)
         except Exception as exception:
             return self.handle_exception(exception)
 
@@ -215,8 +217,9 @@ class SatTrackerPiWebClient:
 
             float_polarity_next = polarity_json['polarity_new']
  
-            polarity_command= "PP" +  str(float_polarity_next)
+            polarity_command= "PO" +  str(float_polarity_next)
             polarity_current = self.execute_serial_command(polarity_command, None)
+            self.polarity_degrees_current = polarity_current
             json_result = {"polarity_degrees": polarity_current}
             return json.dumps(json_result)
 
