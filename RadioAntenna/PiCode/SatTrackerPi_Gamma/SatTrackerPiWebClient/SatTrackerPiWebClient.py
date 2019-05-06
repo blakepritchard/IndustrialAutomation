@@ -215,7 +215,7 @@ class SatTrackerPiWebClient:
             json_result = ""
             logging.info("a set_polarity_json command is being sent with data: " + polarity_json)
 
-            float_polarity_next = polarity_json['polarity_new']
+            float_polarity_next = polarity_json['command_value']
  
             polarity_command= "PO" +  str(float_polarity_next)
             polarity_current = self.execute_serial_command(polarity_command, None)

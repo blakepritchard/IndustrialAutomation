@@ -60,7 +60,7 @@ function polarity_tracking_update(is_tracking)
  
 function polarity_set(int_polarity_next){
     int_polarity_next = $("#polarity_next").val()
-    obj_polarity_command = {rotator_id: 1, command_code:"PP", command_value:int_polarity_next };
+    obj_polarity_command = {rotator_id: 1, command_code:"PO", command_value:int_polarity_next };
     func_success = function(data){$("#polarity_current").text(data.polarity_degrees);}
     post_rotator_command(obj_polarity_command, func_success);
 } 
