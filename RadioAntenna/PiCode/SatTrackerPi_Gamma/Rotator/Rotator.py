@@ -112,12 +112,15 @@ class Rotator(object):
 
         # bottom hat is default address 0x60
         # create a default object, no changes to I2C address or frequency
+        logging.info("Initializing Motor Hat A at I2C address: 0x60")
         self._encoder_A = Adafruit_MotorHAT(addr=0x60)
         
         # top hat has A0 jumper closed, so its address 0x61
+        logging.info("Initializing Motor Hat B at I2C address: 0x61")
         self._encoder_B = Adafruit_MotorHAT(addr=0x61)
 
         # Analog Digital Converter
+        logging.info("Initializing ADC Hat on SPI bus")
         self._adc = MCP3208()
 
 
