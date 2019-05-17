@@ -22,14 +22,14 @@ path_runtime = os.path.dirname(__file__)
 path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
 
-path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
+#path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
 path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
-path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
+#path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
 
 # Add Library Paths to Runtime Environment
 sys.path.insert(0, os.path.abspath(path_lib_stepper))
-sys.path.insert(0, os.path.abspath(path_lib_gpio))
-sys.path.insert(0, os.path.abspath(path_lib_adc))
+#sys.path.insert(0, os.path.abspath(path_lib_gpio))
+#sys.path.insert(0, os.path.abspath(path_lib_adc))
 
 import RotationalAxis
 
