@@ -8,6 +8,11 @@ sudo pip install flask
 sudo pip install flask_sqlalchemy
 sudo pip install flask_migrate
 
+sudo pip install Adafruit_GPIO
+sudo pip install Adafruit_MotorHAT
+sudo pip install mcp3208
+
+
 cd ~/
 mkdir ~/src
 mkdir ~/src/git
