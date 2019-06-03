@@ -8,7 +8,6 @@ import json
 import requests 
 import argparse
 
-#from threading import Timer
 import sched
 import time
 
@@ -55,7 +54,6 @@ class SatTrackerPiWebClient:
         #self.scheduler.cancel(self.client_loop_event)
         
         
-    
     def start_client_loop(self):
         try:
             logging.info("Initializing Timer With Interval: "+str(self.interval))
