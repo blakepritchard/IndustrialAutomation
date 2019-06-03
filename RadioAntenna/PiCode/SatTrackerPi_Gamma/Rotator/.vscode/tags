@@ -1,0 +1,264 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ForwardStepperTest.py	../ForwardStepperTest.py	1;"	kind:file	line:1
+Rotator	../Rotator.py	/^class Rotator(object):$/;"	kind:class	line:43
+Rotator	../Rotator_BACKUP_14164.py	/^class Rotator(object):$/;"	kind:class	line:38
+Rotator	../Rotator_BASE_14164.py	/^class Rotator(object):$/;"	kind:class	line:41
+Rotator	../Rotator_LOCAL_14164.py	/^class Rotator(object):$/;"	kind:class	line:38
+Rotator	../Rotator_REMOTE_14164.py	/^class Rotator(object):$/;"	kind:class	line:41
+Rotator.py	../Rotator.py	1;"	kind:file	line:1
+Rotator_BACKUP_14164.py	../Rotator_BACKUP_14164.py	1;"	kind:file	line:1
+Rotator_BASE_14164.py	../Rotator_BASE_14164.py	1;"	kind:file	line:1
+Rotator_LOCAL_14164.py	../Rotator_LOCAL_14164.py	1;"	kind:file	line:1
+Rotator_REMOTE_14164.py	../Rotator_REMOTE_14164.py	1;"	kind:file	line:1
+SPI_DEVICE	../Rotator.py	/^    SPI_DEVICE = 0$/;"	kind:variable	line:70
+SPI_DEVICE	../Rotator_BACKUP_14164.py	/^    SPI_DEVICE = 0$/;"	kind:variable	line:51
+SPI_DEVICE	../Rotator_LOCAL_14164.py	/^    SPI_DEVICE = 0$/;"	kind:variable	line:51
+SPI_PORT	../Rotator.py	/^    SPI_PORT   = 0$/;"	kind:variable	line:69
+SPI_PORT	../Rotator_BACKUP_14164.py	/^    SPI_PORT   = 0$/;"	kind:variable	line:50
+SPI_PORT	../Rotator_LOCAL_14164.py	/^    SPI_PORT   = 0$/;"	kind:variable	line:50
+__init__	../Rotator.py	/^    def __init__(self):$/;"	kind:member	line:97
+__init__	../Rotator_BACKUP_14164.py	/^    def __init__(self):$/;"	kind:member	line:76
+__init__	../Rotator_BASE_14164.py	/^    def __init__(self):$/;"	kind:member	line:70
+__init__	../Rotator_LOCAL_14164.py	/^    def __init__(self):$/;"	kind:member	line:76
+__init__	../Rotator_REMOTE_14164.py	/^    def __init__(self):$/;"	kind:member	line:70
+__init__.py	../__init__.py	1;"	kind:file	line:1
+_adc	../Rotator.py	/^    _adc = 0$/;"	kind:variable	line:50
+_adc	../Rotator_BACKUP_14164.py	/^    _adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))$/;"	kind:variable	line:52
+_adc	../Rotator_LOCAL_14164.py	/^    _adc = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))$/;"	kind:variable	line:52
+_azimuth_current	../Rotator_BACKUP_14164.py	/^    _azimuth_current = 0$/;"	kind:variable	line:57
+_azimuth_current	../Rotator_BASE_14164.py	/^    _azimuth_current = 0$/;"	kind:variable	line:51
+_azimuth_current	../Rotator_LOCAL_14164.py	/^    _azimuth_current = 0$/;"	kind:variable	line:57
+_azimuth_current	../Rotator_REMOTE_14164.py	/^    _azimuth_current = 0$/;"	kind:variable	line:51
+_azimuth_degrees_per_step	../Rotator.py	/^    _azimuth_degrees_per_step   = 1\/_azimuth_steps_per_degree$/;"	kind:variable	line:86
+_azimuth_requires_calibration	../Rotator.py	/^    _azimuth_requires_calibration = True$/;"	kind:variable	line:90
+_azimuth_stepper_calibration_offset	../Rotator_BACKUP_14164.py	/^    _azimuth_stepper_calibration_offset = 0$/;"	kind:variable	line:69
+_azimuth_stepper_calibration_offset	../Rotator_BASE_14164.py	/^    _azimuth_stepper_calibration_offset = 0$/;"	kind:variable	line:63
+_azimuth_stepper_calibration_offset	../Rotator_LOCAL_14164.py	/^    _azimuth_stepper_calibration_offset = 0$/;"	kind:variable	line:69
+_azimuth_stepper_calibration_offset	../Rotator_REMOTE_14164.py	/^    _azimuth_stepper_calibration_offset = 0$/;"	kind:variable	line:63
+_azimuth_stepper_count	../Rotator.py	/^    _azimuth_stepper_count = 0$/;"	kind:variable	line:78
+_azimuth_stepper_count	../Rotator_BACKUP_14164.py	/^    _azimuth_stepper_count = 0$/;"	kind:variable	line:65
+_azimuth_stepper_count	../Rotator_BASE_14164.py	/^    _azimuth_stepper_count = 0$/;"	kind:variable	line:59
+_azimuth_stepper_count	../Rotator_LOCAL_14164.py	/^    _azimuth_stepper_count = 0$/;"	kind:variable	line:65
+_azimuth_stepper_count	../Rotator_REMOTE_14164.py	/^    _azimuth_stepper_count = 0$/;"	kind:variable	line:59
+_azimuth_steps_per_degree	../Rotator.py	/^    _azimuth_steps_per_degree = 2$/;"	kind:variable	line:82
+_azimuth_target	../Rotator.py	/^    _azimuth_target = 0$/;"	kind:variable	line:73
+_azimuth_target	../Rotator_BACKUP_14164.py	/^    _azimuth_target = 0$/;"	kind:variable	line:61
+_azimuth_target	../Rotator_BASE_14164.py	/^    _azimuth_target = 0$/;"	kind:variable	line:55
+_azimuth_target	../Rotator_LOCAL_14164.py	/^    _azimuth_target = 0$/;"	kind:variable	line:61
+_azimuth_target	../Rotator_REMOTE_14164.py	/^    _azimuth_target = 0$/;"	kind:variable	line:55
+_cabletension_azimuth_center	../Rotator_BACKUP_14164.py	/^    _cabletension_azimuth_center = 701$/;"	kind:variable	line:45
+_cabletension_azimuth_center	../Rotator_LOCAL_14164.py	/^    _cabletension_azimuth_center = 701$/;"	kind:variable	line:45
+_cabletension_azimuth_max	../Rotator_BACKUP_14164.py	/^    _cabletension_azimuth_max = 778$/;"	kind:variable	line:47
+_cabletension_azimuth_max	../Rotator_LOCAL_14164.py	/^    _cabletension_azimuth_max = 778$/;"	kind:variable	line:47
+_cabletension_azimuth_min	../Rotator_BACKUP_14164.py	/^    _cabletension_azimuth_min = 552$/;"	kind:variable	line:46
+_cabletension_azimuth_min	../Rotator_LOCAL_14164.py	/^    _cabletension_azimuth_min = 552$/;"	kind:variable	line:46
+_elevation_current	../Rotator_BACKUP_14164.py	/^    _elevation_current = 0$/;"	kind:variable	line:58
+_elevation_current	../Rotator_BASE_14164.py	/^    _elevation_current = 0$/;"	kind:variable	line:52
+_elevation_current	../Rotator_LOCAL_14164.py	/^    _elevation_current = 0$/;"	kind:variable	line:58
+_elevation_current	../Rotator_REMOTE_14164.py	/^    _elevation_current = 0$/;"	kind:variable	line:52
+_elevation_degrees_per_step	../Rotator.py	/^    _elevation_degrees_per_step = 1\/_elevation_steps_per_degree$/;"	kind:variable	line:87
+_elevation_requires_calibration	../Rotator.py	/^    _elevation_requires_calibration = True$/;"	kind:variable	line:91
+_elevation_stepper_calibration_offset	../Rotator_BACKUP_14164.py	/^    _elevation_stepper_calibration_offset = 0$/;"	kind:variable	line:70
+_elevation_stepper_calibration_offset	../Rotator_BASE_14164.py	/^    _elevation_stepper_calibration_offset = 0$/;"	kind:variable	line:64
+_elevation_stepper_calibration_offset	../Rotator_LOCAL_14164.py	/^    _elevation_stepper_calibration_offset = 0$/;"	kind:variable	line:70
+_elevation_stepper_calibration_offset	../Rotator_REMOTE_14164.py	/^    _elevation_stepper_calibration_offset = 0$/;"	kind:variable	line:64
+_elevation_stepper_count	../Rotator.py	/^    _elevation_stepper_count = 0$/;"	kind:variable	line:79
+_elevation_stepper_count	../Rotator_BACKUP_14164.py	/^    _elevation_stepper_count = 0$/;"	kind:variable	line:66
+_elevation_stepper_count	../Rotator_BASE_14164.py	/^    _elevation_stepper_count = 0$/;"	kind:variable	line:60
+_elevation_stepper_count	../Rotator_LOCAL_14164.py	/^    _elevation_stepper_count = 0$/;"	kind:variable	line:66
+_elevation_stepper_count	../Rotator_REMOTE_14164.py	/^    _elevation_stepper_count = 0$/;"	kind:variable	line:60
+_elevation_steps_per_degree	../Rotator.py	/^    _elevation_steps_per_degree = 4$/;"	kind:variable	line:83
+_elevation_target	../Rotator.py	/^    _elevation_target = 0    $/;"	kind:variable	line:74
+_elevation_target	../Rotator_BACKUP_14164.py	/^    _elevation_target = 0    $/;"	kind:variable	line:62
+_elevation_target	../Rotator_BASE_14164.py	/^    _elevation_target = 0    $/;"	kind:variable	line:56
+_elevation_target	../Rotator_LOCAL_14164.py	/^    _elevation_target = 0    $/;"	kind:variable	line:62
+_elevation_target	../Rotator_REMOTE_14164.py	/^    _elevation_target = 0    $/;"	kind:variable	line:56
+_encoder_A	../Rotator.py	/^    _encoder_A = 0$/;"	kind:variable	line:48
+_encoder_A	../Rotator_BACKUP_14164.py	/^    _encoder_A = 0$/;"	kind:variable	line:41
+_encoder_A	../Rotator_BASE_14164.py	/^    _encoder_A = 0$/;"	kind:variable	line:44
+_encoder_A	../Rotator_LOCAL_14164.py	/^    _encoder_A = 0$/;"	kind:variable	line:41
+_encoder_A	../Rotator_REMOTE_14164.py	/^    _encoder_A = 0$/;"	kind:variable	line:44
+_encoder_B	../Rotator.py	/^    _encoder_B = 0$/;"	kind:variable	line:49
+_encoderposition_azimuth_center	../Rotator.py	/^    _encoderposition_azimuth_center = 701$/;"	kind:variable	line:55
+_encoderposition_azimuth_max	../Rotator.py	/^    _encoderposition_azimuth_max = 764$/;"	kind:variable	line:57
+_encoderposition_azimuth_min	../Rotator.py	/^    _encoderposition_azimuth_min = 600$/;"	kind:variable	line:56
+_encoderposition_elevation_center	../Rotator.py	/^    _encoderposition_elevation_center = 421$/;"	kind:variable	line:59
+_encoderposition_elevation_max	../Rotator.py	/^    _encoderposition_elevation_max = 430$/;"	kind:variable	line:61
+_encoderposition_elevation_min	../Rotator.py	/^    _encoderposition_elevation_min = 314$/;"	kind:variable	line:60
+_encoderposition_polarity_center	../Rotator.py	/^    _encoderposition_polarity_center = 855$/;"	kind:variable	line:63
+_encoderposition_polarity_max	../Rotator.py	/^    _encoderposition_polarity_max = 920$/;"	kind:variable	line:65
+_encoderposition_polarity_min	../Rotator.py	/^    _encoderposition_polarity_min = 625$/;"	kind:variable	line:64
+_is_busy	../Rotator.py	/^    _is_busy = False$/;"	kind:variable	line:46
+_orientation	../Rotator.py	/^    _orientation = 0$/;"	kind:variable	line:51
+_polarity_current	../Rotator_BACKUP_14164.py	/^    _polarity_current = 0$/;"	kind:variable	line:59
+_polarity_current	../Rotator_BASE_14164.py	/^    _polarity_current = 0$/;"	kind:variable	line:53
+_polarity_current	../Rotator_LOCAL_14164.py	/^    _polarity_current = 0$/;"	kind:variable	line:59
+_polarity_current	../Rotator_REMOTE_14164.py	/^    _polarity_current = 0$/;"	kind:variable	line:53
+_polarity_degrees_per_step	../Rotator.py	/^    _polarity_degrees_per_step  = 1\/_polarity_steps_per_degree$/;"	kind:variable	line:88
+_polarity_requires_calibration	../Rotator.py	/^    _polarity_requires_calibration = True$/;"	kind:variable	line:92
+_polarity_stepper_calibration_offset	../Rotator_BACKUP_14164.py	/^    _polarity_stepper_calibration_offset = 0$/;"	kind:variable	line:71
+_polarity_stepper_calibration_offset	../Rotator_BASE_14164.py	/^    _polarity_stepper_calibration_offset = 0$/;"	kind:variable	line:65
+_polarity_stepper_calibration_offset	../Rotator_LOCAL_14164.py	/^    _polarity_stepper_calibration_offset = 0$/;"	kind:variable	line:71
+_polarity_stepper_calibration_offset	../Rotator_REMOTE_14164.py	/^    _polarity_stepper_calibration_offset = 0$/;"	kind:variable	line:65
+_polarity_stepper_count	../Rotator.py	/^    _polarity_stepper_count = 0$/;"	kind:variable	line:80
+_polarity_stepper_count	../Rotator_BACKUP_14164.py	/^    _polarity_stepper_count = 0$/;"	kind:variable	line:67
+_polarity_stepper_count	../Rotator_BASE_14164.py	/^    _polarity_stepper_count = 0$/;"	kind:variable	line:61
+_polarity_stepper_count	../Rotator_LOCAL_14164.py	/^    _polarity_stepper_count = 0$/;"	kind:variable	line:67
+_polarity_stepper_count	../Rotator_REMOTE_14164.py	/^    _polarity_stepper_count = 0$/;"	kind:variable	line:61
+_polarity_steps_per_degree	../Rotator.py	/^    _polarity_steps_per_degree = 2$/;"	kind:variable	line:84
+_polarity_target	../Rotator.py	/^    _polarity_target = 0   $/;"	kind:variable	line:75
+_polarity_target	../Rotator_BACKUP_14164.py	/^    _polarity_target = 0   $/;"	kind:variable	line:63
+_polarity_target	../Rotator_BASE_14164.py	/^    _polarity_target = 0   $/;"	kind:variable	line:57
+_polarity_target	../Rotator_LOCAL_14164.py	/^    _polarity_target = 0   $/;"	kind:variable	line:63
+_polarity_target	../Rotator_REMOTE_14164.py	/^    _polarity_target = 0   $/;"	kind:variable	line:57
+_stepperAzimuth	../Rotator.py	/^    _stepperAzimuth = 0$/;"	kind:variable	line:52
+_stepperAzimuth	../Rotator_BACKUP_14164.py	/^    _stepperAzimuth = 0$/;"	kind:variable	line:42
+_stepperAzimuth	../Rotator_BASE_14164.py	/^    _stepperAzimuth = 0$/;"	kind:variable	line:45
+_stepperAzimuth	../Rotator_LOCAL_14164.py	/^    _stepperAzimuth = 0$/;"	kind:variable	line:42
+_stepperAzimuth	../Rotator_REMOTE_14164.py	/^    _stepperAzimuth = 0$/;"	kind:variable	line:45
+_stepperElevation	../Rotator.py	/^    _stepperElevation = 0$/;"	kind:variable	line:53
+_stepperElevation	../Rotator_BACKUP_14164.py	/^    _stepperElevation = 0$/;"	kind:variable	line:43
+_stepperElevation	../Rotator_BASE_14164.py	/^    _stepperElevation = 0$/;"	kind:variable	line:46
+_stepperElevation	../Rotator_LOCAL_14164.py	/^    _stepperElevation = 0$/;"	kind:variable	line:43
+_stepperElevation	../Rotator_REMOTE_14164.py	/^    _stepperElevation = 0$/;"	kind:variable	line:46
+_verbose	../Rotator.py	/^    _verbose = 0$/;"	kind:variable	line:45
+calculate_azimuth_steps	../Rotator.py	/^    def calculate_azimuth_steps(self, degrees_travel):$/;"	kind:member	line:378
+calculate_azimuth_steps	../Rotator_BACKUP_14164.py	/^    def calculate_azimuth_steps(self):$/;"	kind:member	line:221
+calculate_azimuth_steps	../Rotator_BASE_14164.py	/^    def calculate_azimuth_steps(self):$/;"	kind:member	line:187
+calculate_azimuth_steps	../Rotator_LOCAL_14164.py	/^    def calculate_azimuth_steps(self):$/;"	kind:member	line:210
+calculate_azimuth_steps	../Rotator_REMOTE_14164.py	/^    def calculate_azimuth_steps(self):$/;"	kind:member	line:188
+calculate_elevation_steps	../Rotator.py	/^    def calculate_elevation_steps(self, elevation):$/;"	kind:member	line:252
+calculate_elevation_steps	../Rotator_BACKUP_14164.py	/^    def calculate_elevation_steps(self):$/;"	kind:member	line:175
+calculate_elevation_steps	../Rotator_BASE_14164.py	/^    def calculate_elevation_steps(self):$/;"	kind:member	line:145
+calculate_elevation_steps	../Rotator_LOCAL_14164.py	/^    def calculate_elevation_steps(self):$/;"	kind:member	line:165
+calculate_elevation_steps	../Rotator_REMOTE_14164.py	/^    def calculate_elevation_steps(self):$/;"	kind:member	line:145
+calculate_polarity_steps	../Rotator.py	/^    def calculate_polarity_steps(self, polarity_target):$/;"	kind:member	line:594
+execute_easycomm2_command	../Rotator.py	/^    def execute_easycomm2_command(self, rotator_commands):  $/;"	kind:member	line:662
+execute_easycomm2_command	../Rotator_BACKUP_14164.py	/^    def execute_easycomm2_command(self, rotator_commands):  $/;"	kind:member	line:264
+execute_easycomm2_command	../Rotator_BASE_14164.py	/^    def execute_easycomm2_command(self, rotator_commands):  $/;"	kind:member	line:230
+execute_easycomm2_command	../Rotator_LOCAL_14164.py	/^    def execute_easycomm2_command(self, rotator_commands):  $/;"	kind:member	line:253
+execute_easycomm2_command	../Rotator_REMOTE_14164.py	/^    def execute_easycomm2_command(self, rotator_commands):  $/;"	kind:member	line:231
+execute_website_command	../Rotator.py	/^    def execute_website_command(self, rotator_commands):  $/;"	kind:member	line:700
+get_azimuth	../Rotator.py	/^    def get_azimuth(self):$/;"	kind:member	line:150
+get_azimuth	../Rotator_BACKUP_14164.py	/^    def get_azimuth(self):$/;"	kind:member	line:111
+get_azimuth	../Rotator_BASE_14164.py	/^    def get_azimuth(self):$/;"	kind:member	line:103
+get_azimuth	../Rotator_LOCAL_14164.py	/^    def get_azimuth(self):$/;"	kind:member	line:111
+get_azimuth	../Rotator_REMOTE_14164.py	/^    def get_azimuth(self):$/;"	kind:member	line:103
+get_azimuth_degrees	../Rotator.py	/^    def get_azimuth_degrees(self):$/;"	kind:member	line:295
+get_azimuth_stepper_count	../Rotator.py	/^    def get_azimuth_stepper_count(self):$/;"	kind:member	line:288
+get_elevation	../Rotator.py	/^    def get_elevation(self):$/;"	kind:member	line:146
+get_elevation	../Rotator_BACKUP_14164.py	/^    def get_elevation(self):$/;"	kind:member	line:107
+get_elevation	../Rotator_BASE_14164.py	/^    def get_elevation(self):$/;"	kind:member	line:99
+get_elevation	../Rotator_LOCAL_14164.py	/^    def get_elevation(self):$/;"	kind:member	line:107
+get_elevation	../Rotator_REMOTE_14164.py	/^    def get_elevation(self):$/;"	kind:member	line:99
+get_elevation_degrees	../Rotator.py	/^    def get_elevation_degrees(self):$/;"	kind:member	line:170
+get_elevation_stepper_count	../Rotator.py	/^    def get_elevation_stepper_count(self):$/;"	kind:member	line:173
+get_help_text	../Rotator.py	/^    def get_help_text(self):       $/;"	kind:member	line:641
+get_help_text	../Rotator_BACKUP_14164.py	/^    def get_help_text(self):       $/;"	kind:member	line:255
+get_help_text	../Rotator_BASE_14164.py	/^    def get_help_text(self):       $/;"	kind:member	line:221
+get_help_text	../Rotator_LOCAL_14164.py	/^    def get_help_text(self):       $/;"	kind:member	line:244
+get_help_text	../Rotator_REMOTE_14164.py	/^    def get_help_text(self):       $/;"	kind:member	line:222
+get_polarity	../Rotator.py	/^    def get_polarity(self):$/;"	kind:member	line:154
+get_polarity	../Rotator_BACKUP_14164.py	/^    def get_polarity(self):$/;"	kind:member	line:115
+get_polarity	../Rotator_BASE_14164.py	/^    def get_polarity(self):$/;"	kind:member	line:107
+get_polarity	../Rotator_LOCAL_14164.py	/^    def get_polarity(self):$/;"	kind:member	line:115
+get_polarity	../Rotator_REMOTE_14164.py	/^    def get_polarity(self):$/;"	kind:member	line:107
+get_polarity_degrees	../Rotator.py	/^    def get_polarity_degrees(self):$/;"	kind:member	line:485
+get_polarity_stepper_count	../Rotator.py	/^    def get_polarity_stepper_count(self):$/;"	kind:member	line:488
+get_rotator_status	../Rotator.py	/^    def get_rotator_status(self):$/;"	kind:member	line:649
+get_unsupported_command_text	../Rotator.py	/^    def get_unsupported_command_text(self):$/;"	kind:member	line:644
+get_unsupported_command_text	../Rotator_BACKUP_14164.py	/^    def get_unsupported_command_text(self):$/;"	kind:member	line:258
+get_unsupported_command_text	../Rotator_BASE_14164.py	/^    def get_unsupported_command_text(self):$/;"	kind:member	line:224
+get_unsupported_command_text	../Rotator_LOCAL_14164.py	/^    def get_unsupported_command_text(self):$/;"	kind:member	line:247
+get_unsupported_command_text	../Rotator_REMOTE_14164.py	/^    def get_unsupported_command_text(self):$/;"	kind:member	line:225
+get_verbosity	../Rotator.py	/^    def get_verbosity(self):$/;"	kind:member	line:161
+get_version_text	../Rotator.py	/^    def get_version_text(self):$/;"	kind:member	line:638
+get_version_text	../Rotator_BACKUP_14164.py	/^    def get_version_text(self):$/;"	kind:member	line:252
+get_version_text	../Rotator_BASE_14164.py	/^    def get_version_text(self):$/;"	kind:member	line:218
+get_version_text	../Rotator_LOCAL_14164.py	/^    def get_version_text(self):$/;"	kind:member	line:241
+get_version_text	../Rotator_REMOTE_14164.py	/^    def get_version_text(self):$/;"	kind:member	line:219
+handle_exception	../Rotator.py	/^    def handle_exception(self, e):$/;"	kind:member	line:761
+handle_exception	../Rotator_BACKUP_14164.py	/^    def handle_exception(self, e):$/;"	kind:member	line:301
+handle_exception	../Rotator_BASE_14164.py	/^    def handle_exception(self, e):$/;"	kind:member	line:267
+handle_exception	../Rotator_LOCAL_14164.py	/^    def handle_exception(self, e):$/;"	kind:member	line:290
+handle_exception	../Rotator_REMOTE_14164.py	/^    def handle_exception(self, e):$/;"	kind:member	line:268
+mh	../ForwardStepperTest.py	/^mh = Adafruit_MotorHAT()$/;"	kind:variable	line:9
+motor_direction_driver_const	../Rotator.py	/^    def motor_direction_driver_const(self, is_clockwise):$/;"	kind:member	line:385
+myStepperA	../ForwardStepperTest.py	/^myStepperA = mh.getStepper(200, 1)  # 200 steps\/rev, motor port #1$/;"	kind:variable	line:20
+myStepperB	../ForwardStepperTest.py	/^myStepperB = mh.getStepper(200, 2)  # 200 steps\/rev, motor port #2$/;"	kind:variable	line:21
+path_lib_adc	../Rotator.py	/^path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008\/Adafruit_MCP3008\/MCP3008.py")$/;"	kind:variable	line:27
+path_lib_adc	../Rotator_BACKUP_14164.py	/^path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008\/Adafruit_MCP3008\/MCP3008.py")$/;"	kind:variable	line:23
+path_lib_adc	../Rotator_LOCAL_14164.py	/^path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008\/Adafruit_MCP3008\/MCP3008.py")$/;"	kind:variable	line:23
+path_lib_gpio	../Rotator.py	/^path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO\/Adafruit_GPIO\/SPI.py")$/;"	kind:variable	line:25
+path_lib_gpio	../Rotator_BACKUP_14164.py	/^path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO\/Adafruit_GPIO\/SPI.py")$/;"	kind:variable	line:21
+path_lib_gpio	../Rotator_LOCAL_14164.py	/^path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO\/Adafruit_GPIO\/SPI.py")$/;"	kind:variable	line:21
+path_lib_servo	../Rotator_BASE_14164.py	/^path_lib_servo = os.path.join(path_parent_platform, "Adafruit_Python_PCA9685\/Adafruit_PCA9685\/PCA9685.py")$/;"	kind:variable	line:22
+path_lib_servo	../Rotator_REMOTE_14164.py	/^path_lib_servo = os.path.join(path_parent_platform, "Adafruit_Python_PCA9685\/Adafruit_PCA9685\/PCA9685.py")$/;"	kind:variable	line:22
+path_lib_stepper	../Rotator.py	/^path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library\/Adafruit_MotorHAT\/Adafruit_MotorHAT_Motors.py")$/;"	kind:variable	line:26
+path_lib_stepper	../Rotator_BACKUP_14164.py	/^path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library\/Adafruit_MotorHAT\/Adafruit_MotorHAT_Motors.py")$/;"	kind:variable	line:22
+path_lib_stepper	../Rotator_BASE_14164.py	/^path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library\/Adafruit_MotorHAT\/Adafruit_MotorHAT_Motors.py")$/;"	kind:variable	line:23
+path_lib_stepper	../Rotator_LOCAL_14164.py	/^path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library\/Adafruit_MotorHAT\/Adafruit_MotorHAT_Motors.py")$/;"	kind:variable	line:22
+path_lib_stepper	../Rotator_REMOTE_14164.py	/^path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library\/Adafruit_MotorHAT\/Adafruit_MotorHAT_Motors.py")$/;"	kind:variable	line:23
+path_parent_platform	../Rotator.py	/^path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))$/;"	kind:variable	line:23
+path_parent_platform	../Rotator_BACKUP_14164.py	/^path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))$/;"	kind:variable	line:19
+path_parent_platform	../Rotator_BASE_14164.py	/^path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))$/;"	kind:variable	line:21
+path_parent_platform	../Rotator_LOCAL_14164.py	/^path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))$/;"	kind:variable	line:19
+path_parent_platform	../Rotator_REMOTE_14164.py	/^path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))$/;"	kind:variable	line:21
+path_parent_version	../Rotator.py	/^path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))$/;"	kind:variable	line:22
+path_parent_version	../Rotator_BACKUP_14164.py	/^path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))$/;"	kind:variable	line:18
+path_parent_version	../Rotator_BASE_14164.py	/^path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))$/;"	kind:variable	line:20
+path_parent_version	../Rotator_LOCAL_14164.py	/^path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))$/;"	kind:variable	line:18
+path_parent_version	../Rotator_REMOTE_14164.py	/^path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))$/;"	kind:variable	line:20
+path_runtime	../Rotator.py	/^path_runtime = os.path.dirname(__file__)$/;"	kind:variable	line:21
+path_runtime	../Rotator_BACKUP_14164.py	/^path_runtime = os.path.dirname(__file__)$/;"	kind:variable	line:17
+path_runtime	../Rotator_BASE_14164.py	/^path_runtime = os.path.dirname(__file__)$/;"	kind:variable	line:19
+path_runtime	../Rotator_LOCAL_14164.py	/^path_runtime = os.path.dirname(__file__)$/;"	kind:variable	line:17
+path_runtime	../Rotator_REMOTE_14164.py	/^path_runtime = os.path.dirname(__file__)$/;"	kind:variable	line:19
+plan_azimuth_movement	../Rotator.py	/^    def plan_azimuth_movement(self, target_azimuth):$/;"	kind:member	line:338
+recenter_azimuth	../Rotator.py	/^    def recenter_azimuth(self):$/;"	kind:member	line:303
+recenter_azimuth	../Rotator_BACKUP_14164.py	/^    def recenter_azimuth$/;"	kind:member	line:119
+recenter_azimuth	../Rotator_LOCAL_14164.py	/^    def recenter_azimuth$/;"	kind:member	line:119
+recenter_elevation	../Rotator.py	/^    def recenter_elevation(self):$/;"	kind:member	line:181
+recenter_polarity	../Rotator.py	/^    def recenter_polarity(self):$/;"	kind:member	line:496
+round_azimuth_value	../Rotator.py	/^    def round_azimuth_value(self, azimuth):$/;"	kind:member	line:391
+set_azimuth	../Rotator.py	/^    def set_azimuth(self, azimuth):$/;"	kind:member	line:404
+set_azimuth	../Rotator_BACKUP_14164.py	/^    def set_azimuth(self, azimuth):$/;"	kind:member	line:185
+set_azimuth	../Rotator_BASE_14164.py	/^    def set_azimuth(self, azimuth):$/;"	kind:member	line:154
+set_azimuth	../Rotator_LOCAL_14164.py	/^    def set_azimuth(self, azimuth):$/;"	kind:member	line:174
+set_azimuth	../Rotator_REMOTE_14164.py	/^    def set_azimuth(self, azimuth):$/;"	kind:member	line:155
+set_azimuth_stepper_count	../Rotator.py	/^    def set_azimuth_stepper_count(self, stepper_count):$/;"	kind:member	line:291
+set_elevation	../Rotator.py	/^    def set_elevation(self, elevation):$/;"	kind:member	line:218
+set_elevation	../Rotator_BACKUP_14164.py	/^    def set_elevation(self, elevation):$/;"	kind:member	line:134
+set_elevation	../Rotator_BASE_14164.py	/^    def set_elevation(self, elevation):$/;"	kind:member	line:114
+set_elevation	../Rotator_LOCAL_14164.py	/^    def set_elevation(self, elevation):$/;"	kind:member	line:134
+set_elevation	../Rotator_REMOTE_14164.py	/^    def set_elevation(self, elevation):$/;"	kind:member	line:114
+set_elevation_stepper_count	../Rotator.py	/^    def set_elevation_stepper_count(self, stepper_count):$/;"	kind:member	line:176
+set_polarity	../Rotator.py	/^    def set_polarity(self, polarity_target):$/;"	kind:member	line:535
+set_polarity	../Rotator_BACKUP_14164.py	/^    def set_polarity(self, polarity):$/;"	kind:member	line:230
+set_polarity	../Rotator_BASE_14164.py	/^    def set_polarity(self, polarity):$/;"	kind:member	line:196
+set_polarity	../Rotator_LOCAL_14164.py	/^    def set_polarity(self, polarity):$/;"	kind:member	line:219
+set_polarity	../Rotator_REMOTE_14164.py	/^    def set_polarity(self, polarity):$/;"	kind:member	line:197
+set_polarity_stepper_count	../Rotator.py	/^    def set_polarity_stepper_count(self, stepper_count):$/;"	kind:member	line:491
+set_verbosity	../Rotator.py	/^    def set_verbosity(self, verbose):$/;"	kind:member	line:158
+stop_azimuth	../Rotator.py	/^    def stop_azimuth(self):$/;"	kind:member	line:469
+stop_azimuth	../Rotator_BACKUP_14164.py	/^    def stop_azimuth(self):$/;"	kind:member	line:237
+stop_azimuth	../Rotator_BASE_14164.py	/^    def stop_azimuth(self):$/;"	kind:member	line:203
+stop_azimuth	../Rotator_LOCAL_14164.py	/^    def stop_azimuth(self):$/;"	kind:member	line:226
+stop_azimuth	../Rotator_REMOTE_14164.py	/^    def stop_azimuth(self):$/;"	kind:member	line:204
+stop_elevation	../Rotator.py	/^    def stop_elevation(self):$/;"	kind:member	line:273
+stop_elevation	../Rotator_BACKUP_14164.py	/^    def stop_elevation(self):$/;"	kind:member	line:244
+stop_elevation	../Rotator_BASE_14164.py	/^    def stop_elevation(self):$/;"	kind:member	line:210
+stop_elevation	../Rotator_LOCAL_14164.py	/^    def stop_elevation(self):$/;"	kind:member	line:233
+stop_elevation	../Rotator_REMOTE_14164.py	/^    def stop_elevation(self):$/;"	kind:member	line:211
+stop_polarity	../Rotator.py	/^    def stop_polarity(self):$/;"	kind:member	line:620
+turnOffMotors	../ForwardStepperTest.py	/^def turnOffMotors():$/;"	kind:function	line:12
+turnOffMotors	../Rotator.py	/^    def turnOffMotors(self):$/;"	kind:member	line:134
+turnOffMotors	../Rotator_BACKUP_14164.py	/^    def turnOffMotors(self):$/;"	kind:member	line:101
+turnOffMotors	../Rotator_BASE_14164.py	/^    def turnOffMotors(self):$/;"	kind:member	line:93
+turnOffMotors	../Rotator_LOCAL_14164.py	/^    def turnOffMotors(self):$/;"	kind:member	line:101
+turnOffMotors	../Rotator_REMOTE_14164.py	/^    def turnOffMotors(self):$/;"	kind:member	line:93
