@@ -116,6 +116,7 @@ class SatTrackerPiWebClient:
                 self.delete_client_command(command)
             elif "PO" == command['command_code']:
                 self.set_polarity_json(command)
+                self.delete_client_command(command)
         except Exception as exception:
             return self.handle_exception(exception)
 
