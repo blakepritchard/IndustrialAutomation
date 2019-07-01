@@ -74,8 +74,8 @@ class Rotator(object):
 
     _encoder_channel_polarity = 2
     _encoderposition_polarity_center = 3420
-    _encoderposition_polarity_min = 3300
-    _encoderposition_polarity_max = 3500
+    _encoderposition_polarity_min = 3100
+    _encoderposition_polarity_max = 3600
     
 
     # Hardware SPI configuration:
