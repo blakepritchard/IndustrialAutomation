@@ -150,6 +150,8 @@ def delete_rotator_command(id):
         db.session.delete(command)
         db.session.commit()
 
+        return render_template("commands.html")
+
     except Exception as exception:
         return handle_web_exception(exception)
 
