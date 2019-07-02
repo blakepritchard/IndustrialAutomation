@@ -32,7 +32,7 @@ function update_rotor_status(){
     req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});    
 }
 
-
+              
 
 function polarity_tracking_update(is_tracking)
 {
