@@ -117,6 +117,13 @@ class SatTrackerPiWebClient:
             elif "PO" == command['command_code']:
                 self.set_polarity_json(command)
                 self.delete_client_command(command)
+            elif "AZ" == command['command_code']:
+                self.set_polarity_json(command)
+                self.delete_client_command(command)
+            elif "EL" == command['command_code']:
+                self.set_polarity_json(command)
+                self.delete_client_command(command)
+
         except Exception as exception:
             return self.handle_exception(exception)
 
@@ -212,7 +219,7 @@ class SatTrackerPiWebClient:
     def set_polarity_json(self, polarity_json):
         try:
             json_result = ""
-            logging.info("a set_polarity_json command is being sent with data: " + polarity_json['command_value'])
+            logging.info("a set_polarity_json command has been recieved with data: " + polarity_json['command_value'])
 
             float_polarity_next = polarity_json['command_value']
  
@@ -227,13 +234,18 @@ class SatTrackerPiWebClient:
 
 
 
-    def set_elevation(self, elevation_new):
+    def set_elevation_json(self, elevation_json):
         try:
-            logging.debug("a set_elevation Command Is Being Sent")
+            json_result = ""
+            logging.info("a set_elevation_json command has been recieved with data: " + elevation_json['command_value'])
+            float_elevation_next = elevation_json['command_value']
 
-            polarity_command= "EL" + elevation_new 
-            result = self.execute_serial_command(polarity_command)
-            return result
+            elevation_command= "EL" + str(float_elevation_next)
+            logging.debug("a set_elevation Command Is Being Sent to the Serial Port: " + elevation_command)
+
+            elevation_current = self.execute_serial_command(elevation_command, None)
+            json_result = {"elevation_degrees": elevation_current}
+            return json_result
 
         except Exception as exception:
             return self.handle_exception(exception)
@@ -241,14 +253,18 @@ class SatTrackerPiWebClient:
 
     #@sat_tracker_app.route("/sat_tracker/set_azimuth", methods=["GET","POST"])
     #@sat_tracker_app.route("/azimuth/set_azimuth", methods=["POST"])
-    def set_azimuth(self, azimuth_new):
+    def set_azimuth_json(self, azimuth_json):
         try:
-            logging.debug("a set_azimuth Command Is Being Sent")
+            json_result = ""
+            logging.info("a set_azimuth_json command is being sent with data: " + azimuth_json['command_value'])
+            float_azimuth_next = azimuth_json['command_value']
+            
+            azimuth_command= "AZ" + str(float_azimuth_next) 
+            logging.debug("a set_azimuth Command Is Being Sent to the Serial Port: " + azimuth_command)
 
-            polarity_command= "AZ" + azimuth_new 
-            result = self.execute_serial_command(polarity_command)
-
-            return result
+            azimuth_current = self.execute_serial_command(azimuth_command)
+            json_result = {"azimuth_degrees": azimuth_current}
+            return json_result
 
         except Exception as exception:
             return self.handle_exception(exception)
