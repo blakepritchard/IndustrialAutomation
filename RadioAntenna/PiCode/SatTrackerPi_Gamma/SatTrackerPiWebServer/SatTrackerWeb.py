@@ -150,8 +150,7 @@ def delete_rotator_command(id):
         db.session.delete(command)
         db.session.commit()
 
-        resp = jsonify(success=True)
-        resp.status_code = 200
+        resp = make_response(jsonify(success=True), 201)
         return resp
 
     except Exception as exception:
