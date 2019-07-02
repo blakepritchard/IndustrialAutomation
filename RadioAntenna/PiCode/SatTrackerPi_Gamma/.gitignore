@@ -1,3 +1,7 @@
+./.vscode
+./.vscode/tags
 ./Rotator/Rotator.pyc
 ./Rotator/__pycache__
 ./SatTrackerPiWebsite/app.db
+./Rotator/.vscode
+./Rotator/.vscode/tags
