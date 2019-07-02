@@ -118,10 +118,10 @@ class SatTrackerPiWebClient:
                 self.set_polarity_json(command)
                 self.delete_client_command(command)
             elif "AZ" == command['command_code']:
-                self.set_polarity_json(command)
+                self.set_azimuth_json(command)
                 self.delete_client_command(command)
             elif "EL" == command['command_code']:
-                self.set_polarity_json(command)
+                self.set_elevation_json(command)
                 self.delete_client_command(command)
 
         except Exception as exception:
