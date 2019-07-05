@@ -40,3 +40,24 @@ class RotatorCommand(db.Model):
     def as_dict(self):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
+def create_model()
+    from SatTrackerWebModels import db
+    from SatTrackerWebModels import Rotator
+    from SatTrackerWebModels import RotatorCommand
+
+    engine = db.get_engine(bind=Rotator.__bind_key__)
+    if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
+        db.create_all()
+        rotator = Rotator()
+        rotator.rotator_name="SatTrackerPi"
+        rotator.azimuth_steps=0
+        rotator.azimuth_degrees=0
+        rotator.elevation_steps = 0
+        rotator.elevation_degrees=0
+        rotator.polarity_steps=0
+        rotator.polarity_degrees=0
+        rotator.polarity_is_tracking=False
+        rotator.polarity_tracking_speed=0
+        db.session.add(rotator)
+        db.session.commit()
+        #db.session.close()
