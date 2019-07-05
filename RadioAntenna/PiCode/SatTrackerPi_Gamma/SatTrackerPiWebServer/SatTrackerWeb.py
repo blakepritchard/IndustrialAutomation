@@ -21,7 +21,7 @@ sat_tracker_app = Flask(__name__)
 sat_tracker_app.config.from_object(Config)
 
 db.init_app(sat_tracker_app)
-SatTrackerWebModels.create_models()
+create_models()
 
 #db = SQLAlchemy(sat_tracker_app)
 #migrate = Migrate(sat_tracker_app, db)
