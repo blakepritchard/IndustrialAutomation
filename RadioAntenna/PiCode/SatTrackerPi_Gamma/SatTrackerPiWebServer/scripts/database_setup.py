@@ -1,8 +1,8 @@
 #python
 
-from SatTrackerWeb import db
-from SatTrackerWeb import Rotator
-from SatTrackerWeb import RotatorCommand
+from SatTrackerWebModels import db
+from SatTrackerWebModels import Rotator
+from SatTrackerWebModels import RotatorCommand
 db.create_all()
 rotator = Rotator()
 rotator.rotator_name="SatTrackerPi"
