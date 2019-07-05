@@ -40,7 +40,7 @@ class RotatorCommand(db.Model):
     def as_dict(self):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
-def create_model()
+def create_models():
     from SatTrackerWebModels import db
     from SatTrackerWebModels import Rotator
     from SatTrackerWebModels import RotatorCommand
