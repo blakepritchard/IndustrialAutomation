@@ -41,8 +41,8 @@ class RotatorCommand(db.Model):
        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
 class ModelFactory():
-
     logging = None
+    
     def __init__(self, logger):
         self.logging = logger
 
@@ -54,10 +54,9 @@ class ModelFactory():
         if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
             self.create_models()
         else:
-        self.logging.info("Found Existing Database Tables")
+            self.logging.info("Found Existing Database Tables")
 
-def create_models():
-
+    def create_models(self):
         self.logging.info("Creating Database Tables")
         db.create_all()
         rotator = Rotator()
@@ -73,21 +72,3 @@ def create_models():
         db.session.add(rotator)
         db.session.commit()
         #db.session.close()
-
-
-
-
-        db.create_all()
-        rotator = Rotator()
-        rotator.rotator_name="SatTrackerPi"
-        rotator.azimuth_steps=0
-        rotator.azimuth_degrees=0
-        rotator.elevation_steps = 0
-        rotator.elevation_degrees=0
-        rotator.polarity_steps=0
-        rotator.polarity_degrees=0
-        rotator.polarity_is_tracking=False
-        rotator.polarity_tracking_speed=0
-        db.session.add(rotator)
-        db.session.commit()
-        db.session.close()
