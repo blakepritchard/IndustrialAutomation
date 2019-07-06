@@ -32,33 +32,13 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 
 if __name__ == "__main__":
-    sat_tracker_app.logger.info("Building Models")
-    create_models()    
+    sat_tracker_app.logger.info("Building Models")  
     sat_tracker_app.logger.info("Starting SatTrackerWeb Flask App")
     sat_tracker_app.run(host='0.0.0.0')
 
+    factory = ModelFactory(sat_tracker_app.logger)
 
 
-def create_models():
-    engine = db.get_engine(bind=Rotator.__bind_key__)
-    if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
-        sat_tracker_app.logger.info("Creating Database Tables")
-        db.create_all()
-        rotator = Rotator()
-        rotator.rotator_name="SatTrackerPi"
-        rotator.azimuth_steps=0
-        rotator.azimuth_degrees=0
-        rotator.elevation_steps = 0
-        rotator.elevation_degrees=0
-        rotator.polarity_steps=0
-        rotator.polarity_degrees=0
-        rotator.polarity_is_tracking=False
-        rotator.polarity_tracking_speed=0
-        db.session.add(rotator)
-        db.session.commit()
-        #db.session.close()
-    else:
-        sat_tracker_app.logger.info("Found Existing Database Tables")
 
 @sat_tracker_app.route("/")
 def default_page():
