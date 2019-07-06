@@ -28,7 +28,6 @@ migrate = Migrate(sat_tracker_app, db)
 sat_tracker_app.testing = True
 sat_tracker_app.debug = True
 sat_tracker_app.logger.setLevel(logging.DEBUG)
-factory = ModelFactory(sat_tracker_app.logger)
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
