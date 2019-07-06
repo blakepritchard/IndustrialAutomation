@@ -16,6 +16,7 @@ from flask_migrate import Migrate
 from SatTrackerWebModels import Rotator
 from SatTrackerWebModels import RotatorCommand
 from SatTrackerWebModels import db
+from SatTrackerWebModels import ModelFactory
 
 sat_tracker_app = Flask(__name__)
 sat_tracker_app.config.from_object(Config)
