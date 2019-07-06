@@ -29,15 +29,10 @@ db.init_app(sat_tracker_app)
 sat_tracker_app.testing = True
 sat_tracker_app.debug = True
 sat_tracker_app.logger.setLevel(logging.DEBUG)
-
+factory = ModelFactory(sat_tracker_app.logger)
 
 if __name__ == "__main__":
-    sat_tracker_app.logger.info("Building Models")  
-    sat_tracker_app.logger.info("Starting SatTrackerWeb Flask App")
     sat_tracker_app.run(host='0.0.0.0')
-
-    factory = ModelFactory(sat_tracker_app.logger)
-
 
 
 @sat_tracker_app.route("/")
