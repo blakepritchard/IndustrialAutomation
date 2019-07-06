@@ -32,8 +32,9 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 
 if __name__ == "__main__":
-    sat_tracker_app.logger.info("Starting SatTrackerWeb")
+    sat_tracker_app.logger.info("Building Models")
     create_models()    
+    sat_tracker_app.logger.info("Starting SatTrackerWeb Flask App")
     sat_tracker_app.run(host='0.0.0.0')
 
 
