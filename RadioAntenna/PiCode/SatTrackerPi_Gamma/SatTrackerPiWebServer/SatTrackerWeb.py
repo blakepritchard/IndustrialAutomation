@@ -32,14 +32,16 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 
 if __name__ == "__main__":
+    create_models()    
     sat_tracker_app.run(host='0.0.0.0')
-    create_models()
+
 
 
 def create_models():
-    logging.info("Creating Database Tables")
+    logging.info("Checking For Database Tables")
     engine = db.get_engine(bind=Rotator.__bind_key__)
     if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
+        logging.info("Creating Database Tables")
         db.create_all()
         rotator = Rotator()
         rotator.rotator_name="SatTrackerPi"
