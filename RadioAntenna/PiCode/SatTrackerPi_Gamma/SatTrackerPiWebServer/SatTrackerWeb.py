@@ -16,16 +16,14 @@ from flask_migrate import Migrate
 from SatTrackerWebModels import Rotator
 from SatTrackerWebModels import RotatorCommand
 from SatTrackerWebModels import db
-from SatTrackerWebModels import ModelFactory
 
 sat_tracker_app = Flask(__name__)
 sat_tracker_app.config.from_object(Config)
 
 db.init_app(sat_tracker_app)
-
-
 #db = SQLAlchemy(sat_tracker_app)
-#migrate = Migrate(sat_tracker_app, db)
+
+migrate = Migrate(sat_tracker_app, db)
 
 sat_tracker_app.testing = True
 sat_tracker_app.debug = True
