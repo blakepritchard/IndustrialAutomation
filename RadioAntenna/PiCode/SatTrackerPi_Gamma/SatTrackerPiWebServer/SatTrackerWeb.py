@@ -21,7 +21,7 @@ sat_tracker_app = Flask(__name__)
 sat_tracker_app.config.from_object(Config)
 
 db.init_app(sat_tracker_app)
-create_models()
+
 
 #db = SQLAlchemy(sat_tracker_app)
 #migrate = Migrate(sat_tracker_app, db)
@@ -33,6 +33,8 @@ sat_tracker_app.logger.setLevel(logging.DEBUG)
 
 if __name__ == "__main__":
     sat_tracker_app.run(host='0.0.0.0')
+    create_models()
+
 
 def create_models():
     engine = db.get_engine(bind=Rotator.__bind_key__)
