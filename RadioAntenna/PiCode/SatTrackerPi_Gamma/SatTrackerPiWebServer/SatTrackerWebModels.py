@@ -50,7 +50,7 @@ class ModelFactory():
         from SatTrackerWebModels import Rotator
         from SatTrackerWebModels import RotatorCommand
 
-        engine = db.get_engine(bind=Rotator.__bind_key__)
+        engine = db.get_engine(bind=Rotator)
         if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
             self.create_models()
         else:
