@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
 
 def create_models():
+    logging.info("Creating Database Tables")
     engine = db.get_engine(bind=Rotator.__bind_key__)
     if(model_class.metadata.tables[model_class.__tablename__].exists(engine)):
         db.create_all()
@@ -53,7 +54,8 @@ def create_models():
         db.session.add(rotator)
         db.session.commit()
         #db.session.close()
-
+    else:
+        logging.info("Found Existing Database Tables")
 
 @sat_tracker_app.route("/")
 def default_page():
