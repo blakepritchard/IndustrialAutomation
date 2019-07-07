@@ -86,6 +86,7 @@ def set_rotator_status():
             sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
             sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
         else:
+            sat_tracker_app.logger.info("Rotator Database Record Not Found. Creating New Rotator Object.")
             rotator =  create_rotator()
 
         rotator.azimuth_degrees = dict_json_post["azimuth_degrees"]
@@ -109,6 +110,7 @@ def set_rotator_status():
         return handle_web_exception(exception)
 
 def create_rotator():
+    sat_tracker_app.logger.info("Instantiating New Rotator Object With Default Values.")
     rotator = Rotator()
     db.session.add(rotator)
     db.session.commit()
