@@ -6,7 +6,7 @@
     sudo chown www-data /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer
 
 # to configure nginx for website copy file: 
-   cp /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/SatTrackerWeb_proxy /etc/nginx/sites-available/
+   cp /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/SatTrackerWeb_proxy /etc/nginx/sites-available/
 
 
 # create a symlink to enable nginx:
@@ -15,6 +15,9 @@
 # add website user to tty group:
     sudo adduser www-data tty
 
+# create database:
+cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/
+flask db upgrade
 
 # ( https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html )
 # to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
