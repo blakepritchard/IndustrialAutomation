@@ -17,6 +17,8 @@
 
 # create database:
 cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/
+export FLASK_APP=SatTrackerWeb.py
+printenv FLASK_APP
 flask db upgrade
 
 # ( https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html )
