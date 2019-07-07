@@ -7,26 +7,15 @@ class Rotator(db.Model):
     rotator_name = db.Column(db.String(64), index=False, unique=True)
     rotator_commands = db.relationship("RotatorCommand", backref="Rotator", lazy=True)
 
-    azimuth_steps = db.Column(db.Integer, index=False, unique=False)
-    azimuth_degrees = db.Column(db.Float, index=False, unique=False)
-    elevation_steps = db.Column(db.Integer, index=False, unique=False)
-    elevation_degrees = db.Column(db.Float, index=False, unique=False)
-    polarity_steps = db.Column(db.Integer, index=False, unique=False)
-    polarity_degrees = db.Column(db.Float, index=False, unique=False)
-    polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False)
-    polarity_tracking_speed = db.Column(db.Numeric, index=False, unique=False)
+    azimuth_steps = db.Column(db.Integer, index=False, unique=False, default="SatTrackerPi")
+    azimuth_degrees = db.Column(db.Float, index=False, unique=False, default=0)
+    elevation_steps = db.Column(db.Integer, index=False, unique=False, default=0)
+    elevation_degrees = db.Column(db.Float, index=False, unique=False, default=0)
+    polarity_steps = db.Column(db.Integer, index=False, unique=False, default=0)
+    polarity_degrees = db.Column(db.Float, index=False, unique=False, default=0)
+    polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False, default=False)
+    polarity_tracking_speed = db.Column(db.Numeric, index=False, unique=False, default=0)
     polarity_degrees_to_move = 0
-
-    def __init__(self):
-        self.self_name="SatTrackerPi"
-        self.azimuth_steps=0
-        self.azimuth_degrees=0
-        self.elevation_steps = 0
-        self.elevation_degrees=0
-        self.polarity_steps=0
-        self.polarity_degrees=0
-        self.polarity_is_tracking=False
-        self.polarity_tracking_speed=0
 
 
     def __repr__(self):
