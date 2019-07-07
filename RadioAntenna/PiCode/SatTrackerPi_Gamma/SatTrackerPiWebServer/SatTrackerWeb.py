@@ -67,11 +67,11 @@ def get_rotator_status():
     try:
         rotator = Rotator.query.get(1)
 
-        if(rotator is not None):
-            sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name )
-        else:
+        if(rotator is None):
             sat_tracker_app.logger.info("Rotator Database Record Not Found. Creating New Rotator Object.")
-            rotator =  create_rotator()
+            rotator =  create_rotator()            
+        else:
+            sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name)
 
         json_result = jsonify(rotator.as_dict())
         return json_result
@@ -88,13 +88,13 @@ def set_rotator_status():
 
         rotator = Rotator.query.get(dict_json_post["id"])
 
-        if(rotator is not None):
+        if(rotator is None):
+            sat_tracker_app.logger.info("Rotator Database Record Not Found. Creating New Rotator Object.")
+            rotator =  create_rotator()
+        else:
             sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name )
             sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
             sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
-        else:
-            sat_tracker_app.logger.info("Rotator Database Record Not Found. Creating New Rotator Object.")
-            rotator =  create_rotator()
 
         rotator.azimuth_degrees = dict_json_post["azimuth_degrees"]
         rotator.azimuth_steps = dict_json_post["azimuth_steps"]
