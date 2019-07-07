@@ -66,6 +66,13 @@ def get_rotator_log():
 def get_rotator_status():
     try:
         rotator = Rotator.query.get(1)
+
+        if(rotator is not None):
+            sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name )
+        else:
+            sat_tracker_app.logger.info("Rotator Database Record Not Found. Creating New Rotator Object.")
+            rotator =  create_rotator()
+
         json_result = jsonify(rotator.as_dict())
         return json_result
     
