@@ -17,6 +17,18 @@ class Rotator(db.Model):
     polarity_tracking_speed = db.Column(db.Numeric, index=False, unique=False)
     polarity_degrees_to_move = 0
 
+    def __init__(self):
+        self.self_name="SatTrackerPi"
+        self.azimuth_steps=0
+        self.azimuth_degrees=0
+        self.elevation_steps = 0
+        self.elevation_degrees=0
+        self.polarity_steps=0
+        self.polarity_degrees=0
+        self.polarity_is_tracking=False
+        self.polarity_tracking_speed=0
+
+
     def __repr__(self):
         return '<Rotator {}>'.format(str(self.id) + ", " + str(self.rotator_name))    
 

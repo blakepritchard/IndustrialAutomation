@@ -80,10 +80,14 @@ def set_rotator_status():
         dict_json_post = json.loads(str_json_post)     
 
         rotator = Rotator.query.get(dict_json_post["id"])
-        sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name )
-        sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
-        sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
-        
+
+        if(rotator is not None):
+            sat_tracker_app.logger.debug("Found Database Record for Rotator Name:" + rotator.rotator_name )
+            sat_tracker_app.logger.debug("Request Data Object:" + str(dict_json_post))
+            sat_tracker_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
+        else:
+            rotator =  create_rotator()
+
         rotator.azimuth_degrees = dict_json_post["azimuth_degrees"]
         rotator.azimuth_steps = dict_json_post["azimuth_steps"]
         rotator.elevation_degrees = dict_json_post["elevation_degrees"]
@@ -104,6 +108,11 @@ def set_rotator_status():
     except Exception as exception:
         return handle_web_exception(exception)
 
+def create_rotator():
+    rotator = Rotator()
+    db.session.add(rotator)
+    db.session.commit()
+    return rotator
 
 @sat_tracker_app.route("/sat_tracker/api/rotator/commands", methods=["GET"])
 def read_rotator_commands():
