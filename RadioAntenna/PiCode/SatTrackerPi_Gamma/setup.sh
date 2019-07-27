@@ -3,14 +3,14 @@ sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:gpredict-team/ppa
 sudo apt-get update
 
-sudo pip install future
-sudo pip install flask
-sudo pip install flask_sqlalchemy
-sudo pip install flask_migrate
+sudo pip3 install future
+sudo pip3 install flask
+sudo pip3 install flask_sqlalchemy
+sudo pip3 install flask_migrate
 
-sudo pip install Adafruit_GPIO
-sudo pip install Adafruit_MotorHAT
-sudo pip install mcp3208
+sudo pip3 install Adafruit_GPIO
+sudo pip3 install Adafruit_MotorHAT
+sudo pip3 install mcp3208
 
 
 cd ~/
@@ -29,6 +29,6 @@ cd Adafruit-Motor-HAT-Python-Library
 sudo chown www-data ~/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite
 sudo chown www-data ~/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/app.db
 
-sudo apt-get install python-dev
+sudo apt-get install python3-dev
 
-sudo python setup.py install
+sudo python3 setup.py install
