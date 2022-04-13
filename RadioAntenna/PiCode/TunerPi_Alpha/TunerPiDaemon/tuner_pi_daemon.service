@@ -1,0 +1,16 @@
+[Unit]
+Description=SatTrackerPi Daemon
+After=network.target
+Before=sat_tracker_pi_web_server.service sat_tracker_pi_web_client.service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash start_tracker.bash
+WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
+StandardOutput=inherit
+StandardError=inherit
+Restart=no
+User=pi
+
+[Install]
+WantedBy=multi-user.target
