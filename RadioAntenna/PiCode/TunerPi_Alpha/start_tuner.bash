@@ -20,7 +20,7 @@ mapfile -t arraySocatRotctlOutput < "$logfileRotctl"
 path_rotctld_out="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[0]}")"
 path_tracker_rotctl_in="$(cut -d' ' -f7 <<<"${arraySocatRotctlOutput[1]}")"
 
-echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} and SatTrackerPi listener will listen to: ${path_tracker_rotctl_in}"
+echo $(date -u) " The rotctld servicer will write to: ${path_rotctld_out} and TunerPi listener will listen to: ${path_tracker_rotctl_in}"
 (`rotctld -m 202 -s 9600 -r ${path_rotctld_out}`)&
 
 
@@ -35,22 +35,22 @@ mapfile -t arraySocatWebsiteOutput < "$logfileWebServer"
 path_webclient_out="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[0]}")"
 path_tracker_web_in="$(cut -d' ' -f7 <<<"${arraySocatWebsiteOutput[1]}")"
 
-(`echo {\"SERIAL_PORT_NAME\": \"${path_webclient_out}\"} > ./SatTrackerPiWebClient/webclient_serial.config`)&
+(`echo {\"SERIAL_PORT_NAME\": \"${path_webclient_out}\"} > ./TunerPiWebClient/webclient_serial.config`)&
 sleep 2
 
 echo $(date -u) " The WebClient will write to: ${path_webclient_out} and the Tracker WebInput will listen to: ${path_tracker_web_in} "
 echo $PWD
-(`/usr/bin/python /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}`)&
+(`/usr/bin/python /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiDaemon/TunerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}`)&
 sleep 2
 
 
-#('python ./SatTrackerPiDaemon/SatTrackerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
+#('python ./TunerPiDaemon/TunerPiWebClient.py  -l ${verbosityLevel} -r ${path_webclient_out} -s 9600 -w "sat-tracker-pi" -i 2')&
 wait
 
 
-#(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./SatTrackerPiWebsite/webclient_serial.config`)&
+#(`echo SERIAL_PORT_NAME=\"${path_webclient_out}\" > ./TunerPiWebsite/webclient_serial.config`)&
 #sleep 2
 #(`chown www-data ${path_webclient_out}`)&
 #sleep 2
-# python ./SatTrackerPiDaemon/SatTrackerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}
+# python ./TunerPiDaemon/TunerPiDaemon.py -r ${path_tracker_rotctl_in} -w ${path_tracker_web_in} -l ${verbosityLevel}
 #wait

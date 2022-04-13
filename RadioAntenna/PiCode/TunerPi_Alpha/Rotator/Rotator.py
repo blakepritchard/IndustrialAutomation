@@ -1,6 +1,6 @@
 #!/usr/bin/python
 '''
-Created on Dec 18, 2017
+Created on Apr 14, 2021
 
 @author: blake pritchard
 '''
@@ -17,27 +17,26 @@ import atexit
 import logging
 import json
 
-# Import Local Libraries
+#Adafruit Libraries for ADC
+import busio
+import digitalio
+import board
+import adafruit_mcp3xxx.mcp3008 as MCP
+from adafruit_mcp3xxx.analog_in import AnalogIn
+
+# Import Local Class Libraries (RotaionalAxis)
 path_runtime = os.path.dirname(__file__)
 path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
-
-#path_lib_gpio = os.path.join(path_parent_platform, "Adafruit_Python_GPIO/Adafruit_GPIO/SPI.py")
-path_lib_stepper = os.path.join(path_parent_platform, "Adafruit-Motor-HAT-Python-Library/Adafruit_MotorHAT/Adafruit_MotorHAT_Motors.py")
-#path_lib_adc = os.path.join(path_parent_platform, "Adafruit_Python_MCP3008/Adafruit_MCP3008/MCP3008.py")
-
-# Add Library Paths to Runtime Environment
-sys.path.insert(0, os.path.abspath(path_lib_stepper))
-#sys.path.insert(0, os.path.abspath(path_lib_gpio))
-#sys.path.insert(0, os.path.abspath(path_lib_adc))
-
 import RotationalAxis
 
-# Import ADC (MCP3208) library.
-from mcp3208 import MCP3208
+# Add Stepper Library Paths to Runtime Environment
+path_lib_stepper = os.path.join(path_parent_platform, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py"
+sys.path.insert(0, os.path.abspath(path_lib_stepper))
 
 # Import Stepper
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
+
 
                                                                                                                                                                      
 class Rotator(object):
@@ -45,116 +44,66 @@ class Rotator(object):
     _verbose = 0
     _is_busy = False
     
-    _encoder_A = 0
+    _stepper_controller_A = 0
     _encoder_B = 0
     _adc = 0
-
-
-    _steps_azimuth_center = 360
-    _steps_azimuth_min = 0
-    _steps_azimuth_max = 720
-
-    _encoder_channel_azimuth = 0
-    _encoderposition_azimuth_center = 2816
-    _encoderposition_azimuth_min = 2489
-    _encoderposition_azimuth_max = 3028
-
-    _steps_elevation_center = 0
-    _steps_elevation_min = 0
-    _steps_elevation_max = 360
-
-    _encoder_channel_elevation = 1
-    _encoderposition_elevation_center = 1696
-    _encoderposition_elevation_min = 1260
-    _encoderposition_elevation_max = 1744
 
     _steps_polarity_center = 0
     _steps_polarity_min = 0
     _steps_polarity_max = 180
 
-    _encoder_channel_polarity = 2
+    _encoder_channel_polarity = 0
     _encoderposition_polarity_center = 3420
     _encoderposition_polarity_min = 3100
     _encoderposition_polarity_max = 3600
     
-
     # Hardware SPI configuration:
     SPI_PORT   = 0
     SPI_DEVICE = 0
 
     
-    _azimuth_target = 0
-    _elevation_target = 0    
+    # Target
     _polarity_target = 0   
 
     #Position in Steps
-    _azimuth_stepper_count = 0
-    _elevation_stepper_count = 0
     _polarity_stepper_count = 0
-
-    _azimuth_steps_per_degree = 2
-    _elevation_steps_per_degree = 4
-    _polarity_steps_per_degree = 2
-
-    _azimuth_degrees_per_step   = 1/_azimuth_steps_per_degree
-    _elevation_degrees_per_step = 1/_elevation_steps_per_degree
+    _polarity_steps_per_degree = 30
     _polarity_degrees_per_step  = 1/_polarity_steps_per_degree
-
-    _azimuth_requires_calibration = True
-    _elevation_requires_calibration = True
     _polarity_requires_calibration = True
 
     '''
     Constructor
     '''
     def __init__(self):
-        logging.info("Initializing SatTrackerPi Rotator")
+        logging.info("Initializing TunerPi Stepper")
 
-        # bottom hat is default address 0x60
+        # GeekWorm Hat is default address 0x6F
         # create a default object, no changes to I2C address or frequency
-        logging.info("Initializing Motor Hat A at I2C address: 0x60")
-        self._encoder_A = Adafruit_MotorHAT(addr=0x60)
+        logging.info("Initializing Motor Hat A at I2C address: 0x6F")
+        self._stepper_controller_A = Raspi_MotorHAT(0x6F)
 
-        # top hat has A0 jumper closed, so its address 0x61
-        logging.info("Initializing Motor Hat B at I2C address: 0x61")
-        self._encoder_B = Adafruit_MotorHAT(addr=0x61) 
 
         # Analog To Digital Converter
         logging.info("Initializing ADC Hat on SPI bus")
-        self._adc = MCP3208()
-
+        # create the spi bus
+        spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+        # create the cs (chip select)
+        cs = digitalio.DigitalInOut(board.D22)
+        # create the mcp object
+        self._adc = MCP.MCP3008(spi, cs)
+                                                             
 
         if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
             logging.basicConfig(level=logging.DEBUG)
 
-        self._stepperAzimuth = self._encoder_A.getStepper(200, 1)     # 200 steps/rev, motor port #1
-        self._stepperAzimuth.setSpeed(10)                             # 10 RPM
-
-        self._stepperElevation = self._encoder_A.getStepper(200, 2)   # 200 steps/rev, motor port #2
-        self._stepperElevation.setSpeed(10)                           # 10 RPM
-
-        self._stepperPolarity = self._encoder_B.getStepper(200, 1)   # 200 steps/rev, motor port #1
+        self._stepperPolarity = self._stepper_controller_A.getStepper(200, 1)   # 200 steps/rev, motor port #1
         self._stepperPolarity.setSpeed(10)                           # 10 RPM
-
-        logging.info(str(self._encoder_A))
-        logging.info(str(self._encoder_B))
-
-        self._Azimuth = RotationalAxis.RotationalAxis("Azimuth", self._stepperAzimuth, self._azimuth_steps_per_degree, self._adc, self._encoder_channel_azimuth,
-                                                        self._steps_azimuth_center, self._steps_azimuth_min, self._steps_azimuth_max, 
-                                                        self._encoderposition_azimuth_center, self._encoderposition_azimuth_min, self._encoderposition_azimuth_max)
-
-        self._Elevation = RotationalAxis.RotationalAxis("Elevation", self._stepperElevation, self._elevation_steps_per_degree, self._adc, self._encoder_channel_elevation,
-                                                        self._steps_elevation_center, self._steps_elevation_min, self._steps_elevation_max, 
-                                                        self._encoderposition_elevation_center, self._encoderposition_elevation_min, self._encoderposition_elevation_max)
-
-        self._Polarity = RotationalAxis.RotationalAxis("Polarity", self._stepperPolarity, self._polarity_steps_per_degree, self._adc, self._encoder_channel_polarity,
+                                
+        logging.info(str(self._stepper_controller_A))
+        self._Polarity = RotationalAxis.RotationalAxis("Polarity", self._stepperPolarity, self._polarity_steps_per_degree, self._adc,
                                                         self._steps_polarity_center, self._steps_polarity_min, self._steps_polarity_max, 
                                                         self._encoderposition_polarity_center, self._encoderposition_polarity_min, self._encoderposition_polarity_max)
 
-        self._Elevation.reverse_movement()
-
-        self._Azimuth.recenter()
-        self._Elevation.recenter()
         self._Polarity.recenter()
 
         atexit.register(self.turnOffMotors)
@@ -162,10 +111,10 @@ class Rotator(object):
 
 
     def turnOffMotors(self):
-        self._encoder_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+        self._stepper_controller_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+        self._stepper_controller_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+        self._stepper_controller_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+        self._stepper_controller_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
         self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
         self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
@@ -185,7 +134,7 @@ class Rotator(object):
 #    Protocol
 ##########################################################################################    
     def get_version_text(self):
-        return "SatTrackerPi - Version 1.0"
+        return "TunerPi - Version 1.0"
     
     def get_help_text(self):       
         return "Help Text Goes Here..."

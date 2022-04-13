@@ -11,16 +11,19 @@ import time
 import logging
 
 # Import ADC (MCP3208) library.
-from mcp3208 import MCP3208
+import adafruit_mcp3xxx.mcp3008 as MCP
+from adafruit_mcp3xxx.analog_in import AnalogIn
 
 # Import Stepper
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
 
 
 class RotationalAxis(object):
 
     _is_busy = False
-    _adc = 0
+    _adc_position = 0
+    _adc_limit_switch_A = 0
+    _adc_limit_switch_B = 0
     _stepper = 0
     _axis_name = "AxisNameHere"
 
@@ -40,13 +43,14 @@ class RotationalAxis(object):
     _requires_calibration = True
     _reverse_movement = False
 
-    def __init__(self, axis_name, stepper, steps_per_degree, adc, adc_channel, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
+    def __init__(self, axis_name, stepper, steps_per_degree, adc, stepper_center, stepper_min, stepper_max, encoder_center, encoder_min, encoder_max):
         self._axis_name = axis_name
         self._stepper = stepper
         self._steps_per_degree = steps_per_degree
         self._degrees_per_step = float(1.0)/self._steps_per_degree
-        self._adc = adc
-        self._adc_channel = adc_channel
+        self._adc_position = AnalogIn(mcp, MCP.P0)
+        self._adc_limit_switch_A = AnalogIn(mcp, MCP.P1)
+        self._adc_limit_switch_B = AnalogIn(mcp, MCP.P2)
         
         self._steppercount_center = stepper_center
         self._steppercount_min = stepper_min
@@ -104,7 +108,7 @@ class RotationalAxis(object):
 
             # set default direction forward
             is_forward = True
-            direction_required = Adafruit_MotorHAT.FORWARD
+            direction_required = Raspi_MotorHAT.FORWARD
             stepper_incriment = 1
             limit_label = "Maximum"
 
@@ -114,7 +118,7 @@ class RotationalAxis(object):
 
             # set reverse if needed
             if (is_forward is False):
-                direction_required = Adafruit_MotorHAT.BACKWARD
+                direction_required = Raspi_MotorHAT.BACKWARD
                 stepper_incriment = -1
                 limit_label = "Minimum"
 
@@ -123,7 +127,7 @@ class RotationalAxis(object):
             keep_moving = True
             while (keep_moving is True):
                 nSteps+=stepper_incriment
-                self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
+                self._stepper.step(1, direction_required, Raspi_MotorHAT.DOUBLE)
                 encoderposition_previous = encoder_position_current
                 encoder_position_current = self.read_encoder_average()  
 
@@ -152,7 +156,7 @@ class RotationalAxis(object):
                   
             self.set_stepper_count(self._steppercount_center)
             self._requires_calibration = False
-            logging.info("Current  Reading: "+str(self.get_degrees())+" "+str(self._axis_name)+ ", Now Centered on Tripod with Encoder Position = " + str(self._adc.read(0)))
+            logging.info("Current  Reading: "+str(self.get_degrees())+" "+str(self._axis_name)+ ", Now Centered on Tripod with Encoder Position = " + str(self._adc_position.value))
 
             return self.get_degrees()
 
@@ -181,7 +185,7 @@ class RotationalAxis(object):
 
                 # set default direction forward
                 is_forward = True
-                direction_required = Adafruit_MotorHAT.FORWARD
+                direction_required Raspi_MotorHAT.FORWARD
                 direction_label = "Clockwise"
                 limit_label = "Maximum"
                 stepper_incriment = 1
@@ -190,13 +194,13 @@ class RotationalAxis(object):
                 if steps_required < 0:
                     is_forward = False
 
-                #check for reverse gear ratio (Elevation)
+                #check for reverse gear ratio setting (Old Elevation Gearing)
                 if self._reverse_movement == True:
                     is_forward = not is_forward
                     stepper_incriment *= -1
 
                 if(is_forward == False):
-                    direction_required = Adafruit_MotorHAT.BACKWARD
+                    direction_required = Raspi_MotorHAT.BACKWARD
                     direction_label = "CounterClockwise"
                     limit_label = "Minimum"
                     stepper_incriment *= -1
@@ -209,11 +213,11 @@ class RotationalAxis(object):
                 for steps_taken in range(abs(steps_required)):         
                     
                     # Step Motor
-                    self._stepper.step(1, direction_required, Adafruit_MotorHAT.DOUBLE)
+                    self._stepper.step(1, direction_required, Raspi_MotorHAT.DOUBLE)
 
                     # Set  Value to Be Returned to GPredict                    
                     self.set_stepper_count(self.get_stepper_count() + stepper_incriment)
-                    encoder_position_current = self._adc.read(self._adc_channel)
+                    encoder_position_current = self._adc_position.value
                     
                     logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoder_position_current))
 
@@ -280,7 +284,7 @@ class RotationalAxis(object):
         num_samples = 6
         sample_subtotal = 0
         for i in range(0, num_samples):
-            sample_subtotal += self._adc.read(self._adc_channel)
+            sample_subtotal += self._adc_position.value
 
         encoder_average = sample_subtotal/num_samples
         logging.debug("Encoder Average: " + str(encoder_average))
@@ -291,7 +295,7 @@ class RotationalAxis(object):
     def stop(self):
         try:        
             logging.info(" Stop")
-            self._stepper.run(Adafruit_MotorHAT.RELEASE)           
+            self._stepper.run(Raspi_MotorHAT.RELEASE)           
             self._requires_calibration = True
         except Exception as e:
             self.handle_exception(e)
