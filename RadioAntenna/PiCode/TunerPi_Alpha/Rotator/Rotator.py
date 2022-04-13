@@ -31,7 +31,7 @@ path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pard
 import RotationalAxis
 
 # Add Stepper Library Paths to Runtime Environment
-path_lib_stepper = os.path.join(path_parent_platform, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py"
+path_lib_stepper = os.path.join(path_parent_platform, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py")
 sys.path.insert(0, os.path.abspath(path_lib_stepper))
 
 # Import Stepper

@@ -3,14 +3,12 @@
 '''
 SatTrackerPiDaemon.SatTrackerPiDaemon -- Raspbian Serial Client for GPredict and RotCtlD Antenna Rotator Control 
 
-SatTrackerPiDaemon.SatTrackerPiDaemon is a RaspberryPi based antenna rotator hardware solution 
-It provides 3 axis control of Heading-Azimuth Elevation and Polarity.
-It is hardware dependent on Adafruit Motor-Hat (i2c stepper motor controller) and an MCP3008 Analog-Digital converter
+TunerPiDaemon is a RaspberryPi based antenna tuner hardware solution 
+It provides a single axis control
+It is hardware dependent on Geekworm Motor-Hat (i2c stepper motor controller) and an MCP3008 Analog-Digital converter
 
 @author:     Blake Pritchard
-
 @copyright:  2017 Blake Pritchard. All rights reserved.
-
 @license:    All Rights Reserved
 '''
 
@@ -77,7 +75,7 @@ def main(argv=None): # IGNORE:C0111
     program_license = '''%s
 
   Created by Blake Pritchard on %s.
-  Copyright 2017 Blake Pritchard. All rights reserved.
+  Copyright 2021 Blake Pritchard. All rights reserved.
 
   Licensed under the Apache License 2.0
   http://www.apache.org/licenses/LICENSE-2.0
@@ -106,7 +104,7 @@ USAGE
 
         
         #Initialize Log File
-        logging.basicConfig(filename='sat_tracker_daemon.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        logging.basicConfig(filename='tuner_pi_daemon.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
         # Initialize Hardware
@@ -234,7 +232,7 @@ if __name__ == "__main__":
     if PROFILE:
         import cProfile
         import pstats
-        profile_filename = 'SatTrackerPiDaemon.SatTrackerPiDaemon_profile.txt'
+        profile_filename = 'TunerPiDaemon.TunerPiDaemon_profile.txt'
         cProfile.run('main()', profile_filename)
         statsfile = open("profile_stats.txt", "wb")
         p = pstats.Stats(profile_filename, stream=statsfile)
