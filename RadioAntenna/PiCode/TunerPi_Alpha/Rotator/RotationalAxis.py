@@ -14,7 +14,17 @@ import logging
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
+
+# Add Stepper Library Paths to Runtime Environment
+path_runtime = os.path.dirname(__file__)
+path_parent = os.path.abspath(os.path.join(path_runtime, os.pardir))
+path_lib_stepper = os.path.join(path_parent, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py")
+sys.path.insert(0, os.path.abspath(path_lib_stepper))
+
+logging.info(path_lib_stepper)
+
 # Import Stepper
+import ('/home/pi/IndustrialAutomation/RadioAntenna/PiCode/GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py')
 from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
 
 
@@ -185,7 +195,7 @@ class RotationalAxis(object):
 
                 # set default direction forward
                 is_forward = True
-                direction_required Raspi_MotorHAT.FORWARD
+                direction_required = Raspi_MotorHAT.FORWARD
                 direction_label = "Clockwise"
                 limit_label = "Maximum"
                 stepper_incriment = 1

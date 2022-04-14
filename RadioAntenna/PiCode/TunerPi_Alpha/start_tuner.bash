@@ -2,7 +2,7 @@
 logfileRotctl=pseudoterminalsRotctl.txt
 logfileWebServer=pseudoterminalsWebServer.txt
 
-verbosityLevel="20"
+verbosityLevel="10"
 
 trap "kill 0 " EXIT
 

@@ -28,7 +28,8 @@ path_lib_rotor = os.path.join(path_parent, "Rotator")
 
 sys.path.insert(0, os.path.abspath(path_parent))
 sys.path.insert(0, os.path.abspath(path_lib_rotor))
-# logging.info(sys.path)
+
+logging.info(sys.path)
 
 
 
@@ -108,7 +109,7 @@ USAGE
         logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
         # Initialize Hardware
-        import Rotator
+        import Rotator.py
         device_rotator = Rotator.Rotator()
 
 
