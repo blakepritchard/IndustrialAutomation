@@ -14,19 +14,10 @@ import logging
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
-
-# Add Stepper Library Paths to Runtime Environment
-path_runtime = os.path.dirname(__file__)
-path_parent = os.path.abspath(os.path.join(path_runtime, os.pardir))
-path_lib_stepper = os.path.join(path_parent, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py")
-sys.path.insert(0, os.path.abspath(path_lib_stepper))
-
-logging.info(path_lib_stepper)
-
 # Import Stepper
-import ('/home/pi/IndustrialAutomation/RadioAntenna/PiCode/GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py')
-from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
-
+import board
+from adafruit_motor import stepper
+from adafruit_motorkit import MotorKit
 
 class RotationalAxis(object):
 
@@ -118,7 +109,7 @@ class RotationalAxis(object):
 
             # set default direction forward
             is_forward = True
-            direction_required = Raspi_MotorHAT.FORWARD
+            direction_required = stepper.FORWARD
             stepper_incriment = 1
             limit_label = "Maximum"
 
@@ -128,7 +119,7 @@ class RotationalAxis(object):
 
             # set reverse if needed
             if (is_forward is False):
-                direction_required = Raspi_MotorHAT.BACKWARD
+                direction_required = stepper.BACKWARD
                 stepper_incriment = -1
                 limit_label = "Minimum"
 
@@ -137,7 +128,7 @@ class RotationalAxis(object):
             keep_moving = True
             while (keep_moving is True):
                 nSteps+=stepper_incriment
-                self._stepper.step(1, direction_required, Raspi_MotorHAT.DOUBLE)
+                self._stepper.step(1, direction_required, stepper.DOUBLE)
                 encoderposition_previous = encoder_position_current
                 encoder_position_current = self.read_encoder_average()  
 
@@ -195,7 +186,7 @@ class RotationalAxis(object):
 
                 # set default direction forward
                 is_forward = True
-                direction_required = Raspi_MotorHAT.FORWARD
+                direction_required = stepper.FORWARD
                 direction_label = "Clockwise"
                 limit_label = "Maximum"
                 stepper_incriment = 1
@@ -210,7 +201,7 @@ class RotationalAxis(object):
                     stepper_incriment *= -1
 
                 if(is_forward == False):
-                    direction_required = Raspi_MotorHAT.BACKWARD
+                    direction_required = stepper.BACKWARD
                     direction_label = "CounterClockwise"
                     limit_label = "Minimum"
                     stepper_incriment *= -1
@@ -223,7 +214,7 @@ class RotationalAxis(object):
                 for steps_taken in range(abs(steps_required)):         
                     
                     # Step Motor
-                    self._stepper.step(1, direction_required, Raspi_MotorHAT.DOUBLE)
+                    self._stepper.step(1, direction_required, stepper.DOUBLE)
 
                     # Set  Value to Be Returned to GPredict                    
                     self.set_stepper_count(self.get_stepper_count() + stepper_incriment)
@@ -305,7 +296,7 @@ class RotationalAxis(object):
     def stop(self):
         try:        
             logging.info(" Stop")
-            self._stepper.run(Raspi_MotorHAT.RELEASE)           
+            self._stepper.run(stepper.RELEASE)           
             self._requires_calibration = True
         except Exception as e:
             self.handle_exception(e)

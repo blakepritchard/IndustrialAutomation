@@ -24,19 +24,16 @@ import board
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
+# Import Stepper
+import board
+from adafruit_motor import stepper
+from adafruit_motorkit import MotorKit
+
 # Import Local Class Libraries (RotaionalAxis)
 path_runtime = os.path.dirname(__file__)
 path_parent_version = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_parent_platform = os.path.abspath(os.path.join(path_parent_version, os.pardir))
 import RotationalAxis
-
-# Add Stepper Library Paths to Runtime Environment
-path_lib_stepper = os.path.join(path_parent_platform, "GeekWorm/Raspi-MotorHAT-python3/Raspi_MotorHAT.py")
-sys.path.insert(0, os.path.abspath(path_lib_stepper))
-
-# Import Stepper
-from Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_StepperMotor
-
 
                                                                                                                                                                      
 class Rotator(object):
@@ -77,10 +74,10 @@ class Rotator(object):
     def __init__(self):
         logging.info("Initializing TunerPi Stepper")
 
-        # GeekWorm Hat is default address 0x6F
+
         # create a default object, no changes to I2C address or frequency
         logging.info("Initializing Motor Hat A at I2C address: 0x6F")
-        self._stepper_controller_A = Raspi_MotorHAT(0x6F)
+        self._stepper_controller_A = MotorKit(i2c=board.I2C())
 
 
         # Analog To Digital Converter
@@ -96,8 +93,8 @@ class Rotator(object):
         if len(sys.argv) == 2 and sys.argv[1].lower() == '-v':
             logging.basicConfig(level=logging.DEBUG)
 
-        self._stepperPolarity = self._stepper_controller_A.getStepper(200, 1)   # 200 steps/rev, motor port #1
-        self._stepperPolarity.setSpeed(10)                           # 10 RPM
+        self._stepperPolarity = self._stepper_controller_A.stepper1  # motor port #1
+        # self._stepperPolarity.setSpeed(10)                           # 10 RPM
                                 
         logging.info(str(self._stepper_controller_A))
         self._Polarity = RotationalAxis.RotationalAxis("Polarity", self._stepperPolarity, self._polarity_steps_per_degree, self._adc,
@@ -109,18 +106,9 @@ class Rotator(object):
         atexit.register(self.turnOffMotors)
         self._is_busy = False
 
-
     def turnOffMotors(self):
-        self._stepper_controller_A.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-        self._stepper_controller_A.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-        self._stepper_controller_A.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        self._stepper_controller_A.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
-
-        self._encoder_B.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_B.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_B.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        self._encoder_B.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
-        self._is_busy = False
+        self._stepper_controller_A.stepper1.release()
+        self._stepper_controller_A.stepper2.release()
 
     def set_verbosity(self, verbose):
         self._verbose = verbose

@@ -24,7 +24,7 @@ from argparse import RawDescriptionHelpFormatter
 path_runtime = os.path.dirname(__file__)
 path_parent = os.path.abspath(os.path.join(path_runtime, os.pardir))
 path_lib_rotor = os.path.join(path_parent, "Rotator")
-
+print("Rotor Lib Path:", path_lib_rotor) 
 
 sys.path.insert(0, os.path.abspath(path_parent))
 sys.path.insert(0, os.path.abspath(path_lib_rotor))
@@ -109,7 +109,9 @@ USAGE
         logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
         # Initialize Hardware
-        import Rotator.py
+        print("Rotor Lib Path:", path_lib_rotor) 
+        
+        import Rotator
         device_rotator = Rotator.Rotator()
 
 
