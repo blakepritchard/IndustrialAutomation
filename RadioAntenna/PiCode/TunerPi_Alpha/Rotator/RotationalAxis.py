@@ -10,12 +10,16 @@ import sys
 import time
 import logging
 
+import busio
+import digitalio
+import board
+
 # Import ADC (MCP3208) library.
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
 # Import Stepper
-import board
+
 from adafruit_motor import stepper
 from adafruit_motorkit import MotorKit
 
@@ -49,9 +53,9 @@ class RotationalAxis(object):
         self._stepper = stepper
         self._steps_per_degree = steps_per_degree
         self._degrees_per_step = float(1.0)/self._steps_per_degree
-        self._adc_position = AnalogIn(mcp, MCP.P0)
-        self._adc_limit_switch_A = AnalogIn(mcp, MCP.P1)
-        self._adc_limit_switch_B = AnalogIn(mcp, MCP.P2)
+        self._adc_position = AnalogIn(adc, MCP.P0)
+        self._adc_limit_switch_A = AnalogIn(adc, MCP.P1)
+        self._adc_limit_switch_B = AnalogIn(adc, MCP.P2)
         
         self._steppercount_center = stepper_center
         self._steppercount_min = stepper_min

@@ -5,7 +5,7 @@ SatTrackerPiDaemon.SatTrackerPiDaemon -- Raspbian Serial Client for GPredict and
 
 TunerPiDaemon is a RaspberryPi based antenna tuner hardware solution 
 It provides a single axis control
-It is hardware dependent on Geekworm Motor-Hat (i2c stepper motor controller) and an MCP3008 Analog-Digital converter
+It is hardware dependent on Adafruit Motor-Hat (i2c stepper motor controller) and an MCP3008 Analog-Digital converter
 
 @author:     Blake Pritchard
 @copyright:  2017 Blake Pritchard. All rights reserved.
