@@ -132,7 +132,9 @@ class RotationalAxis(object):
             keep_moving = True
             while (keep_moving is True):
                 nSteps+=stepper_incriment
-                self._stepper.step(1, direction_required, stepper.DOUBLE)
+                # self._stepper.onestep(direction_required, stepper.SINGLE)
+                self._stepper.onestep(direction=direction_required, style=stepper.SINGLE)
+                # onestep(direction=stepper.FORWARD, style=stepper.SINGLE)                
                 encoderposition_previous = encoder_position_current
                 encoder_position_current = self.read_encoder_average()  
 
