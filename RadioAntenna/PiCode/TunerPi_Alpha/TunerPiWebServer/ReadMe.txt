@@ -3,27 +3,27 @@
 
 
 # make www-data the owner of the subfolder:
-    sudo chown www-data /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer
+    sudo chown www-data /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer
 
 # to configure nginx for website copy file: 
-   cp /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/SatTrackerWeb_proxy /etc/nginx/sites-available/
+   cp /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/TunerWeb_proxy /etc/nginx/sites-available/
 
 
 # create a symlink to enable nginx:
-   sudo ln -s /etc/nginx/sites-available/SatTrackerWeb_proxy /etc/nginx/sites-enabled/
+   sudo ln -s /etc/nginx/sites-available/TunerWeb_proxy /etc/nginx/sites-enabled/
 
 # add website user to tty group:
     sudo adduser www-data tty
 
 # create database:
-cd /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/
-export FLASK_APP=SatTrackerWeb.py
+cd /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/
+export FLASK_APP=TunerWeb.py
 printenv FLASK_APP
 flask db upgrade
 
 # ( https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html )
 # to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
-   @chromium-browser --kiosk http://sat-tracker-pi
+   @chromium-browser --kiosk http://tuner-pi
 
 
 ###############################################################################################################################################################
@@ -43,22 +43,22 @@ flask db upgrade
 
 #On Raspian Use systemd to start the WebServer, TrackerDaemon, and WebClient.
 #As root, Create Symbolic Link to  the following files into /etc/systemd/system:
-    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiDaemon/sat_tracker_pi_daemon.service /etc/systemd/system
-    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebServer/sat_tracker_pi_web_server.service /etc/systemd/system 
-    sudo ln -s /home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebClient/sat_tracker_pi_web_client.service /etc/systemd/system 
+    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiDaemon/tuner_pi_daemon.service /etc/systemd/system
+    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/tuner_pi_web_server.service /etc/systemd/system 
+    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebClient/tuner_pi_web_client.service /etc/systemd/system 
 
 
 #enable services to strat at boot:
-   sudo systemctl enable sat_tracker_pi_daemon.service 
-   sudo systemctl enable sat_tracker_pi_web_server.service
-   sudo systemctl enable sat_tracker_pi_web_client.service 
+   sudo systemctl enable tuner_pi_daemon.service 
+   sudo systemctl enable tuner_pi_web_server.service
+   sudo systemctl enable tuner_pi_web_client.service 
 
 
 # test the scripts by starting them manually:
-   sudo systemctl start sat_tracker_pi_daemon.service  
+   sudo systemctl start tuner_pi_daemon.service  
 
 # view the logs with the systemctl status command:
-   sudo systemctl status sat_tracker_pi_daemon.service  
+   sudo systemctl status tuner_pi_daemon.service  
 
 
 
