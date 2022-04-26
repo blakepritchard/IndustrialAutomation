@@ -1,5 +1,6 @@
 
 #( https://iotbytes.wordpress.com/python-flask-web-application-on-raspberry-pi-with-nginx-and-uwsgi/ )
+https://stackoverflow.com/questions/31252791/flask-importerror-no-module-named-flask
 
 
 # make www-data the owner of the subfolder:
@@ -17,7 +18,9 @@
 
 # create database:
 cd /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/
-export FLASK_APP=TunerWeb.py
+export FLASK_APP=TunerWeb.py 
+export FLASK_ENV=development
+flask run
 printenv FLASK_APP
 flask db upgrade
 
@@ -48,7 +51,7 @@ flask db upgrade
     sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebClient/tuner_pi_web_client.service /etc/systemd/system 
 
 
-#enable services to strat at boot:
+#enable services to start at boot:
    sudo systemctl enable tuner_pi_daemon.service 
    sudo systemctl enable tuner_pi_web_server.service
    sudo systemctl enable tuner_pi_web_client.service 

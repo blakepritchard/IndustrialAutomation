@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sat Tracker Web</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sat_tracker_web.css') }}">
+    <title>Tuner Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tuner_web.css') }}">
     <script type=text/javascript src="{{ url_for('static', filename='javascript/jquery-3.3.1.js') }}"></script>
-    <script type=text/javascript src="{{ url_for('static', filename='javascript/sat_tracker_web.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='javascript/tuner_web.js') }}"></script>
   </head>
   <body>
     <header>
       <div class="header_menu">
-        <h1 class="logo">Satellite Tracker</h1>
+        <h1 class="logo">Antenna Tuner</h1>
         <strong><nav>
           <ul class="menu">
 
@@ -19,30 +19,6 @@
     </header>
     <div class="main_display">
       <div class="dashboard">
-        <div class="azimuth">
-          <h1>Azimuth: <br>
-            <span id="azimuth_current"></span>
-          </h1>
-          <div id="azimuthNext">
-            Set Azimuth: 
-            <input type="text" id="azimuth_next"><br>
-          </div>
-          <div id="azimuthSet">
-            <button id="btnSetAzimuth">Set Azimuth</button>
-          </div>                
-        </div>
-        <div class="elevation">
-          <h1>Elevation: <br>
-            <span id="elevation_current"></span>
-          </h1>
-          <div id="elevationNext">
-            Set Elevation: 
-            <input type="text" id="elevation_next"><br>
-          </div>
-          <div id="elevationSet">
-            <button id="btnSetElevation">Set Elevation</button>
-          </div>
-        </div>
         <div class="polarity">
             <h1>Polarity: <br>
               <span id="polarity_current"></span>

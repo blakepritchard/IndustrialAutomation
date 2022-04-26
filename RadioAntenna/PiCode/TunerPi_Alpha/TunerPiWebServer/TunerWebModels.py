@@ -7,10 +7,6 @@ class Rotator(db.Model):
     rotator_name = db.Column(db.String(64), index=False, unique=True)
     rotator_commands = db.relationship("RotatorCommand", backref="Rotator", lazy=True)
 
-    azimuth_steps = db.Column(db.Integer, index=False, unique=False, default="SatTrackerPi")
-    azimuth_degrees = db.Column(db.Float, index=False, unique=False, default=0)
-    elevation_steps = db.Column(db.Integer, index=False, unique=False, default=0)
-    elevation_degrees = db.Column(db.Float, index=False, unique=False, default=0)
     polarity_steps = db.Column(db.Integer, index=False, unique=False, default=0)
     polarity_degrees = db.Column(db.Float, index=False, unique=False, default=0)
     polarity_is_tracking = db.Column(db.Boolean, index=False, unique=False, default=False)

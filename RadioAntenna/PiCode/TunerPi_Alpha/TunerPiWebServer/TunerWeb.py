@@ -1,3 +1,10 @@
+# from flask import Flask
+# app = Flask(__name__)
+
+# @app.route("/")
+# def hello():
+#     return "Hello World!"
+
 import os
 import pwd
 import sys
@@ -29,19 +36,23 @@ tuner_web_app.testing = True
 tuner_web_app.debug = True
 tuner_web_app.logger.setLevel(logging.DEBUG)
 
-if __name__ == "__main__":
-    tuner_web_app.run(host='0.0.0.0')
-
+# #if __name__ == "__main__":
+# #    tuner_web_app.run(host='0.0.0.0')
 
 @tuner_web_app.route("/")
-def default_page():
-    return redirect("http://"+socket.gethostname()+"/tuner/", code=302)
+def hello():
+    return "Hello World Again!"
+
+# @tuner_web_app.route("/")
+# def default_page():
+#     return redirect("http://"+socket.gethostname()+"/tuner/", code=302)
 
 @tuner_web_app.route("/tuner/", methods=["GET"])
-def sat_tracker_web():
-    log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
-    log_text_lines_array = log_text_lines_array[::-1]
-    return render_template("sat_tracker_web.html", **locals())
+def tuner_web():
+    # log_text_lines_array = open("../tuner_pi_daemon.log", "r").read().split("\n")
+    # log_text_lines_array = log_text_lines_array[::-1]
+    return render_template("tuner_web.html", **locals())
+    return "Hello Tuner "
 
 @tuner_web_app.route("/polarity/", methods=["GET"])
 def polarity_control():
@@ -53,7 +64,7 @@ def polarity_control():
 @tuner_web_app.route("/tuner/api/rotator/log", methods=["GET"])
 def get_rotator_log():
     try:
-        log_text_lines_array = open("../sat_tracker_daemon.log", "r").read().split("\n")
+        log_text_lines_array = open("../tuner_pi_daemon.log", "r").read().split("\n")
         log_text_lines_array = log_text_lines_array[::-1]
         json_result = json.dumps(log_text_lines_array)
         return json_result
@@ -96,10 +107,6 @@ def set_rotator_status():
             tuner_web_app.logger.debug("Request Data Object:" + str(dict_json_post))
             tuner_web_app.logger.debug("Request String Data Type:" + str(type(str_json_post))+", Dictionary Object Data Type:" + str(type(dict_json_post)) )
 
-        rotator.azimuth_degrees = dict_json_post["azimuth_degrees"]
-        rotator.azimuth_steps = dict_json_post["azimuth_steps"]
-        rotator.elevation_degrees = dict_json_post["elevation_degrees"]
-        rotator.elevation_steps = dict_json_post["elevation_steps"]
         rotator.polarity_steps = dict_json_post["polarity_steps"]
         rotator.polarity_degrees = dict_json_post["polarity_degrees"]
         if ("True" == dict_json_post["polarity_is_tracking"]):

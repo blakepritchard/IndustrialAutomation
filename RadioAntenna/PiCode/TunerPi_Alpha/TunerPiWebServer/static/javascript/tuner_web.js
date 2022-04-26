@@ -28,8 +28,8 @@ function screen_update_toggle(){
 }
 
 function update_rotor_status(){
-    req_status = $.get("/sat_tracker/api/rotator/status", function(data){update_dashboard(data)});
-    req_log = $.get("/sat_tracker/api/rotator/log", function(data){update_logview(data)});    
+    req_status = $.get("/tuner/api/rotator/status", function(data){update_dashboard(data)});
+    req_log = $.get("/tuner/api/rotator/log", function(data){update_logview(data)});    
 }
 
               
@@ -81,7 +81,7 @@ function elevation_set(int_elevation_next){
 function post_rotator_command(obj_rotator_command, func_success){
     json_rotator_command = JSON.stringify(obj_rotator_command);
     resp_rotator_next = jQuery.ajax ({
-        url: "/sat_tracker/api/rotator/command",
+        url: "/tuner/api/rotator/command",
         type: "POST",
         data: json_rotator_command,
         dataType: "json",
