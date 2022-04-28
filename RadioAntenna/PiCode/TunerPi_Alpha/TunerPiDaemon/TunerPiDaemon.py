@@ -20,6 +20,7 @@ import logging
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 
+
 # Import Local Libraries
 path_runtime = os.path.dirname(__file__)
 path_parent = os.path.abspath(os.path.join(path_runtime, os.pardir))
@@ -140,11 +141,11 @@ USAGE
         serial_port_website = serial.Serial(name_port_website, 9600, rtscts=True,dsrdtr=True, timeout=0)
 
         logging.info("Port Open. Setting Constants.")
-        bytes_carraigereturn = bytes("\r")
-        bytes_linefeed = bytes("\n")    
+        bytes_carraigereturn = bytes("\r", 'utf-8')
+        bytes_linefeed = bytes("\n", 'utf-8')    
 
         logging.info("Sending Serial Message to Web Client: Ready")
-        serial_port_website.write("Ready\n")
+        serial_port_website.write(bytes("Ready\n", 'utf-8'))
 
         logging.info("Reading Serial Port Loop")
         
@@ -161,7 +162,7 @@ USAGE
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
                     rotator_response = device_rotator.execute_easycomm2_command(command_rotctl)
-                    serial_port_rotctl.write(rotator_response)
+                    serial_port_rotctl.write(bytes(rotator_response, 'utf-8'))
                     command_rotctl = ""  
                 elif '!'==char_next_rotctl:
                     logging.info('!'),
@@ -184,7 +185,7 @@ USAGE
                 if ((byte_next_website == bytes_carraigereturn) or (byte_next_website == bytes_linefeed)):
                     website_response = device_rotator.execute_website_command(command_website)
                     logging.debug("Writing Serial Response to Website: "+ str(website_response))
-                    serial_port_website.write(str(website_response) + "\n")
+                    serial_port_website.write(bytes(str(website_response) + "\n", 'utf-8'))
                     command_website = ""  
                 elif '!'==char_next_website:
                     logging.debug('!'),

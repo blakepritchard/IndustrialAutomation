@@ -50,9 +50,9 @@ class Rotator(object):
     _steps_polarity_max = 180
 
     _encoder_channel_polarity = 0
-    _encoderposition_polarity_center = 3420
-    _encoderposition_polarity_min = 3100
-    _encoderposition_polarity_max = 3600
+    _encoderposition_polarity_center = 28865
+    _encoderposition_polarity_min = 26700
+    _encoderposition_polarity_max = 36000
     
     # Hardware SPI configuration:
     SPI_PORT   = 0
@@ -134,10 +134,6 @@ class Rotator(object):
 
     def get_rotator_status(self):
         status_dict = {}
-        status_dict["azimuth_degrees"] = self._Azimuth.get_degrees()
-        status_dict["azimuth_steps"] = self._Azimuth.get_stepper_count()
-        status_dict["elevation_degrees"] = self._Elevation.get_degrees()
-        status_dict["elevation_steps"] = self._Elevation.get_stepper_count()
         status_dict["polarity_degrees"] = self._Polarity.get_degrees()
         status_dict["polarity_steps"] = self._Polarity.get_stepper_count()
         
