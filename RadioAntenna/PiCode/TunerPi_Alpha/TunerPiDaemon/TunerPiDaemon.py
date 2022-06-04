@@ -106,14 +106,14 @@ USAGE
 
         
         #Initialize Log File
-        logging.basicConfig(filename='tuner_pi_daemon.log', filemode='w', level=int(args.loglevel), format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        logging.basicConfig(filename='~/tuner_pi_daemon.log', filemode='w', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.info("Verbose mode on Log Level: "+str(args.loglevel))
 
         # Initialize Hardware
         print("Rotor Lib Path:", path_lib_rotor) 
         
         import Rotator
-        device_rotator = Rotator.Rotator()
+        device_rotator = Rotator.Rotator(str(args.loglevel))
 
 
         #set rotator verbosity

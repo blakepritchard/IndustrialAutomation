@@ -46,15 +46,15 @@ flask db upgrade
 
 #On Raspian Use systemd to start the WebServer, TrackerDaemon, and WebClient.
 #As root, Create Symbolic Link to  the following files into /etc/systemd/system:
-    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiDaemon/tuner_pi_daemon.service /etc/systemd/system
-    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/tuner_pi_web_server.service /etc/systemd/system 
-    sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebClient/tuner_pi_web_client.service /etc/systemd/system 
+sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiDaemon/tuner_pi_daemon.service /etc/systemd/system
+sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/tuner_pi_web_server.service /etc/systemd/system 
+sudo ln -s /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebClient/tuner_pi_web_client.service /etc/systemd/system 
 
 
 #enable services to start at boot:
-   sudo systemctl enable tuner_pi_daemon.service 
-   sudo systemctl enable tuner_pi_web_server.service
-   sudo systemctl enable tuner_pi_web_client.service 
+sudo systemctl enable tuner_pi_daemon.service 
+sudo systemctl enable tuner_pi_web_server.service
+sudo systemctl enable tuner_pi_web_client.service 
 
 
 # test the scripts by starting them manually:

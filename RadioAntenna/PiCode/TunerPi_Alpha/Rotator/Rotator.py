@@ -47,7 +47,7 @@ class Rotator(object):
 
     _steps_polarity_center = 0
     _steps_polarity_min = 0
-    _steps_polarity_max = 180
+    _steps_polarity_max = 10800
 
     _encoder_channel_polarity = 0
     _encoderposition_polarity_center = 28865
@@ -71,8 +71,9 @@ class Rotator(object):
     '''
     Constructor
     '''
-    def __init__(self):
-        logging.info("Initializing TunerPi Stepper")
+    def __init__(self, logLevel):
+        logging.basicConfig(filename='~/tuner_pi_rotator.log', filemode='w', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        logging.info("Initializing TunerPi Rotator")
 
 
         # create a default object, no changes to I2C address or frequency

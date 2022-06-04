@@ -35,3 +35,5 @@ RadioAntenna/PiCode/bno055-python-i2c
 RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/__pycache__/config.cpython-36.pyc
 RadioAntenna/PiCode/SatTrackerPi_Gamma/sat_tracker_daemon.log
 RadioAntenna/PiCode/SatTrackerPi_Gamma/SatTrackerPiWebsite/sat_tracker_web_uwsgi.log
+
+RadioAntenna/PiCode/GeekWorm

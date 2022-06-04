@@ -1,12 +1,12 @@
 [Unit]
-Description=SatTrackerPi Daemon
+Description=TunerPi Daemon
 After=network.target
-Before=sat_tracker_pi_web_server.service sat_tracker_pi_web_client.service
+Before=tuner_pi_web_server.service tuner_pi_web_client.service
 
 [Service]
 Type=simple
-ExecStart=/bin/bash start_tracker.bash
-WorkingDirectory=/home/pi/src/git/IndustrialAutomation/RadioAntenna/PiCode/SatTrackerPi_Gamma/
+ExecStart=/bin/bash start_tuner.bash
+WorkingDirectory=/home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/
 StandardOutput=inherit
 StandardError=inherit
 Restart=no
