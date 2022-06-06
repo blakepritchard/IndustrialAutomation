@@ -3,11 +3,8 @@
 https://stackoverflow.com/questions/31252791/flask-importerror-no-module-named-flask
 
 
-# make www-data the owner of the subfolder:
-    sudo chown www-data /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer
-
 # to configure nginx for website copy file: 
-   cp /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/TunerWeb_proxy /etc/nginx/sites-available/
+   sudo cp /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/TunerWeb_proxy /etc/nginx/sites-available/
 
 
 # create a symlink to enable nginx:
@@ -20,9 +17,20 @@ https://stackoverflow.com/questions/31252791/flask-importerror-no-module-named-f
 cd /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer/
 export FLASK_APP=TunerWeb.py 
 export FLASK_ENV=development
-flask run
-printenv FLASK_APP
+
+sqlite3 app.db
+.quit
+
+sudo chmod 666 app.db
 flask db upgrade
+
+printenv FLASK_APP
+flask run
+
+
+# make www-data the owner of the subfolder:
+    sudo chown www-data /home/pi/IndustrialAutomation/RadioAntenna/PiCode/TunerPi_Alpha/TunerPiWebServer
+
 
 # ( https://blog.eq8.eu/til/raspberi-pi-as-kiosk-load-browser-on-startup-fullscreen.html )
 # to configure chromium to start in the GUI copy the following text into ~/.config/lxsession/LXDE-pi/autostart
