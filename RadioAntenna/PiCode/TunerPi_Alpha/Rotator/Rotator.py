@@ -17,15 +17,17 @@ import atexit
 import logging
 import json
 
+
 #Adafruit Libraries for ADC
 import busio
 import digitalio
 import board
+from rpi_lcd import LCD
+
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
 # Import Stepper
-import board
 from adafruit_motor import stepper
 from adafruit_motorkit import MotorKit
 
@@ -75,6 +77,13 @@ class Rotator(object):
         logging.basicConfig(filename='~/tuner_pi_rotator.log', filemode='w', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.info("Initializing TunerPi Rotator")
 
+        # Initialize LCD Display
+        lcd = LCD()
+        lcd.clear()
+        lcd.text("Tuner Pi ", 1)
+        lcd.text("copyright 2022", 2)
+        lcd.text("Blake Pritchard", 3)
+        lcd.text("https://blakesbots.com", 4)
 
         # create a default object, no changes to I2C address or frequency
         logging.info("Initializing Motor Hat A at I2C address: 0x6F")

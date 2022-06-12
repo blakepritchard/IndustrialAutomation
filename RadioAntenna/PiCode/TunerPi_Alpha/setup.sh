@@ -5,7 +5,10 @@ sudo apt-get install python3-serial
 
 sudo pip install pyserial
 sudo pip install adafruit-circuitpython-mcp3xxx
-sudo pip install board
+sudo pip install adafruit-circuitpython-motorkit
+sudo pip install rpi_lcd
+
+sudo pip install adafruit-blinka
 sudo pip install argparse
 sudo pip install flask
 sudo pip install flask-migrate
@@ -30,3 +33,7 @@ sudo systemctl enable tuner_pi_web_client.service
    sudo systemctl status tuner_pi_daemon.service  
 
 
+# learn.adafruit.com/assets/64848
+
+cd /home/pi/IndustrialAutomation/RadioAntenna/PiCode/
+git clone https://github.com/adafruit/Adafruit_Blinka.git
