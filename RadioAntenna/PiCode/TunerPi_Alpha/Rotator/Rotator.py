@@ -191,7 +191,7 @@ class Rotator(object):
                     command_parameters = rotator_command[2:]
 
                     if not self._is_busy:     
-                        elif "PO" == command_operation:
+                        if "PO" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
                             result = self._Polarity.set_position(command_parameters)
                             logging.info("Returning Polarity Position: " + str(result))
@@ -200,6 +200,7 @@ class Rotator(object):
                     else:
                         result = "Busy"
                         logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(rotator_command))
+                        lcd.text("Busy, Ignoring: " +str(rotator_command), 1) 
             return result       
         
         except Exception as e:
