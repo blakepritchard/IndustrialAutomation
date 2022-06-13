@@ -44,7 +44,7 @@ class RotationalAxis(object):
 
     _target_degrees = 0
     _stepper_count = 0
-    _steps_per_degree = 
+    _steps_per_degree = 30
     _degrees_per_step = 0.5
 
     _requires_calibration = True
@@ -235,18 +235,18 @@ class RotationalAxis(object):
                     encoder_position_current = self._adc_position.value
                     
                     logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoder_position_current))
-                    self._lcd.text("Steps: " + str(self.get_stepper_count(), 2)
-                    self._lcd.text("Degrees: " + str(self.get_degrees(), 3)
+                    self._lcd.text("Steps: " + str(self.get_stepper_count(), 2))
+                    self._lcd.text("Degrees: " + str(self.get_degrees(), 3))
                     
                     # Check Limits
                     if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
                         logging.warning(" Warning. Stepper Limits Outside "+limit_label+" Range from: "+str(self._steppercount_min)+", to: "+str(self._steppercount_max)+" Stepper Value at: " + str(self.get_stepper_count())+ "; Re-Centering .")
-                        self._lcd.text("Step Limit: " + str(self.get_stepper_count(), 4)
+                        self._lcd.text("Step Limit: " + str(self.get_stepper_count(), 4))
                         self.recenter()
                         break
                     if False == self.check_encoder_limits(encoder_position_current):
                         logging.warning(" Warning. Encoder Limits Outside "+limit_label+" Range from: "+str(self._encoderposition_min)+", to:"+str(self._encoderposition_max)+" Encoder Value at: " + str(encoder_position_current)+ "; Re-Centering .")
-                        self._lcd.text("Step Limit: " + str(self.encoder_position_current(), 4)
+                        self._lcd.text("Step Limit: " + str(self.encoder_position_current(), 4))
                         self.recenter()
                         break
 
