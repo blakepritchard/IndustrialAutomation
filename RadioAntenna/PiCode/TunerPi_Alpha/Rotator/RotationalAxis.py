@@ -14,6 +14,8 @@ import busio
 import digitalio
 import board
 
+from rpi_lcd import LCD
+
 # Import ADC (MCP3208) library.
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
@@ -42,7 +44,7 @@ class RotationalAxis(object):
 
     _target_degrees = 0
     _stepper_count = 0
-    _steps_per_degree = 2
+    _steps_per_degree = 
     _degrees_per_step = 0.5
 
     _requires_calibration = True
@@ -64,6 +66,8 @@ class RotationalAxis(object):
         self._encoderposition_center = encoder_center
         self._encoderposition_min = encoder_min
         self._encoderposition_max = encoder_max
+        self._lcd = LCD()
+
 
     def __del__(self):
         # body of destructor
@@ -182,10 +186,13 @@ class RotationalAxis(object):
             steps_required, self.target = self.calculate_steps(_target)
 
             logging.debug("Position Target: "+ str(self.target) +"; degrees per setp: " + str(self._degrees_per_step) ) 
-
+            self._lcd.clear()
+            self._lcd.text("Target: " + str(_target), 1)
+            
             _current_degrees = self.get_degrees()
             if _target == _current_degrees:
                 logging.info("Holding  Steady at: "+ str(_target))
+                self._lcd.text("Holding", 2)
             else:
                 
                 encoder_position_current = self.read_encoder_average()
@@ -222,19 +229,24 @@ class RotationalAxis(object):
                     # Step Motor
                     self._stepper.onestep(direction=direction_required, style=stepper.SINGLE)
 
+
                     # Set  Value to Be Returned to GPredict                    
                     self.set_stepper_count(self.get_stepper_count() + stepper_incriment)
                     encoder_position_current = self._adc_position.value
                     
                     logging.debug("Interim  Stepper Count:"+str(self.get_stepper_count())+"; Interim  Degrees: " + str(self.get_degrees()) + " EncoderValue: "+ str(encoder_position_current))
-
+                    self._lcd.text("Steps: " + str(self.get_stepper_count(), 2)
+                    self._lcd.text("Degrees: " + str(self.get_degrees(), 3)
+                    
                     # Check Limits
                     if ((self.get_stepper_count() > self._steppercount_max) or (self.get_stepper_count() < self._steppercount_min)):
                         logging.warning(" Warning. Stepper Limits Outside "+limit_label+" Range from: "+str(self._steppercount_min)+", to: "+str(self._steppercount_max)+" Stepper Value at: " + str(self.get_stepper_count())+ "; Re-Centering .")
+                        self._lcd.text("Step Limit: " + str(self.get_stepper_count(), 4)
                         self.recenter()
                         break
                     if False == self.check_encoder_limits(encoder_position_current):
                         logging.warning(" Warning. Encoder Limits Outside "+limit_label+" Range from: "+str(self._encoderposition_min)+", to:"+str(self._encoderposition_max)+" Encoder Value at: " + str(encoder_position_current)+ "; Re-Centering .")
+                        self._lcd.text("Step Limit: " + str(self.encoder_position_current(), 4)
                         self.recenter()
                         break
 

@@ -80,10 +80,10 @@ class Rotator(object):
         # Initialize LCD Display
         lcd = LCD()
         lcd.clear()
-        lcd.text("Tuner Pi ", 1)
-        lcd.text("copyright 2022", 2)
+        lcd.text("TunerPi, Rev.1 ", 1)
+        lcd.text("Copyright 2022", 2)
         lcd.text("Blake Pritchard", 3)
-        lcd.text("https://blakesbots.com", 4)
+        lcd.text("www.blakesbots.com", 4)
 
         # create a default object, no changes to I2C address or frequency
         logging.info("Initializing Motor Hat A at I2C address: 0x6F")
@@ -151,93 +151,52 @@ class Rotator(object):
         logging.debug("Rotator Status: " + json_result)
         return json_result
 
-    def execute_easycomm2_command(self, rotator_commands):  
-
-        try:
-            array_commands = rotator_commands.split(" ")
-                
-            for rotator_command in array_commands: 
-                #logging.debug("Command: " + rotator_command)
-                result = ""
-                    
-                # EasyCommII uses short commands to Get values from the Rotator
-                if len(rotator_command) == 2:
-                    if      "AZ" == rotator_command: result = str(self._Azimuth.get_degrees())
-                    elif    "EL" == rotator_command: result = str(self._Elevation.get_degrees())
-                    elif    "SA" == rotator_command: self._Azimuth.stop()
-                    elif    "SE" == rotator_command: self._Elevation.stop()
-                    elif    "VE" == rotator_command: result = self.get_version_text()
-                    elif    "HE" == rotator_command: result = self.get_help_text()
-                    
-                # EasyCommII uses longer commands to Set values on the Rotator        
-                elif len(rotator_command) > 2:
-                    command_operation = rotator_command[:2]
-                    command_parameters = rotator_command[2:]
-
-                    if not self._is_busy:    
-                        if "AZ" == command_operation:
-                            logging.info("Recieved Azimuth Command: " + str(command_parameters))
-                            self._Azimuth.set_position(command_parameters)
-                        elif "EL" == command_operation:
-                            logging.info("Recieved Elevation Command: " + str(command_parameters))      
-                            self._Elevation.set_position(command_parameters)       
-                    else:
-                        logging.info("Rotor is Busy Moving, Ignoring Command: " + str(command_parameters))
-            return result       
-        
-        except Exception as e:
-            self.handle_exception(e)
-
-
     def execute_website_command(self, rotator_commands):  
         try:
             array_commands = rotator_commands.split(" ")               
             for rotator_command in array_commands: 
                 logging.debug("Command: " + rotator_command)
                 result = ""
-                    
+                  
+                #Stop  
+                if("STOP" == rotator_command): 
+                        self._Polarity.stop()
+                        logging.debug("Received Stop Polarity Command")
+                        lcd.clear()
+                        lcd.text("Stop", 1)  
+                            
                 # Website uses short commands to Get values from the Rotator
-                if len(rotator_command) == 2:
+                elif len(rotator_command) == 2:
                     if  "RS" == rotator_command:
                        result = str(self.get_rotator_status()) 
                        logging.debug("Received Rotator Status Request, Result: " + str(result)) 
-                    elif    "AZ" == rotator_command: 
-                        result = str(self._Azimuth.get_degrees())
-                        logging.debug("Received Azimuth Request, Result: " + str(result))
-                    elif    "EL" == rotator_command: 
-                        result = str(self._Elevation.get_degrees())
-                        logging.debug("Received Elevation Request, Result: " + str(result))
-                    elif    "PO" == rotator_command: 
-                        result = str(self._Polarity.get_degrees())
-                        logging.debug("Received Polarity Request, Result: " + str(result))
-                    elif    "SA" == rotator_command: 
-                        self._Azimuth.stop()
-                        logging.debug("Received Stop Azimuth Command")
-                    elif    "SE" == rotator_command: 
-                        self._Elevation.stop()
-                        logging.debug("Received Stop Elevation Command")
-                    elif    "SP" == rotator_command: 
+
+                    elif "PO" == rotator_command: 
+                        result_deg = str(self._Polarity.get_degrees())
+                        result_steps = str(self._Polarity.get_stepper_count())
+                        logging.debug("Received Polarity Request, Degrees: " + result_deg + ", Steps: " + result_steps)
+                        lcd.clear()
+                        lcd.text("Steps: " + str(result_steps), 1)
+                        lcd.text("Degrees: " + str(result_deg), 2)
+
+                    elif "SP" == rotator_command: 
                         self._Polarity.stop()
                         logging.debug("Received Stop Polarity Command")
-                    elif    "VE" == rotator_command: result = self.get_version_text()
-                    elif    "HE" == rotator_command: result = self.get_help_text()
+                    elif "VE" == rotator_command: result = self.get_version_text()
+                    elif "HE" == rotator_command: result = self.get_help_text()
                     
                 # WebSite uses longer commands to Set values on the Rotator        
                 elif len(rotator_command) > 2:
                     command_operation = rotator_command[:2]
                     command_parameters = rotator_command[2:]
 
-                    if not self._is_busy:
-                        if "AZ" == command_operation:
-                            logging.info("Received Azimuth Command: " + str(command_parameters))
-                            result = self._Azimuth.set_position(command_parameters)
-                        elif "EL" == command_operation:
-                            logging.info("Received Elevation Command: " + str(command_parameters))      
-                            result = self._Elevation.set_position(command_parameters)       
+                    if not self._is_busy:     
                         elif "PO" == command_operation:
                             logging.info("Received Polarity Position Command: " + str(command_parameters))
                             result = self._Polarity.set_position(command_parameters)
-                            logging.info("Returning Polarity Position: " + str(result))         
+                            logging.info("Returning Polarity Position: " + str(result))
+                            lcd.clear()
+                            lcd.text(str(result), 1)         
                     else:
                         result = "Busy"
                         logging.warning("Rotor is Busy Moving, Ignoring Command: " + str(rotator_command))
@@ -256,4 +215,6 @@ class Rotator(object):
         print(e)
         
         sys.stderr.write("Rotator.py: " + repr(e) + "\n")
+        lcd.clear()
+        lcd.text(e, 1)
         return 2

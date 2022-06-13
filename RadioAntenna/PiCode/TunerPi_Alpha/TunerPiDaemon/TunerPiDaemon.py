@@ -161,7 +161,7 @@ USAGE
             if byte_next_rotctl:
                 
                 if ((byte_next_rotctl == bytes_carraigereturn) or (byte_next_rotctl == bytes_linefeed)):
-                    rotator_response = device_rotator.execute_easycomm2_command(command_rotctl)
+                    rotator_response = device_rotator.execute_website_command(command_rotctl)
                     serial_port_rotctl.write(bytes(rotator_response, 'utf-8'))
                     command_rotctl = ""  
                 elif '!'==char_next_rotctl:
